@@ -2,7 +2,7 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 
 export const BerandaPage = () => {
     return (
-        <div className="space-y-4 max-w-md mx-auto">
+        <div>
             <Card className="bg-gradient-to-r from-yellow-100 to-yellow-200 border-yellow-300">
                 <CardHeader>
                     <CardTitle className="text-base text-yellow-800">Total Saldo</CardTitle>

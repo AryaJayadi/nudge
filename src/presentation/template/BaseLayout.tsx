@@ -18,10 +18,10 @@ export const BaseLayout = () => {
                     <h1 className="text-lg font-semibold">Nudge Recommendation Model</h1>
                     <div className="flex items-center space-x-2">
                         <Button size="icon" variant="ghost">
-                            <Bell className="h-5 w-5" />
+                            <Bell className="h-5 w-5"/>
                         </Button>
                         <Avatar>
-                            <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Budi" />
+                            <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Budi"/>
                             <AvatarFallback>BD</AvatarFallback>
                         </Avatar>
                     </div>
@@ -30,10 +30,12 @@ export const BaseLayout = () => {
             <main className="flex-1 py-6 px-4 overflow-y-auto">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-xl font-bold mb-4">{title}</h2>
-                    <Outlet />
+                    <div className="space-y-4 max-w-md mx-auto">
+                        <Outlet/>
+                    </div>
                 </div>
             </main>
-            <BottomNav />
+            <BottomNav/>
         </div>
     )
 }
