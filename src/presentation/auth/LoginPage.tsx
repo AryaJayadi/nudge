@@ -20,7 +20,7 @@ export const LoginPage = () => {
     return (
         <Card className="w-[350px]">
             <CardHeader>
-                <CardTitle>Login Admin</CardTitle>
+                <CardTitle>Login</CardTitle>
             </CardHeader>
             <CardContent>
                 <form>
