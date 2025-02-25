@@ -4,6 +4,8 @@ import {AuthLayout} from "@/presentation/template/AuthLayout.tsx";
 import {RootLayout} from "@/presentation/template/RootLayout.tsx";
 import {LoginPage} from "@/presentation/auth/LoginPage.tsx";
 import {RouterProvider} from "react-router/dom";
+import {BaseLayout} from "@/presentation/template/BaseLayout.tsx";
+import {BerandaPage} from "@/presentation/beranda/BerandaPage.tsx";
 
 function isAuthenticated(): boolean {
     return true;
@@ -34,18 +36,14 @@ const router = createBrowserRouter([
                 element: <ProtectedRoute isAuthenticated={isAuthenticated} redirectPath={"/auth/login"}/>,
                 children: [
                     {
-                        // path: "",
-                        // element: <DashboardLayout/>,
-                        // children: [
-                        //     {
-                        //         path: "company",
-                        //         element: <CompanyPage/>
-                        //     },
-                        //     {
-                        //         path: "student",
-                        //         element: <StudentPage/>
-                        //     },
-                        // ]
+                        path: "",
+                        element: <BaseLayout/>,
+                        children: [
+                            {
+                                path: "beranda",
+                                element: <BerandaPage/>
+                            },
+                        ]
                     },
                 ]
             },

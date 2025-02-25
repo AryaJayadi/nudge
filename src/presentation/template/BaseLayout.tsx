@@ -3,13 +3,14 @@ import {Button} from "@/components/ui/button.tsx";
 import {Bell} from "lucide-react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
 import BottomNav from "@/components/bottom-nav.tsx";
-import {Outlet} from "react-router";
+import {Outlet, useLocation} from "react-router";
 
-interface Props {
-    title: string
-}
 
-export const BaseLayout : (Props) => JSX.Element = p => {
+export const BaseLayout = () => {
+    const location = useLocation();
+    let title = location.pathname.split("/").pop() || "title";
+    title = title.charAt(0).toUpperCase() + title.slice(1);
+
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
             <header className="bg-modern-500 text-white p-4 sticky top-0 z-10">
@@ -28,7 +29,7 @@ export const BaseLayout : (Props) => JSX.Element = p => {
             </header>
             <main className="flex-1 py-6 px-4 overflow-y-auto">
                 <div className="max-w-6xl mx-auto">
-                    <h2 className="text-xl font-bold mb-4">{p.title}</h2>
+                    <h2 className="text-xl font-bold mb-4">{title}</h2>
                     <Outlet />
                 </div>
             </main>
