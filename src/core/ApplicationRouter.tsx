@@ -6,6 +6,7 @@ import {LoginPage} from "@/presentation/auth/LoginPage.tsx";
 import {RouterProvider} from "react-router/dom";
 import {BaseLayout} from "@/presentation/template/BaseLayout.tsx";
 import {BerandaPage} from "@/presentation/beranda/BerandaPage.tsx";
+import {TabunganPage} from "@/presentation/tabungan/TabunganPage.tsx";
 
 function isAuthenticated(): boolean {
     return true;
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
                                 path: "beranda",
                                 element: <BerandaPage/>
                             },
+                            {
+                                path: "tabungan",
+                                element: <TabunganPage/>
+                            }
                         ]
                     },
                 ]
