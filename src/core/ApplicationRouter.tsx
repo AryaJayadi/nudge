@@ -40,7 +40,7 @@ const router = createBrowserRouter([
                 element: <ProtectedRoute isAuthenticated={isAuthenticated} redirectPath={"/auth/login"}/>,
                 children: [
                     {
-                        path: "",
+                        path: "app",
                         element: <BaseLayout/>,
                         children: [
                             {
