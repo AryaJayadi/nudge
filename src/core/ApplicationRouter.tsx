@@ -7,6 +7,7 @@ import {RouterProvider} from "react-router/dom";
 import {BaseLayout} from "@/presentation/template/BaseLayout.tsx";
 import {BerandaPage} from "@/presentation/beranda/BerandaPage.tsx";
 import {TabunganPage} from "@/presentation/tabungan/TabunganPage.tsx";
+import {KreditPage} from "@/presentation/kredit/KreditPage.tsx";
 
 function isAuthenticated(): boolean {
     return true;
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
                             {
                                 path: "tabungan",
                                 element: <TabunganPage/>
+                            },
+                            {
+                                path: "kredit",
+                                element: <KreditPage/>
                             }
                         ]
                     },
