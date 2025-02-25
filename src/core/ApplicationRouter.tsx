@@ -9,6 +9,7 @@ import {BerandaPage} from "@/presentation/beranda/BerandaPage.tsx";
 import {TabunganPage} from "@/presentation/tabungan/TabunganPage.tsx";
 import {KreditPage} from "@/presentation/kredit/KreditPage.tsx";
 import {InvestasiPage} from "@/presentation/investasi/InvestasiPage.tsx";
+import {AsuransiPage} from "@/presentation/asuransi/AsuransiPage.tsx";
 
 function isAuthenticated(): boolean {
     return true;
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
                                 path: "investasi",
                                 element: <InvestasiPage/>
                             },
+                            {
+                                path: "asuransi",
+                                element: <AsuransiPage/>
+                            }
                         ]
                     },
                 ]
