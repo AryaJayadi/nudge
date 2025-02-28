@@ -47,11 +47,11 @@ export default function ProductCard({
                 <div className="grid grid-cols-2 gap-2 mb-4">
                     <div>
                         <p className="text-sm font-semibold">{primaryInfo.label}</p>
-                        <p className="text-lg font-bold text-modern-600">{primaryInfo.value}</p>
+                        <p className="text-lg font-bold text-blue-600">{primaryInfo.value}</p>
                     </div>
                     <div>
                         <p className="text-sm font-semibold">{secondaryInfo.label}</p>
-                        <p className="text-lg font-bold text-modern-600">{secondaryInfo.value}</p>
+                        <p className="text-lg font-bold text-blue-600">{secondaryInfo.value}</p>
                     </div>
                 </div>
                 <Button variant="outline" className="w-full mb-4" onClick={() => setIsExpanded(!isExpanded)}>
