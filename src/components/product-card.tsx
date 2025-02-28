@@ -1,4 +1,4 @@
-import { useState } from "react"
+import {JSX, useState} from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -7,7 +7,7 @@ import { ArrowRight, ChevronDown, ChevronUp, AlertCircle } from "lucide-react"
 interface ProductCardProps {
     title: string
     description: string
-    icon: React.ReactNode
+    icon: JSX.Element
     isPopular?: boolean
     primaryInfo: { label: string; value: string }
     secondaryInfo: { label: string; value: string }
