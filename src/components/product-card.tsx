@@ -92,7 +92,7 @@ export default function ProductCard({
                         </div>
                     )}
                 </>
-                <Button className="w-full bg-modern-600 hover:bg-modern-700 text-white" onClick={onCtaClick}>
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" onClick={onCtaClick}>
                     {ctaText} <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
             </CardContent>
