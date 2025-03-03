@@ -1,6 +1,9 @@
 import {useLocation, useNavigate} from "react-router";
 import {useToast} from "@/components/ui/use-toast.ts";
-import {useRef} from "react";
+import {useCallback, useMemo, useRef} from "react";
+import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataSource.ts";
+import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
+import {UserSignUp} from "@/domain/usecase/UserSignUp.ts";
 
 export default function RegisterPageViewModel() {
     const navigate = useNavigate()
@@ -11,6 +14,15 @@ export default function RegisterPageViewModel() {
 
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passRef = useRef<HTMLInputElement | null>(null);
+
+    const userSupabaseDataSource = useMemo(() => new UserSupabaseDataSource(), []);
+    const userRepository = useMemo(() => new UserRepositoryDataSource(userSupabaseDataSource), [userSupabaseDataSource]);
+
+    const userSignUpUseCase = useMemo(() => new UserSignUp(userRepository), [userRepository]);
+
+    const userSignUp = useCallback(async (email: string, password: string) => {
+        return await userSignUpUseCase.invoke(email, password);
+    }, [userSignUpUseCase])
 
     async function handleSubmit() {
         if (!emailRef.current || !passRef.current) {
@@ -30,7 +42,8 @@ export default function RegisterPageViewModel() {
         const email: string = emailRef.current['value'];
         const pass: string = passRef.current['value'];
 
-        //login logic
+        const res = await userSignUp(email, pass);
+        console.log(res);
 
         emailRef.current['value'] = "";
         passRef.current['value'] = "";
