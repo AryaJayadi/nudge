@@ -1,6 +1,10 @@
-import {useRef} from "react";
+import {useCallback, useMemo, useRef} from "react";
 import {useToast} from "@/components/ui/use-toast.ts";
 import {useLocation, useNavigate} from "react-router";
+import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataSource.ts";
+import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
+import {UserSignUp} from "@/domain/usecase/UserSignUp.ts";
+import {UserSignIn} from "@/domain/usecase/UserSignIn.ts";
 
 export default function HomePageViewModel() {
     const navigate = useNavigate()
@@ -11,6 +15,15 @@ export default function HomePageViewModel() {
 
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passRef = useRef<HTMLInputElement | null>(null);
+
+    const userDataSource = useMemo(() => new UserSupabaseDataSource(), []);
+    const userRepository  = useMemo(() => new UserRepositoryDataSource(userDataSource), [userDataSource]);
+
+    const userSignInUseCase = useMemo(() => new UserSignIn(userDataSource), [userRepository]);
+
+    const userSignIn = useCallback(async (email: string, password: string) => {
+        return await userSignInUseCase.invoke(email, password);
+    }, [userSignInUseCase]);
 
     async function handleSubmit() {
         if (!emailRef.current || !passRef.current) {
@@ -30,7 +43,7 @@ export default function HomePageViewModel() {
         const email: string = emailRef.current['value'];
         const pass: string = passRef.current['value'];
 
-        //login logic
+        const res = await userSignIn(email, pass);
 
         emailRef.current['value'] = "";
         passRef.current['value'] = "";

@@ -43,7 +43,6 @@ export default function RegisterPageViewModel() {
         const pass: string = passRef.current['value'];
 
         const res = await userSignUp(email, pass);
-        console.log(res);
 
         emailRef.current['value'] = "";
         passRef.current['value'] = "";
