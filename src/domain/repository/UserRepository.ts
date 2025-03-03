@@ -1,3 +1,5 @@
+import {AuthResponse} from "@supabase/supabase-js";
+
 export interface UserRepository {
-    signUp(email: string, password: string): Promise<void>;
+    signUp(email: string, password: string): Promise<AuthResponse>;
 }
