@@ -9,4 +9,10 @@ export default class UserSupabaseDataSource implements UserDataSource {
         console.log(res);
         return res;
     }
+
+    async signIn(email: string, password: string): Promise<AuthResponse> {
+        const res = await supabase.auth.signInWithPassword({email, password});
+        console.log(res);
+        return res;
+    }
 }

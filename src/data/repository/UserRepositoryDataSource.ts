@@ -12,4 +12,7 @@ export class UserRepositoryDataSource implements UserRepository {
         return this.datasource.signUp(email, password);
     }
 
+    signIn(email: string, password: string): Promise<AuthResponse> {
+        return this.datasource.signIn(email, password);
+    }
 }
