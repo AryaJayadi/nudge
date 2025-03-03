@@ -10,6 +10,7 @@ import {TabunganPage} from "@/presentation/tabungan/TabunganPage.tsx";
 import {KreditPage} from "@/presentation/kredit/KreditPage.tsx";
 import {InvestasiPage} from "@/presentation/investasi/InvestasiPage.tsx";
 import {AsuransiPage} from "@/presentation/asuransi/AsuransiPage.tsx";
+import {RegisterPage} from "@/presentation/auth/RegisterPage.tsx";
 
 function isAuthenticated(): boolean {
     return true;
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
                     {
                         path: "login",
                         element: <LoginPage/>
+                    },
+                    {
+                        path: "register",
+                        element: <RegisterPage/>
                     }
                 ]
             }
