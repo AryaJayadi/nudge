@@ -3,6 +3,7 @@ import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import useViewModel from "./RegisterPageViewModel.ts"
+import {Link} from "react-router";
 
 export const RegisterPage = () => {
     const {
@@ -29,6 +30,8 @@ export const RegisterPage = () => {
                         </div>
                     </div>
                 </form>
+                <span className="text-sm">Already have an account? <Link to="/auth/login"
+                                                                       className="text-blue-600 underline cursor-pointer">Login now</Link></span>
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button onClick={handleSubmit}>Login</Button>

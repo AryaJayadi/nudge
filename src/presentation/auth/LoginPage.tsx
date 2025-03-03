@@ -9,6 +9,7 @@ import {
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import useViewModel from "./LoginPageViewModel.ts"
+import {Link} from "react-router";
 
 export const LoginPage = () => {
     const {
@@ -35,6 +36,8 @@ export const LoginPage = () => {
                         </div>
                     </div>
                 </form>
+                <span className="text-sm">Don't have an account? <Link to="/auth/register"
+                                                                       className="text-blue-600 underline cursor-pointer">Register now</Link></span>
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button onClick={handleSubmit}>Login</Button>
