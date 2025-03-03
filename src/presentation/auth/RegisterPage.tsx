@@ -34,7 +34,7 @@ export const RegisterPage = () => {
                                                                        className="text-blue-600 underline cursor-pointer">Login now</Link></span>
             </CardContent>
             <CardFooter className="flex justify-between">
-                <Button onClick={handleSubmit}>Login</Button>
+                <Button onClick={handleSubmit}>Register</Button>
             </CardFooter>
         </Card>
     )
