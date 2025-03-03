@@ -1,5 +1,6 @@
 import ProductCard from "@/components/product-card.tsx";
 import {ChurchIcon, Landmark, PiggyBank, Plane} from "lucide-react";
+import useViewModel from "./TabunganPageViewModel.ts"
 
 const savingsProducts = [
     {
@@ -46,6 +47,11 @@ const savingsProducts = [
 ]
 
 export const TabunganPage = () => {
+    const {
+        loading,
+        record
+    } = useViewModel();
+
     return (
         <>
             {savingsProducts.map((product, index) => (
