@@ -1,10 +1,10 @@
 export interface Record {
-    id: string; // UUID
+    id: string;
     record_name: string;
-    page_id?: string | null; // UUID (nullable)
-    created_at?: string; // Timestamp (nullable, defaults to now)
-    record_title?: string | null;
-    record_description?: string | null;
-    record_code?: string | null;
-    category_id?: number | null;
+    page_id: string;
+    created_at: string;
+    record_title: string;
+    record_description: string;
+    record_code: string;
+    category_id: number;
 }
