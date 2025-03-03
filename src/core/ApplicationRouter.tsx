@@ -11,20 +11,34 @@ import {KreditPage} from "@/presentation/kredit/KreditPage.tsx";
 import {InvestasiPage} from "@/presentation/investasi/InvestasiPage.tsx";
 import {AsuransiPage} from "@/presentation/asuransi/AsuransiPage.tsx";
 import {RegisterPage} from "@/presentation/auth/RegisterPage.tsx";
+import {useLocalStorage} from "usehooks-ts";
+import {AuthResponse, Session} from "@supabase/supabase-js";
 
-function isAuthenticated(): boolean {
-    return true;
+function isAuthenticated(session: Session | null | undefined): boolean {
+    if(session === null || session === undefined) return false;
+
+    try {
+        const currentTime = Math.floor(Date.now() / 1000);
+
+        return currentTime < session.expires_at;
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
 }
 
 interface ProtectedRouteProps {
-    isAuthenticated: () => boolean;
+    isAuthenticated: (session: Session | null | undefined) => boolean;
     redirectPath: string;
 }
 
 const ProtectedRoute: (p: ProtectedRouteProps) => (JSX.Element) = (p: ProtectedRouteProps) => {
+    const [value, , ] = useLocalStorage('auth', '')
     const location = useLocation()
 
-    if (!p.isAuthenticated()) {
+    const auth: AuthResponse | null = value ? JSON.parse(value) : null;
+
+    if (!p.isAuthenticated(auth?.data.session)) {
         return <Navigate to={p.redirectPath} state={{from: location}}/>
     }
 
