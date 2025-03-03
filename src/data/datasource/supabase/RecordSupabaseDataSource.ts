@@ -5,7 +5,7 @@ import supabase from "@/core/DatabaseSupabase.tsx";
 
 export default class RecordSupabaseDataSource implements RecordDataSource {
 
-    async getRecordByCategory(category: RecordCategory): Promise<Record> {
+    async getRecordByCategory(category: RecordCategory): Promise<Record[]> {
         const response = await supabase
             .from("records")
             .select("*")
@@ -21,6 +21,7 @@ export default class RecordSupabaseDataSource implements RecordDataSource {
             return;
         }
 
-        return response.data as Record;
+        console.log(response);
+        return response.data as Record[];
     }
 }

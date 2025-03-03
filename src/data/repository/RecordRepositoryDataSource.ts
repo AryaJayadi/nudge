@@ -10,7 +10,7 @@ export class RecordRepositoryDataSource implements RecordRepository {
         this.datasource = _datasource;
     }
 
-    getRecordByCategory(category: RecordCategory): Promise<Record> {
+    getRecordByCategory(category: RecordCategory): Promise<Record[]> {
         return this.datasource.getRecordByCategory(category);
     }
 }

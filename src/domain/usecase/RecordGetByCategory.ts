@@ -3,7 +3,7 @@ import {Record} from "@/domain/model/Record.ts";
 import {RecordRepository} from "@/domain/repository/RecordRepository.ts";
 
 interface RecordGetByCategoryUseCase {
-    invoke(category: RecordCategory): Promise<Record>;
+    invoke(category: RecordCategory): Promise<Record[]>;
 }
 
 export class RecordGetByCategory implements RecordGetByCategoryUseCase {
@@ -13,7 +13,7 @@ export class RecordGetByCategory implements RecordGetByCategoryUseCase {
         this.repository = _repository;
     }
 
-    invoke(category: RecordCategory): Promise<Record> {
+    invoke(category: RecordCategory): Promise<Record[]> {
         return this.repository.getRecordByCategory(category);
     }
 }

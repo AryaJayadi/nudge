@@ -3,5 +3,5 @@ import {Record} from "@/domain/model/Record.ts";
 
 export interface RecordRepository {
 
-    getRecordByCategory(category: RecordCategory): Promise<Record>;
+    getRecordByCategory(category: RecordCategory): Promise<Record[]>;
 }
