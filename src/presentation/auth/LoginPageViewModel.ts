@@ -5,8 +5,11 @@ import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataS
 import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
 import {UserSignUp} from "@/domain/usecase/UserSignUp.ts";
 import {UserSignIn} from "@/domain/usecase/UserSignIn.ts";
+import {useLocalStorage} from "usehooks-ts";
+import {AuthResponse} from "@supabase/supabase-js";
 
 export default function HomePageViewModel() {
+    const [, setValue, ] = useLocalStorage<AuthResponse>('auth', null)
     const navigate = useNavigate()
     const location = useLocation()
     const {toast} = useToast()
@@ -45,8 +48,15 @@ export default function HomePageViewModel() {
 
         const res = await userSignIn(email, pass);
 
+        toast({
+            title: "Login success!",
+            description: `Welcome, ${res.data.user?.email}!`,
+        });
+
         emailRef.current['value'] = "";
         passRef.current['value'] = "";
+
+        setValue(res)
 
         navigate(from, {replace: true})
     }

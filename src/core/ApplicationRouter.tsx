@@ -33,12 +33,10 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: (p: ProtectedRouteProps) => (JSX.Element) = (p: ProtectedRouteProps) => {
-    const [value, , ] = useLocalStorage('auth', '')
+    const [value, , ] = useLocalStorage<AuthResponse>('auth', null)
     const location = useLocation()
 
-    const auth: AuthResponse | null = value ? JSON.parse(value) : null;
-
-    if (!p.isAuthenticated(auth?.data.session)) {
+    if (!p.isAuthenticated(value?.data.session)) {
         return <Navigate to={p.redirectPath} state={{from: location}}/>
     }
 
