@@ -44,6 +44,11 @@ export default function RegisterPageViewModel() {
 
         const res = await userSignUp(email, pass);
 
+        toast({
+            title: "Login success!",
+            description: `Welcome, ${res.data.user?.email}!`,
+        });
+
         emailRef.current['value'] = "";
         passRef.current['value'] = "";
 

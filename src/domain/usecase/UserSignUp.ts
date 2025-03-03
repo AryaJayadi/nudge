@@ -1,4 +1,5 @@
 import {UserRepository} from "@/domain/repository/UserRepository.ts";
+import {AuthResponse} from "@supabase/supabase-js";
 
 export interface UserSignUpUseCase {
     invoke: (email: string, password: string) => Promise<void>;
@@ -11,7 +12,7 @@ export class UserSignUp implements UserSignUp {
         this.repository = _repository;
     }
 
-    invoke(email: string, password: string): Promise<void> {
+    invoke(email: string, password: string): Promise<AuthResponse> {
         return this.repository.signUp(email, password);
     }
 }
