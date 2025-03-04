@@ -5,7 +5,7 @@ import {RecordRepositoryDataSource} from "@/data/repository/RecordRepositoryData
 import {RecordGetByCategory} from "@/domain/usecase/RecordGetByCategory.ts";
 import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
 
-export default function TabunganPageViewModel() {
+export default function ProductPageViewModel(category: RecordCategory) {
     const [records, setRecords] = useState<Record[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -15,7 +15,7 @@ export default function TabunganPageViewModel() {
     const recordGetByCategoryUseCase = useMemo(() => new RecordGetByCategory(recordRepository), [recordRepository]);
 
     const recordGetByCategory = useCallback(async () => {
-        return await recordGetByCategoryUseCase.invoke(RecordCategory.SAVING)
+        return await recordGetByCategoryUseCase.invoke(category)
     }, [recordGetByCategoryUseCase])
 
     useEffect(() => {

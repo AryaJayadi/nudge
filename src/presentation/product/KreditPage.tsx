@@ -1,13 +1,14 @@
+import {Car, CreditCard, Home, PiggyBank, Wallet} from "lucide-react";
 import ProductCard from "@/components/product-card.tsx";
-import {PiggyBank} from "lucide-react";
-import useViewModel from "./TabunganPageViewModel.ts"
+import useViewModel from "@/presentation/product/ProductPageViewModel.ts";
+import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
 import SkeletonCard from "@/components/skeleton-card.tsx";
 
-export const TabunganPage = () => {
+export const KreditPage = () => {
     const {
         loading,
         records
-    } = useViewModel();
+    } = useViewModel(RecordCategory.LOAN);
 
     const length = 4;
 
