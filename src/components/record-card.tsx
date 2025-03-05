@@ -2,6 +2,7 @@ import {useState} from "react"
 import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import {SimulationModal} from "@/components/simulation-modal"
+import {formatCurrency} from "@/lib/utils.ts";
 
 interface RecordCardProps {
     title: string
@@ -15,15 +16,6 @@ interface RecordCardProps {
 
 export default function RecordCard({title, description, profit, price, risk, onWin, onLose}: RecordCardProps) {
     const [isModalOpen, setIsModalOpen] = useState(false)
-
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(amount)
-    }
 
     return (
         <>

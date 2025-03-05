@@ -4,12 +4,15 @@ import {Bell} from "lucide-react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
 import BottomNav from "@/components/bottom-nav.tsx";
 import {Outlet, useLocation} from "react-router";
+import {useUser} from "@/presentation/context/UserContext.tsx";
+import {formatCurrency} from "@/lib/utils.ts";
 
 
 export const BaseLayout = () => {
     const location = useLocation();
     let title = location.pathname.split("/").pop() || "title";
     title = title.charAt(0).toUpperCase() + title.slice(1);
+    const {balance} = useUser();
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
@@ -17,6 +20,9 @@ export const BaseLayout = () => {
                 <div className="flex justify-between items-center max-w-6xl mx-auto">
                     <h1 className="text-lg font-semibold">Nudge Recommendation Model</h1>
                     <div className="flex items-center space-x-2">
+                        <span>
+                            {formatCurrency(balance)}
+                        </span>
                         <Button size="icon" variant="ghost">
                             <Bell className="h-5 w-5"/>
                         </Button>
