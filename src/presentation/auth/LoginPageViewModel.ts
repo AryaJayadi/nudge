@@ -3,7 +3,6 @@ import {useToast} from "@/components/ui/use-toast.ts";
 import {useLocation, useNavigate} from "react-router";
 import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataSource.ts";
 import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
-import {UserSignUp} from "@/domain/usecase/UserSignUp.ts";
 import {UserSignIn} from "@/domain/usecase/UserSignIn.ts";
 import {useLocalStorage} from "usehooks-ts";
 import {AuthResponse} from "@supabase/supabase-js";
