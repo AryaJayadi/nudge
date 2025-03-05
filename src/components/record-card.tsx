@@ -9,9 +9,11 @@ interface RecordCardProps {
     profit: number
     price: number
     risk: number
+    onWin: (amt: number, profit: number) => void
+    onLose: (amt: number) => void
 }
 
-export default function RecordCard({title, description, profit, price, risk}: RecordCardProps) {
+export default function RecordCard({title, description, profit, price, risk, onWin, onLose}: RecordCardProps) {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const formatCurrency = (amount: number) => {

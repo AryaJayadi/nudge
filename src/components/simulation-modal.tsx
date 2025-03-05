@@ -6,9 +6,9 @@ import {
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { useState, useEffect, useRef } from "react"
-import { CheckCircle2, XCircle, AlertCircle } from "lucide-react"
+import {Button} from "@/components/ui/button"
+import {useState, useEffect, useRef} from "react"
+import {CheckCircle2, XCircle, AlertCircle} from "lucide-react"
 
 interface SimulationModalProps {
     isOpen: boolean
@@ -16,12 +16,20 @@ interface SimulationModalProps {
     profit: number
     price: number
     risk: number
+    onWin: (amount: number, profit: number) => void
+    onLose: (amount: number) => void
 }
 
-export function SimulationModal({ isOpen, onClose, profit, price, risk }: SimulationModalProps) {
+enum SimulationResult {
+    WIN,
+    LOSE,
+    EMPTY
+}
+
+export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, onLose}: SimulationModalProps) {
     const [isSimulating, setIsSimulating] = useState(false)
     const [currentNumber, setCurrentNumber] = useState<number | null>(null)
-    const [result, setResult] = useState<"win" | "lose" | null>(null)
+    const [result, setResult] = useState<SimulationResult>(SimulationResult.EMPTY)
     const [finalNumber, setFinalNumber] = useState<number | null>(null)
     const [closeCountdown, setCloseCountdown] = useState<number | null>(null)
     const simulationTimerRef = useRef<NodeJS.Timeout | null>(null)
@@ -63,9 +71,9 @@ export function SimulationModal({ isOpen, onClose, profit, price, risk }: Simula
                 // If the final number is greater than the risk percentage, user wins
                 // Example: If risk is 30%, numbers 31-100 are wins, 1-30 are losses
                 if (finalRandomNumber > risk) {
-                    setResult("win")
+                    setResult(SimulationResult.WIN)
                 } else {
-                    setResult("lose")
+                    setResult(SimulationResult.LOSE)
                 }
 
                 setIsSimulating(false)
@@ -136,6 +144,15 @@ export function SimulationModal({ isOpen, onClose, profit, price, risk }: Simula
         }
     }, [isOpen])
 
+    useEffect(() => {
+        if (result === SimulationResult.WIN) {
+            onWin(price, profit);
+        } else if (result === SimulationResult.LOSE) {
+            onLose(price);
+        }
+        
+    }, [result]);
+
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="sm:max-w-md">
@@ -178,7 +195,7 @@ export function SimulationModal({ isOpen, onClose, profit, price, risk }: Simula
                             >
                                 {result === "win" ? (
                                     <>
-                                        <CheckCircle2 className="h-12 w-12 mb-2" />
+                                        <CheckCircle2 className="h-12 w-12 mb-2"/>
                                         <p className="text-xl font-bold">You Win!</p>
                                         <p className="text-sm">
                                             Number {finalNumber} is greater than risk ({risk}%)
@@ -186,7 +203,7 @@ export function SimulationModal({ isOpen, onClose, profit, price, risk }: Simula
                                     </>
                                 ) : (
                                     <>
-                                        <XCircle className="h-12 w-12 mb-2" />
+                                        <XCircle className="h-12 w-12 mb-2"/>
                                         <p className="text-xl font-bold">You Lose!</p>
                                         <p className="text-sm">
                                             Number {finalNumber} is within risk range (1-{risk}%)
@@ -221,11 +238,13 @@ export function SimulationModal({ isOpen, onClose, profit, price, risk }: Simula
                                                     cy="50"
                                                 />
                                             </svg>
-                                            <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
+                                            <div
+                                                className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
                                                 <span className="text-2xl font-medium">{closeCountdown}</span>
                                             </div>
                                         </div>
-                                        <p className="mt-2 text-sm text-gray-500">Closing in {closeCountdown} seconds</p>
+                                        <p className="mt-2 text-sm text-gray-500">Closing
+                                            in {closeCountdown} seconds</p>
                                     </div>
                                 )}
                             </div>
@@ -233,7 +252,7 @@ export function SimulationModal({ isOpen, onClose, profit, price, risk }: Simula
 
                         {!currentNumber && !isSimulating && !result && (
                             <div className="text-center text-gray-500 flex items-center">
-                                <AlertCircle className="mr-2 h-5 w-5" />
+                                <AlertCircle className="mr-2 h-5 w-5"/>
                                 <span>Click simulate to start</span>
                             </div>
                         )}
