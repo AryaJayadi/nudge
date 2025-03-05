@@ -62,6 +62,8 @@ export default function RecordCard({title, description, profit, price, risk, onW
                 profit={profit}
                 price={price}
                 risk={risk}
+                onWin={onWin}
+                onLose={onLose}
             />
         </>
     )
