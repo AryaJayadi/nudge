@@ -8,12 +8,13 @@ import {useToast} from "@/components/ui/use-toast.ts";
 
 interface UserContextType {
     user: User | null;
-    setUser: (user: User | null) => void;
+    setUser: (value: (((prevState: (User | null)) => (User | null)) | User | null)) => void;
     balance: number;
-    setBalance: (balance: number) => void;
+    setBalance: (value: (((prevState: number) => number) | number)) => void;
     login: (email: string, password: string) => Promise<AuthResponse>;
     register: (email: string, password: string) => Promise<AuthResponse>;
     logout: () => void;
+    incBalance: (amount: number) => number;
 }
 
 const UserContext = createContext<UserContextType>({
@@ -27,6 +28,7 @@ const UserContext = createContext<UserContextType>({
     register: async () => Promise.reject(new Error("No UserProvider found")),
     logout: () => {
     },
+    incBalance: (amount: number) => -1
 });
 
 export function UserProvider({children}: { children: ReactNode }) {
@@ -87,8 +89,13 @@ export function UserProvider({children}: { children: ReactNode }) {
         setUser(null);
     }
 
+    function incBalance(amount: number) {
+        setBalance((prev) => prev + amount);
+        return balance;
+    }
+
     return (
-        <UserContext.Provider value={{user, setUser, balance, setBalance, login, register, logout}}>
+        <UserContext.Provider value={{user, setUser, balance, setBalance, login, register, logout, incBalance}}>
             {children}
         </UserContext.Provider>
     );
