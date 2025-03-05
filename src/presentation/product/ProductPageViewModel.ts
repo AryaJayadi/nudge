@@ -25,8 +25,9 @@ export default function ProductPageViewModel(category: RecordCategory) {
         incBalance(res);
     }
 
-    function onPurchaseLose(amount: number) {
-        incBalance(-amount);
+    function onPurchaseLose(amount: number, profit: number) {
+        const res = amount * (profit / 100);
+        incBalance(-res);
     }
 
     useEffect(() => {

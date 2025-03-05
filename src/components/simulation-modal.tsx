@@ -17,7 +17,7 @@ interface SimulationModalProps {
     price: number
     risk: number
     onWin: (amt: number, profit: number) => void
-    onLose: (amt: number) => void
+    onLose: (amt: number, profit: number) => void
 }
 
 export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, onLose}: SimulationModalProps) {
@@ -101,7 +101,7 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, on
         if (result === "win") {
             onWin(price, profit)
         } else if (result === "lose") {
-            onLose(price)
+            onLose(price, profit)
         }
     }, [result]);
 

@@ -11,7 +11,7 @@ interface RecordCardProps {
     price: number
     risk: number
     onWin: (amt: number, profit: number) => void
-    onLose: (amt: number) => void
+    onLose: (amt: number, profit: number) => void
 }
 
 export default function RecordCard({title, description, profit, price, risk, onWin, onLose}: RecordCardProps) {
