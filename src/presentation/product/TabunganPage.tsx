@@ -8,7 +8,9 @@ import RecordCard from "@/components/record-card.tsx";
 export const TabunganPage = () => {
     const {
         loading,
-        records
+        records,
+        onPurchaseWin,
+        onPurchaseLose
     } = useViewModel(RecordCategory.SAVING);
 
     const length = 4;
@@ -28,6 +30,8 @@ export const TabunganPage = () => {
                                 profit={12.5}
                                 price={5000000}
                                 risk={30}
+                                onWin={onPurchaseWin}
+                                onLose={onPurchaseLose}
                             />
                             <ProductCard
                                 key={index}
