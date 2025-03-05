@@ -13,12 +13,12 @@ export default class RecordSupabaseDataSource implements RecordDataSource {
 
         if (response.error) {
             console.error("Error fetching record by category:", response.error.message);
-            return;
+            return [];
         }
 
         if (!response.data) {
             console.error("Error fetching record by category:");
-            return;
+            return [];
         }
 
         console.log(response);

@@ -15,7 +15,7 @@ import {useLocalStorage} from "usehooks-ts";
 import {AuthResponse, Session} from "@supabase/supabase-js";
 
 function isAuthenticated(session: Session | null | undefined): boolean {
-    if(session === null || session === undefined) return false;
+    if(session === null || session === undefined || session.expires_at === undefined) return false;
 
     try {
         const currentTime = Math.floor(Date.now() / 1000);
@@ -33,7 +33,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: (p: ProtectedRouteProps) => (JSX.Element) = (p: ProtectedRouteProps) => {
-    const [value, , ] = useLocalStorage<AuthResponse>('auth', null)
+    const [value, , ] = useLocalStorage<AuthResponse | null>('auth', null)
     const location = useLocation()
 
     if (!p.isAuthenticated(value?.data.session)) {

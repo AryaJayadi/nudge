@@ -1,4 +1,4 @@
-import {Car, GraduationCap, Heart, LineChart, PiggyBank, UserCheck} from "lucide-react";
+import {PiggyBank} from "lucide-react";
 import ProductCard from "@/components/product-card.tsx";
 import useViewModel from "@/presentation/product/ProductPageViewModel.ts";
 import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
@@ -20,7 +20,7 @@ export const AsuransiPage = () => {
             {
                 loading ?
                     Array.from({length: length}).map((_, i) => (
-                        <SkeletonCard/>
+                        <SkeletonCard key={i} />
                     )) :
                     records.map((o, index) => (
                         <>

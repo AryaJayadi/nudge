@@ -8,7 +8,7 @@ import {useLocalStorage} from "usehooks-ts";
 import {AuthResponse} from "@supabase/supabase-js";
 
 export default function HomePageViewModel() {
-    const [, setValue, ] = useLocalStorage<AuthResponse>('auth', null)
+    const [, setValue, ] = useLocalStorage<AuthResponse | null>('auth', null)
     const navigate = useNavigate()
     const location = useLocation()
     const {toast} = useToast()

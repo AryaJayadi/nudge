@@ -28,7 +28,7 @@ const UserContext = createContext<UserContextType>({
     register: async () => Promise.reject(new Error("No UserProvider found")),
     logout: () => {
     },
-    incBalance: (amount: number) => -1
+    incBalance: (amount: number) => amount
 });
 
 export function UserProvider({children}: { children: ReactNode }) {

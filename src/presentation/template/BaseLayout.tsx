@@ -1,4 +1,3 @@
-import {JSX} from "react";
 import {Button} from "@/components/ui/button.tsx";
 import {Bell} from "lucide-react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";

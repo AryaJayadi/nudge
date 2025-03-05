@@ -20,7 +20,7 @@ export const TabunganPage = () => {
             {
                 loading ?
                     Array.from({length: length}).map((_, i) => (
-                        <SkeletonCard/>
+                        <SkeletonCard key={i} />
                     )) :
                     records.map((o, index) => (
                         <>
