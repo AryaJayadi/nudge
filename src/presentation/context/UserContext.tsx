@@ -31,7 +31,7 @@ const UserContext = createContext<UserContextType>({
 
 export function UserProvider({children}: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
-    const [balance, setBalance] = useState<number>(0);
+    const [balance, setBalance] = useState<number>(30000000);
     const {toast} = useToast();
 
     const userDataSource = useMemo(() => new UserSupabaseDataSource(), []);
