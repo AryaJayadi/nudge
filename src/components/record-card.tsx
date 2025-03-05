@@ -41,8 +41,7 @@ export default function RecordCard({title, description, profit, price, risk, onW
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                            onClick={() => setIsModalOpen(true)}>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" onClick={() => setIsModalOpen(true)}>
                         Buy Now
                     </Button>
                 </CardFooter>

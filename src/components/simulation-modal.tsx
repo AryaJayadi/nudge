@@ -16,24 +16,16 @@ interface SimulationModalProps {
     profit: number
     price: number
     risk: number
-    onWin: (amount: number, profit: number) => void
-    onLose: (amount: number) => void
-}
-
-enum SimulationResult {
-    WIN,
-    LOSE,
-    EMPTY
+    onWin: (amt: number, profit: number) => void
+    onLose: (amt: number) => void
 }
 
 export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, onLose}: SimulationModalProps) {
     const [isSimulating, setIsSimulating] = useState(false)
     const [currentNumber, setCurrentNumber] = useState<number | null>(null)
-    const [result, setResult] = useState<SimulationResult>(SimulationResult.EMPTY)
+    const [result, setResult] = useState<"win" | "lose" | null>()
     const [finalNumber, setFinalNumber] = useState<number | null>(null)
-    const [closeCountdown, setCloseCountdown] = useState<number | null>(null)
     const simulationTimerRef = useRef<NodeJS.Timeout | null>(null)
-    const closeTimerRef = useRef<NodeJS.Timeout | null>(null)
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat("id-ID", {
@@ -48,7 +40,6 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, on
         setIsSimulating(true)
         setResult(null)
         setFinalNumber(null)
-        setCloseCountdown(null)
 
         // Generate random numbers for 3 seconds
         let duration = 0
@@ -71,47 +62,16 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, on
                 // If the final number is greater than the risk percentage, user wins
                 // Example: If risk is 30%, numbers 31-100 are wins, 1-30 are losses
                 if (finalRandomNumber > risk) {
-                    setResult(SimulationResult.WIN)
+                    setResult("win")
                 } else {
-                    setResult(SimulationResult.LOSE)
+                    setResult("lose")
                 }
 
                 setIsSimulating(false)
-
-                // Start the 5-second countdown to auto-close
-                startCloseCountdown()
             }
         }
 
         updateNumber()
-    }
-
-    const startCloseCountdown = () => {
-        // Start at 5 seconds
-        setCloseCountdown(5)
-
-        // Update countdown every second
-        const countdownInterval = setInterval(() => {
-            setCloseCountdown((prev) => {
-                if (prev === null || prev <= 1) {
-                    clearInterval(countdownInterval)
-                    // Close the modal when countdown reaches 0
-                    closeTimerRef.current = setTimeout(() => {
-                        onClose()
-                    }, 1000)
-                    return 0
-                }
-                return prev - 1
-            })
-        }, 1000)
-
-        // Clean up interval if component unmounts
-        return () => {
-            clearInterval(countdownInterval)
-            if (closeTimerRef.current) {
-                clearTimeout(closeTimerRef.current)
-            }
-        }
     }
 
     // Clean up timers on unmount or when modal closes
@@ -119,9 +79,6 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, on
         return () => {
             if (simulationTimerRef.current) {
                 clearTimeout(simulationTimerRef.current)
-            }
-            if (closeTimerRef.current) {
-                clearTimeout(closeTimerRef.current)
             }
         }
     }, [])
@@ -133,28 +90,23 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, on
             setCurrentNumber(null)
             setResult(null)
             setFinalNumber(null)
-            setCloseCountdown(null)
 
             if (simulationTimerRef.current) {
                 clearTimeout(simulationTimerRef.current)
-            }
-            if (closeTimerRef.current) {
-                clearTimeout(closeTimerRef.current)
             }
         }
     }, [isOpen])
 
     useEffect(() => {
-        if (result === SimulationResult.WIN) {
-            onWin(price, profit);
-        } else if (result === SimulationResult.LOSE) {
-            onLose(price);
+        if (result === "win") {
+            onWin(price, profit)
+        } else if (result === "lose") {
+            onLose(price)
         }
-        
     }, [result]);
 
     return (
-        <Dialog open={isOpen} onOpenChange={onClose}>
+        <Dialog open={isOpen} onOpenChange={isSimulating ? undefined : onClose}>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle>Investment Simulation</DialogTitle>
@@ -210,43 +162,6 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, on
                                         </p>
                                     </>
                                 )}
-
-                                {closeCountdown !== null && (
-                                    <div className="mt-6 flex flex-col items-center">
-                                        <div className="relative h-16 w-16">
-                                            {/* Circular countdown animation */}
-                                            <svg className="h-full w-full" viewBox="0 0 100 100">
-                                                <circle
-                                                    className="text-gray-200"
-                                                    strokeWidth="8"
-                                                    stroke="currentColor"
-                                                    fill="transparent"
-                                                    r="42"
-                                                    cx="50"
-                                                    cy="50"
-                                                />
-                                                <circle
-                                                    className={`${result === "win" ? "text-green-600" : "text-red-600"} transition-all duration-1000 ease-linear`}
-                                                    strokeWidth="8"
-                                                    strokeDasharray={264}
-                                                    strokeDashoffset={264 * (1 - closeCountdown / 5)}
-                                                    strokeLinecap="round"
-                                                    stroke="currentColor"
-                                                    fill="transparent"
-                                                    r="42"
-                                                    cx="50"
-                                                    cy="50"
-                                                />
-                                            </svg>
-                                            <div
-                                                className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
-                                                <span className="text-2xl font-medium">{closeCountdown}</span>
-                                            </div>
-                                        </div>
-                                        <p className="mt-2 text-sm text-gray-500">Closing
-                                            in {closeCountdown} seconds</p>
-                                    </div>
-                                )}
                             </div>
                         )}
 
@@ -260,11 +175,11 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, on
                 </div>
 
                 <DialogFooter className="sm:justify-between">
+                    <Button variant="outline" onClick={onClose} disabled={isSimulating}>
+                        {result ? "Close" : "Cancel"}
+                    </Button>
                     {!isSimulating && !result && (
                         <>
-                            <Button variant="outline" onClick={onClose}>
-                                Cancel
-                            </Button>
                             <Button onClick={startSimulation} className="bg-blue-600 hover:bg-blue-700">
                                 Simulate
                             </Button>
@@ -275,3 +190,4 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, on
         </Dialog>
     )
 }
+
