@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef, type RefObject } from "react"
-import { cn } from "@/lib/utils"
+import {useEffect, useState, useRef, type RefObject} from "react"
+import {cn} from "@/lib/utils"
 
 interface CustomScrollbarProps {
     containerRef: RefObject<HTMLDivElement>
@@ -8,13 +8,13 @@ interface CustomScrollbarProps {
     className?: string
 }
 
-export default function CustomScrollbar({ containerRef, contentRef, height, className }: CustomScrollbarProps) {
+export default function CustomScrollbar({containerRef, contentRef, height, className}: CustomScrollbarProps) {
     const [thumbHeight, setThumbHeight] = useState(30)
     const [scrollPercentage, setScrollPercentage] = useState(0)
     const [isDragging, setIsDragging] = useState(false)
     const [startY, setStartY] = useState(0)
     const [startScrollPercentage, setStartScrollPercentage] = useState(0)
-    const trackRef = useRef<HTMLDivElement>(null)
+    const trackRef = useRef<HTMLDivElement | null>(null)
 
     // Calculate thumb height based on content
     useEffect(() => {
@@ -132,7 +132,7 @@ export default function CustomScrollbar({ containerRef, contentRef, height, clas
         <div
             ref={trackRef}
             className={cn("w-2 bg-gray-100 dark:bg-gray-800 rounded-full relative cursor-pointer", className)}
-            style={{ height: `${height}px` }}
+            style={{height: `${height}px`}}
             onClick={handleTrackClick}
         >
             <div
