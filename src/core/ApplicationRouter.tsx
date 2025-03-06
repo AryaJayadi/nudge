@@ -50,6 +50,10 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "",
+                element: <Navigate to="/app/beranda" replace />
+            },
+            {
+                path: "",
                 element: <ProtectedRoute isAuthenticated={isAuthenticated} redirectPath={"/auth/login"}/>,
                 children: [
                     {
