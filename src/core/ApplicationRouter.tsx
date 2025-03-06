@@ -13,6 +13,7 @@ import {AsuransiPage} from "@/presentation/product/AsuransiPage.tsx";
 import {RegisterPage} from "@/presentation/auth/RegisterPage.tsx";
 import {useLocalStorage} from "usehooks-ts";
 import {AuthResponse, Session} from "@supabase/supabase-js";
+import {QuestionnairePage} from "@/presentation/questionnaire/QuestionnairePage.tsx";
 
 function isAuthenticated(session: Session | null | undefined): boolean {
     if(session === null || session === undefined || session.expires_at === undefined) return false;
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
             {
                 path: "",
                 element: <Navigate to="/app/beranda" replace />
+            },
+            {
+                path: "questionnaire",
+                element: <QuestionnairePage />
             },
             {
                 path: "",
