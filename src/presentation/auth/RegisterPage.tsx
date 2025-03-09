@@ -4,13 +4,17 @@ import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import useViewModel from "./RegisterPageViewModel.ts"
 import {Link} from "react-router";
+import {useUser} from "@/presentation/context/UserContext.tsx";
 
 export const RegisterPage = () => {
+    const {
+        register
+    } = useUser();
     const {
         emailRef,
         passRef,
         handleSubmit
-    } = useViewModel();
+    } = useViewModel(register);
 
     return (
         <Card className="w-[350px]">
