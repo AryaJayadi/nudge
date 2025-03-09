@@ -3,20 +3,26 @@ import QuestionSupabaseDataSource from "@/data/datasource/supabase/QuestionSupab
 import {QuestionRepositoryDataSource} from "@/data/repository/QuestionRepositoryDataSource.ts";
 import QuestionGetAll from "@/domain/usecase/QuestionGetAll.ts";
 import {Question} from "@/domain/model/Question.ts";
+import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
 
 interface QuestionnaireContextType {
     loading: boolean;
     questions: Question[];
+    responses: InsertUserResponseSupabase[];
+    setResponses: (value: (((prevState: InsertUserResponseSupabase[]) => InsertUserResponseSupabase[]) | InsertUserResponseSupabase[])) => void;
 }
 
 const QuestionnaireContext = createContext<QuestionnaireContextType>({
     loading: true,
     questions: [],
+    responses: [],
+    setResponses: value => {}
 })
 
 export function QuestionnaireProvider({children}: { children: ReactNode }) {
     const [loading, setLoading] = useState<boolean>(true)
     const [questions, setQuestions] = useState<Question[]>([])
+    const [responses, setResponses] = useState<InsertUserResponseSupabase[]>([])
 
     const questionDataSource = useMemo(() => new QuestionSupabaseDataSource(), []);
     const questionRepository = useMemo(() => new QuestionRepositoryDataSource(questionDataSource), [questionDataSource]);
@@ -28,7 +34,7 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
     }, [questionGetAllUseCase]);
 
     useEffect(() => {
-        if(loading) {
+        if (loading) {
             getAllQuestions().then(res => {
                 setQuestions(res);
                 setLoading(false);
@@ -37,7 +43,7 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
     }, [loading]);
 
     return (
-        <QuestionnaireContext.Provider value={{loading, questions}}>
+        <QuestionnaireContext.Provider value={{loading, questions, responses, setResponses}}>
             {children}
         </QuestionnaireContext.Provider>
     );
