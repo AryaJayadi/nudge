@@ -7,12 +7,15 @@ import { questions } from "@/lib/questions"
 import { CheckCircle2 } from "lucide-react"
 import CustomScrollbar from "@/components/custom-scrollbar"
 import {Question} from "@/domain/model/Question.ts";
+import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
 
 interface Props {
-    questions: Question[]
+    questions: Question[];
+    responses: InsertUserResponseSupabase[];
+    handleAnswerChange: (question: Question, answer: string) => void;
 }
 
-export default function Questionnaire({questions} : Props) {
+export default function Questionnaire({questions, responses, handleAnswerChange} : Props) {
     const [currentPage, setCurrentPage] = useState(0)
     const [answers, setAnswers] = useState<Record<string, string>>({})
     const [isComplete, setIsComplete] = useState(false)
@@ -23,13 +26,6 @@ export default function Questionnaire({questions} : Props) {
     const totalPages = 8
     const questionsPerPage = 10
     const progress = ((currentPage + 1) / totalPages) * 100
-
-    const handleAnswerChange = (questionId: string, answer: string) => {
-        setAnswers((prev) => ({
-            ...prev,
-            [questionId]: answer,
-        }))
-    }
 
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
@@ -85,7 +81,7 @@ export default function Questionnaire({questions} : Props) {
             <CardContent className="relative flex">
                 <div ref={containerRef} className="flex-1 h-[400px] overflow-auto pr-4 scrollbar-hide">
                     <div ref={contentRef}>
-                        <QuestionPage questions={questions} onAnswerChange={handleAnswerChange} />
+                        <QuestionPage questions={questions} onAnswerChange={handleAnswerChange} responses={responses}/>
                     </div>
                 </div>
                 <CustomScrollbar containerRef={containerRef} contentRef={contentRef} height={400} />

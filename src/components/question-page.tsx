@@ -1,27 +1,17 @@
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
+import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group"
+import {Label} from "@/components/ui/label"
 import {Question} from "@/domain/model/Question.ts";
 import {Checkbox} from "@/components/ui/checkbox.tsx";
 import {QuestionType} from "@/domain/model/enum/QuestionType.ts";
+import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
 
 interface QuestionPageProps {
-    questions: Question[]
-    onAnswerChange: (questionId: string, answer: string | string[]) => void
+    questions: Question[];
+    responses: InsertUserResponseSupabase[];
+    onAnswerChange: (question: Question, answer: string) => void;
 }
 
-export default function QuestionPage({ questions, onAnswerChange }: QuestionPageProps) {
-    const handleMultiSelectChange = (questionId: string, value: string, checked: boolean) => {
-        const currentAnswers = []
-
-        if (checked) {
-            onAnswerChange(questionId, [...currentAnswers, value])
-        } else {
-            onAnswerChange(
-                questionId,
-                currentAnswers.filter((item) => item !== value),
-            )
-        }
-    }
+export default function QuestionPage({questions, responses, onAnswerChange}: QuestionPageProps) {
 
     return (
         <div className="space-y-8 pb-4">
@@ -33,7 +23,7 @@ export default function QuestionPage({ questions, onAnswerChange }: QuestionPage
                     {
                         question.question_type === QuestionType.SINGLE ? (
                             <RadioGroup
-                                onValueChange={(value) => onAnswerChange(question.id, value)}
+                                onValueChange={(value) => onAnswerChange(question, value)}
                                 className="space-y-2"
                             >
                                 <>
@@ -48,16 +38,15 @@ export default function QuestionPage({ questions, onAnswerChange }: QuestionPage
                         ) : (
                             <div className="space-y-2">
                                 {question.options.map((answer) => {
-                                    const currentAnswers = []
-                                    const isChecked = currentAnswers.includes(answer)
+                                    const isChecked = responses.some(o => o.question_id === question.id && o.response.includes(answer))
 
                                     return (
                                         <div key={answer} className="flex items-center space-x-2">
                                             <Checkbox
                                                 id={`${question.id}-${answer}`}
                                                 checked={isChecked}
-                                                onCheckedChange={(checked) =>
-                                                    handleMultiSelectChange(question.id, answer, checked === true)
+                                                onCheckedChange={() =>
+                                                    onAnswerChange(question, answer)
                                                 }
                                             />
                                             <Label htmlFor={`${question.id}-${answer}`}>{answer}</Label>
