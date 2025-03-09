@@ -1,4 +1,4 @@
-import {createContext, useContext, useState, ReactNode, useMemo, useCallback} from "react";
+import {createContext, ReactNode, useCallback, useContext, useMemo, useState} from "react";
 import {AuthResponse, User} from "@supabase/supabase-js";
 import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataSource.ts";
 import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
@@ -50,39 +50,11 @@ export function UserProvider({children}: { children: ReactNode }) {
     }, [userSignUpUseCase])
 
     async function login(email: string, password: string) {
-        const res = await userSignIn(email, password);
-
-        if (res.error) {
-            toast({
-                title: "Login failed!",
-                description: `${res.error.message}`,
-            });
-        } else {
-            toast({
-                title: "Login success!",
-                description: `Welcome, ${res.data.user?.email}!`,
-            });
-        }
-
-        return res;
+        return await userSignIn(email, password);
     }
 
     async function register(email: string, password: string) {
-        const res = await userSignUp(email, password);
-
-        if (res.error) {
-            toast({
-                title: "Register failed!",
-                description: `${res.error.message}`,
-            });
-        } else {
-            toast({
-                title: "Register success!",
-                description: `Welcome, ${res.data.user?.email}!`,
-            });
-        }
-
-        return res;
+        return await userSignUp(email, password);
     }
 
     function logout() {

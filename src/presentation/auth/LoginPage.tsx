@@ -10,13 +10,17 @@ import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import useViewModel from "./LoginPageViewModel.ts"
 import {Link} from "react-router";
+import {useUser} from "@/presentation/context/UserContext.tsx";
 
 export const LoginPage = () => {
+    const {
+        login
+    } = useUser();
     const {
         emailRef,
         passRef,
         handleSubmit
-    } = useViewModel();
+    } = useViewModel(login);
 
     return (
         <Card className="w-[350px]">
