@@ -6,7 +6,7 @@ import QuestionGetAll from "@/domain/usecase/QuestionGetAll.ts";
 
 export default function QuestionnairePageViewModel() {
     const [loading, setLoading] = useState<boolean>(true)
-    const [question, setQuestion] = useState<Question[]>()
+    const [questions, setQuestions] = useState<Question[]>()
 
     const questionDataSource = useMemo(() => new QuestionSupabaseDataSource(), []);
     const questionRepository = useMemo(() => new QuestionRepositoryDataSource(questionDataSource), [questionDataSource]);
@@ -20,7 +20,7 @@ export default function QuestionnairePageViewModel() {
     useEffect(() => {
         if(loading) {
             getAllQuestions().then(res => {
-                setQuestion(res);
+                setQuestions(res);
                 setLoading(false);
             });
         }
@@ -28,6 +28,6 @@ export default function QuestionnairePageViewModel() {
 
     return {
         loading,
-        question
+        questions
     }
 }
