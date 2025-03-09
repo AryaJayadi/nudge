@@ -4,25 +4,17 @@ import {useCallback, useMemo, useRef} from "react";
 import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataSource.ts";
 import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
 import {UserSignUp} from "@/domain/usecase/UserSignUp.ts";
+import {AuthResponse} from "@supabase/supabase-js";
 
-export default function RegisterPageViewModel() {
+export default function RegisterPageViewModel(register: (email: string, password: string) => Promise<AuthResponse>) {
     const navigate = useNavigate()
     const location = useLocation()
     const {toast} = useToast()
 
-    const from = location.state?.from || "/"
+    const from = location.state?.from || "/auth/login"
 
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passRef = useRef<HTMLInputElement | null>(null);
-
-    const userSupabaseDataSource = useMemo(() => new UserSupabaseDataSource(), []);
-    const userRepository = useMemo(() => new UserRepositoryDataSource(userSupabaseDataSource), [userSupabaseDataSource]);
-
-    const userSignUpUseCase = useMemo(() => new UserSignUp(userRepository), [userRepository]);
-
-    const userSignUp = useCallback(async (email: string, password: string) => {
-        return await userSignUpUseCase.invoke(email, password);
-    }, [userSignUpUseCase])
 
     async function handleSubmit() {
         if (!emailRef.current || !passRef.current) {
@@ -42,11 +34,25 @@ export default function RegisterPageViewModel() {
         const email: string = emailRef.current['value'];
         const pass: string = passRef.current['value'];
 
-        const res = await userSignUp(email, pass);
+        const res = await register(email, pass);
+
+        if(res.error) {
+            toast({
+                title: "Register failed!",
+                description: `${res.error.message}`,
+            });
+            return;
+        } else if(res.data.user == null) {
+            toast({
+                title: "Register failed!",
+                description: `Failed to register user`,
+            });
+            return;
+        }
 
         toast({
-            title: "Login success!",
-            description: `Welcome, ${res.data.user?.email}!`,
+            title: "Register success!",
+            description: `Please login, ${res.data.user?.email}!`,
         });
 
         emailRef.current['value'] = "";
