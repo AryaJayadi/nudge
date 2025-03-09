@@ -6,7 +6,7 @@ import {QuestionType} from "@/domain/model/enum/QuestionType.ts";
 
 interface QuestionPageProps {
     questions: Question[]
-    onAnswerChange: (questionId: string, answer: string) => void
+    onAnswerChange: (questionId: string, answer: string | string[]) => void
 }
 
 export default function QuestionPage({ questions, onAnswerChange }: QuestionPageProps) {
