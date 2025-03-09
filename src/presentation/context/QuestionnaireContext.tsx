@@ -4,22 +4,27 @@ import {QuestionRepositoryDataSource} from "@/data/repository/QuestionRepository
 import QuestionGetAll from "@/domain/usecase/QuestionGetAll.ts";
 import {Question} from "@/domain/model/Question.ts";
 import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
+import {useUser} from "@/presentation/context/UserContext.tsx";
+import {QuestionType} from "@/domain/model/enum/QuestionType.ts";
 
 interface QuestionnaireContextType {
     loading: boolean;
     questions: Question[];
     responses: InsertUserResponseSupabase[];
-    setResponses: (value: (((prevState: InsertUserResponseSupabase[]) => InsertUserResponseSupabase[]) | InsertUserResponseSupabase[])) => void;
+    handleAnswerChange: (question: Question, answer: string) => void;
 }
 
 const QuestionnaireContext = createContext<QuestionnaireContextType>({
     loading: true,
     questions: [],
     responses: [],
-    setResponses: value => {}
+    handleAnswerChange: value => {}
 })
 
 export function QuestionnaireProvider({children}: { children: ReactNode }) {
+    const {
+        user
+    } = useUser();
     const [loading, setLoading] = useState<boolean>(true)
     const [questions, setQuestions] = useState<Question[]>([])
     const [responses, setResponses] = useState<InsertUserResponseSupabase[]>([])
@@ -42,8 +47,42 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
         }
     }, [loading]);
 
+    function handleAnswerChange(question: Question, answer: string) {
+        setResponses(prev => {
+            let updatedResponses = prev.map(o => ({ ...o })); // Create a shallow copy
+
+            let currIndex = updatedResponses.findIndex(o => o.question_id === question.id);
+
+            if (currIndex !== -1) {
+                let curr = updatedResponses[currIndex];
+
+                if (question.question_type === QuestionType.MULTI) {
+                    curr.response = curr.response.includes(answer)
+                        ? curr.response.filter(o => o !== answer) // Remove answer
+                        : [...curr.response, answer]; // Add answer
+                } else if (question.question_type === QuestionType.SINGLE) {
+                    curr.response = [answer]; // Replace with single answer
+                }
+
+                updatedResponses[currIndex] = { ...curr }; // Ensure immutability
+            } else {
+                updatedResponses = [
+                    ...updatedResponses,
+                    {
+                        user_id: user?.id,
+                        question_id: question.id,
+                        response: [answer]
+                    } as InsertUserResponseSupabase
+                ];
+            }
+
+            return updatedResponses;
+        });
+    }
+
+
     return (
-        <QuestionnaireContext.Provider value={{loading, questions, responses, setResponses}}>
+        <QuestionnaireContext.Provider value={{loading, questions, responses, handleAnswerChange}}>
             {children}
         </QuestionnaireContext.Provider>
     );
