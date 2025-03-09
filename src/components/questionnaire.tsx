@@ -85,7 +85,7 @@ export default function Questionnaire({questions} : Props) {
             <CardContent className="relative flex">
                 <div ref={containerRef} className="flex-1 h-[400px] overflow-auto pr-4 scrollbar-hide">
                     <div ref={contentRef}>
-                        <QuestionPage questions={questions} answers={answers} onAnswerChange={handleAnswerChange} />
+                        <QuestionPage questions={questions} onAnswerChange={handleAnswerChange} />
                     </div>
                 </div>
                 <CustomScrollbar containerRef={containerRef} contentRef={contentRef} height={400} />
