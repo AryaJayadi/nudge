@@ -14,7 +14,7 @@ export const QuestionnairePage = () => {
     return (
         <main className="min-h-screen flex items-center justify-center p-4 bg-gray-50">
             <div className="w-full max-w-4xl">
-                {!hasConsented ? <ConsentModal onConsent={() => setHasConsented(true)} /> : <Questionnaire />}
+                {!hasConsented ? <ConsentModal onConsent={() => setHasConsented(true)} /> : <Questionnaire questions={questions}/>}
             </div>
         </main>
     )

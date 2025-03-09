@@ -6,7 +6,7 @@ import QuestionGetAll from "@/domain/usecase/QuestionGetAll.ts";
 
 export default function QuestionnairePageViewModel() {
     const [loading, setLoading] = useState<boolean>(true)
-    const [questions, setQuestions] = useState<Question[]>()
+    const [questions, setQuestions] = useState<Question[]>([])
 
     const questionDataSource = useMemo(() => new QuestionSupabaseDataSource(), []);
     const questionRepository = useMemo(() => new QuestionRepositoryDataSource(questionDataSource), [questionDataSource]);

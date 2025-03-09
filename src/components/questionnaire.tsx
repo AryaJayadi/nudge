@@ -6,8 +6,13 @@ import QuestionPage from "@/components/question-page"
 import { questions } from "@/lib/questions"
 import { CheckCircle2 } from "lucide-react"
 import CustomScrollbar from "@/components/custom-scrollbar"
+import {Question} from "@/domain/model/Question.ts";
 
-export default function Questionnaire() {
+interface Props {
+    questions: Question[]
+}
+
+export default function Questionnaire({questions} : Props) {
     const [currentPage, setCurrentPage] = useState(0)
     const [answers, setAnswers] = useState<Record<string, string>>({})
     const [isComplete, setIsComplete] = useState(false)
@@ -50,7 +55,6 @@ export default function Questionnaire() {
 
     const startIndex = currentPage * questionsPerPage
     const endIndex = startIndex + questionsPerPage
-    const currentQuestions = questions.slice(startIndex, endIndex)
 
     if (isComplete) {
         return (
@@ -81,7 +85,7 @@ export default function Questionnaire() {
             <CardContent className="relative flex">
                 <div ref={containerRef} className="flex-1 h-[400px] overflow-auto pr-4 scrollbar-hide">
                     <div ref={contentRef}>
-                        <QuestionPage questions={currentQuestions} answers={answers} onAnswerChange={handleAnswerChange} />
+                        <QuestionPage questions={questions} answers={answers} onAnswerChange={handleAnswerChange} />
                     </div>
                 </div>
                 <CustomScrollbar containerRef={containerRef} contentRef={contentRef} height={400} />

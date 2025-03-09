@@ -1,6 +1,6 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
-import type { Question } from "@/lib/questions"
+import {Question} from "@/domain/model/Question.ts";
 
 interface QuestionPageProps {
     questions: Question[]
@@ -11,21 +11,21 @@ interface QuestionPageProps {
 export default function QuestionPage({ questions, answers, onAnswerChange }: QuestionPageProps) {
     return (
         <div className="space-y-8 pb-4">
-            {questions.map((question, index) => (
-                <div key={question.id} className="space-y-4">
+            {questions.map((o, index) => (
+                <div key={o.id} className="space-y-4">
                     <h3 className="font-medium text-lg">
-                        {index + 1}. {question.text}
+                        {index + 1}. {o.question_text}
                     </h3>
                     <RadioGroup
-                        value={answers[question.id] || ""}
-                        onValueChange={(value) => onAnswerChange(question.id, value)}
+                        value={answers[o.id] || ""}
+                        onValueChange={(value) => onAnswerChange(o.id, value)}
                         className="space-y-2"
                     >
                         <>
-                            {question.options.map((option) => (
+                            {o.options.map((option) => (
                                 <div key={option.value} className="flex items-center space-x-2">
-                                    <RadioGroupItem value={option.value} id={`${question.id}-${option.value}`} />
-                                    <Label htmlFor={`${question.id}-${option.value}`}>{option.label}</Label>
+                                    <RadioGroupItem value={option.value} id={`${o.id}-${option.value}`} />
+                                    <Label htmlFor={`${o.id}-${option.value}`}>{option.label}</Label>
                                 </div>
                             ))}
                         </>
