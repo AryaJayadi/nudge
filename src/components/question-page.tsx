@@ -25,6 +25,7 @@ export default function QuestionPage({questions}: Props) {
                     {
                         question.question_type === QuestionType.SINGLE ? (
                             <RadioGroup
+                                value={responses.find(o => o.question_id === question.id)?.response[0]}
                                 onValueChange={(value) => handleAnswerChange(question, value)}
                                 className="space-y-2"
                             >

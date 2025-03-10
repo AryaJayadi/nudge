@@ -31,7 +31,7 @@ export default function Questionnaire() {
     const endIndex = startIndex + QUESTIONS_PER_PAGE
     const currQuestions = questions.slice(startIndex, endIndex);
     const canProgress = responses.length === QUESTIONS_PER_PAGE * (currentPage + 1);
-    
+
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
             setCurrentPage((prev) => prev + 1)
