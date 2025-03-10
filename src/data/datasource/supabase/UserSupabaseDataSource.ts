@@ -21,10 +21,10 @@ export default class UserSupabaseDataSource implements UserDataSource {
             .from("user_consent_form")
             .select("consent_agreement")
             .eq("user_id", userId)
-            .single();
+            .single<boolean>();
 
         if(error) return error;
-        return data;
+        return data ?? false;
     }
 
     async checkSurvey(userId: string): Promise<boolean | PostgrestError> {
@@ -32,9 +32,9 @@ export default class UserSupabaseDataSource implements UserDataSource {
             .from("user_finish_surveys")
             .select("has_finished")
             .eq("user_id", userId)
-            .single();
+            .single<boolean>();
 
         if(error) return error;
-        return data;
+        return data ?? false;
     }
 }
