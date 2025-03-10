@@ -8,7 +8,6 @@ import {useQuestionnaire} from "@/presentation/context/QuestionnaireContext.tsx"
 
 export default function QuestionPage() {
     const {
-        loading,
         questions,
         responses,
         handleAnswerChange

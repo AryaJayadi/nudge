@@ -12,7 +12,7 @@ import {useQuestionnaire} from "@/presentation/context/QuestionnaireContext.tsx"
 
 export default function Questionnaire() {
     const {
-        loading,
+        loading
     } = useQuestionnaire();
     const [currentPage, setCurrentPage] = useState(0)
     const [answers, setAnswers] = useState<Record<string, string>>({})
