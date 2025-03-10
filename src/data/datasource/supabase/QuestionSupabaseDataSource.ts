@@ -1,6 +1,9 @@
 import QuestionDataSource from "@/data/datasource/QuestionDataSource.ts";
 import {Question} from "@/domain/model/Question.ts";
 import supabase from "@/core/DatabaseSupabase.tsx";
+import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
+import {UserResponses} from "@/core/global.types.ts";
+import {PostgrestError} from "@supabase/supabase-js";
 
 export default class QuestionSupabaseDataSource implements QuestionDataSource {
 
@@ -21,5 +24,10 @@ export default class QuestionSupabaseDataSource implements QuestionDataSource {
 
         console.log(response);
         return response.data as Question[];
+    }
+
+    async insertResponses(data: InsertUserResponseSupabase[]): Promise<UserResponses[] | PostgrestError> {
+        console.log(data);
+        return data;
     }
 }
