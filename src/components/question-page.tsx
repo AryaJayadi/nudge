@@ -4,14 +4,15 @@ import {Question} from "@/domain/model/Question.ts";
 import {Checkbox} from "@/components/ui/checkbox.tsx";
 import {QuestionType} from "@/domain/model/enum/QuestionType.ts";
 import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
+import {useQuestionnaire} from "@/presentation/context/QuestionnaireContext.tsx";
 
-interface QuestionPageProps {
-    questions: Question[];
-    responses: InsertUserResponseSupabase[];
-    onAnswerChange: (question: Question, answer: string) => void;
-}
-
-export default function QuestionPage({questions, responses, onAnswerChange}: QuestionPageProps) {
+export default function QuestionPage() {
+    const {
+        loading,
+        questions,
+        responses,
+        handleAnswerChange
+    } = useQuestionnaire();
 
     return (
         <div className="space-y-8 pb-4">
@@ -23,7 +24,7 @@ export default function QuestionPage({questions, responses, onAnswerChange}: Que
                     {
                         question.question_type === QuestionType.SINGLE ? (
                             <RadioGroup
-                                onValueChange={(value) => onAnswerChange(question, value)}
+                                onValueChange={(value) => handleAnswerChange(question, value)}
                                 className="space-y-2"
                             >
                                 <>
@@ -46,7 +47,7 @@ export default function QuestionPage({questions, responses, onAnswerChange}: Que
                                                 id={`${question.id}-${answer}`}
                                                 checked={isChecked}
                                                 onCheckedChange={() =>
-                                                    onAnswerChange(question, answer)
+                                                    handleAnswerChange(question, answer)
                                                 }
                                             />
                                             <Label htmlFor={`${question.id}-${answer}`}>{answer}</Label>
