@@ -14,23 +14,24 @@ export default function Questionnaire() {
     const {
         loading,
         questions,
+        responses,
         submitAnswer
     } = useQuestionnaire();
     const [currentPage, setCurrentPage] = useState(0)
-    const [answers, setAnswers] = useState<Record<string, string>>({})
     const [isComplete, setIsComplete] = useState(false)
 
     const containerRef = useRef<HTMLDivElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
 
-    const questionsPerPage = 10
-    const totalPages = Math.ceil(questions.length / questionsPerPage)
+    const QUESTIONS_PER_PAGE = 10
+    const totalPages = Math.ceil(questions.length / QUESTIONS_PER_PAGE)
     const progress = ((currentPage + 1) / totalPages) * 100
 
-    const startIndex = currentPage * questionsPerPage
-    const endIndex = startIndex + questionsPerPage
+    const startIndex = currentPage * QUESTIONS_PER_PAGE
+    const endIndex = startIndex + QUESTIONS_PER_PAGE
     const currQuestions = questions.slice(startIndex, endIndex);
-
+    const canProgress = responses.length === QUESTIONS_PER_PAGE * (currentPage + 1);
+    
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
             setCurrentPage((prev) => prev + 1)
@@ -49,7 +50,6 @@ export default function Questionnaire() {
 
     const handleSubmit = () => {
         // Here you would typically send the answers to your backend
-        console.log("Submitting answers:", answers)
         submitAnswer();
         setIsComplete(true)
     }
@@ -98,7 +98,10 @@ export default function Questionnaire() {
                 <Button variant="outline" onClick={handlePrevious} disabled={currentPage === 0}>
                     Previous
                 </Button>
-                <Button onClick={currentPage === totalPages - 1 ? handleSubmit : handleNext}>
+                <Button
+                    onClick={currentPage === totalPages - 1 ? handleSubmit : handleNext}
+                    disabled={!canProgress}
+                >
                     {currentPage === totalPages - 1 ? "Submit" : "Next"}
                 </Button>
             </CardFooter>
