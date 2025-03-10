@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import {useState, useRef, useEffect} from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -13,6 +13,7 @@ import {useQuestionnaire} from "@/presentation/context/QuestionnaireContext.tsx"
 export default function Questionnaire() {
     const {
         loading,
+        questions,
         submitAnswer
     } = useQuestionnaire();
     const [currentPage, setCurrentPage] = useState(0)
@@ -22,9 +23,13 @@ export default function Questionnaire() {
     const containerRef = useRef<HTMLDivElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
 
-    const totalPages = 8
     const questionsPerPage = 10
+    const totalPages = Math.ceil(questions.length / questionsPerPage)
     const progress = ((currentPage + 1) / totalPages) * 100
+
+    const startIndex = currentPage * questionsPerPage
+    const endIndex = startIndex + questionsPerPage
+    const currQuestions = questions.slice(startIndex, endIndex);
 
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
@@ -48,9 +53,6 @@ export default function Questionnaire() {
         submitAnswer();
         setIsComplete(true)
     }
-
-    const startIndex = currentPage * questionsPerPage
-    const endIndex = startIndex + questionsPerPage
 
     if(loading) {
         return (
@@ -87,7 +89,7 @@ export default function Questionnaire() {
             <CardContent className="relative flex">
                 <div ref={containerRef} className="flex-1 h-[400px] overflow-auto pr-4 scrollbar-hide">
                     <div ref={contentRef}>
-                        <QuestionPage/>
+                        <QuestionPage questions={currQuestions}/>
                     </div>
                 </div>
                 <CustomScrollbar containerRef={containerRef} contentRef={contentRef} height={400} />

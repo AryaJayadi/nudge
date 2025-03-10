@@ -1,14 +1,16 @@
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group"
 import {Label} from "@/components/ui/label"
-import {Question} from "@/domain/model/Question.ts";
 import {Checkbox} from "@/components/ui/checkbox.tsx";
 import {QuestionType} from "@/domain/model/enum/QuestionType.ts";
-import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
 import {useQuestionnaire} from "@/presentation/context/QuestionnaireContext.tsx";
+import {Question} from "@/domain/model/Question.ts";
 
-export default function QuestionPage() {
+interface Props {
+    questions: Question[];
+}
+
+export default function QuestionPage({questions}: Props) {
     const {
-        questions,
         responses,
         handleAnswerChange
     } = useQuestionnaire();
