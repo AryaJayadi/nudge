@@ -89,6 +89,7 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
 
     async function submitAnswer() {
         const res = await insertResponses(responses);
+        console.log(user);
         console.log(res);
     }
 

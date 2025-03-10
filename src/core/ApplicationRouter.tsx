@@ -14,19 +14,8 @@ import {RegisterPage} from "@/presentation/auth/RegisterPage.tsx";
 import {useLocalStorage} from "usehooks-ts";
 import {AuthResponse, Session} from "@supabase/supabase-js";
 import {QuestionnairePage} from "@/presentation/questionnaire/QuestionnairePage.tsx";
-
-function isAuthenticated(session: Session | null | undefined): boolean {
-    if(session === null || session === undefined || session.expires_at === undefined) return false;
-
-    try {
-        const currentTime = Math.floor(Date.now() / 1000);
-
-        return currentTime < session.expires_at;
-    } catch (e) {
-        console.log(e);
-        return false;
-    }
-}
+import {isAuthenticated} from "@/lib/utils.ts";
+import {UserProvider} from "@/presentation/context/UserContext.tsx";
 
 interface ProtectedRouteProps {
     isAuthenticated: (session: Session | null | undefined) => boolean;
@@ -44,10 +33,18 @@ const ProtectedRoute: (p: ProtectedRouteProps) => (JSX.Element) = (p: ProtectedR
     return <Outlet/>
 }
 
+const Root = () => {
+    return (
+        <UserProvider>
+            <RootLayout/>
+        </UserProvider>
+    )
+}
+
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <RootLayout/>,
+        element: <Root/>,
         children: [
             {
                 path: "",
