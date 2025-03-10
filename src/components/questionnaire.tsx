@@ -12,7 +12,8 @@ import {useQuestionnaire} from "@/presentation/context/QuestionnaireContext.tsx"
 
 export default function Questionnaire() {
     const {
-        loading
+        loading,
+        submitAnswer
     } = useQuestionnaire();
     const [currentPage, setCurrentPage] = useState(0)
     const [answers, setAnswers] = useState<Record<string, string>>({})
@@ -44,6 +45,7 @@ export default function Questionnaire() {
     const handleSubmit = () => {
         // Here you would typically send the answers to your backend
         console.log("Submitting answers:", answers)
+        submitAnswer();
         setIsComplete(true)
     }
 

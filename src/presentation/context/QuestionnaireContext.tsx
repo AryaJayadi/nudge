@@ -6,19 +6,22 @@ import {Question} from "@/domain/model/Question.ts";
 import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
 import {useUser} from "@/presentation/context/UserContext.tsx";
 import {QuestionType} from "@/domain/model/enum/QuestionType.ts";
+import QuestionInsertResponses from "@/domain/usecase/QuestionInsertResponses.ts";
 
 interface QuestionnaireContextType {
     loading: boolean;
     questions: Question[];
     responses: InsertUserResponseSupabase[];
     handleAnswerChange: (question: Question, answer: string) => void;
+    submitAnswer: () => void;
 }
 
 const QuestionnaireContext = createContext<QuestionnaireContextType>({
     loading: true,
     questions: [],
     responses: [],
-    handleAnswerChange: value => {}
+    handleAnswerChange: value => {},
+    submitAnswer: () => {},
 })
 
 export function QuestionnaireProvider({children}: { children: ReactNode }) {
@@ -33,10 +36,14 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
     const questionRepository = useMemo(() => new QuestionRepositoryDataSource(questionDataSource), [questionDataSource]);
 
     const questionGetAllUseCase = useMemo(() => new QuestionGetAll(questionRepository), [questionRepository]);
-
     const getAllQuestions = useCallback(async () => {
         return await questionGetAllUseCase.invoke();
     }, [questionGetAllUseCase]);
+
+    const questionInsertUserResponsesUseCase = useMemo(() => new QuestionInsertResponses(questionRepository), [questionRepository]);
+    const insertResponses = useCallback(async (data: InsertUserResponseSupabase[]) => {
+        return await questionInsertUserResponsesUseCase.invoke(data);
+    }, [questionInsertUserResponsesUseCase]);
 
     useEffect(() => {
         if (loading) {
@@ -80,9 +87,13 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
         });
     }
 
+    async function submitAnswer() {
+        const res = await insertResponses(responses);
+        console.log(res);
+    }
 
     return (
-        <QuestionnaireContext.Provider value={{loading, questions, responses, handleAnswerChange}}>
+        <QuestionnaireContext.Provider value={{loading, questions, responses, handleAnswerChange, submitAnswer}}>
             {children}
         </QuestionnaireContext.Provider>
     );
