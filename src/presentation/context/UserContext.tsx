@@ -43,6 +43,7 @@ export function UserProvider({children}: { children: ReactNode }) {
     const navigate = useNavigate();
 
     const REDIRECT_PATH = "/auth/login"
+    const DEFAULT_PATH = "/app/beranda"
 
     const userDataSource = useMemo(() => new UserSupabaseDataSource(), []);
     const userRepository = useMemo(() => new UserRepositoryDataSource(userDataSource), [userDataSource]);
@@ -63,15 +64,13 @@ export function UserProvider({children}: { children: ReactNode }) {
                 if (value?.data.user) {
                     setUser(value.data.user);
                 } else {
-                    navigate(REDIRECT_PATH, { state: { from: location } });
+                    navigate(location.pathname === REDIRECT_PATH ? DEFAULT_PATH : REDIRECT_PATH, { state: { from: location } });
                 }
             } else {
-                navigate(REDIRECT_PATH, { state: { from: location } });
+                navigate(location.pathname === REDIRECT_PATH ? DEFAULT_PATH : REDIRECT_PATH, { state: { from: location } });
             }
         }
     }, [user, value, navigate, location]);
-
-
 
     async function login(email: string, password: string) {
         const res = await userSignIn(email, password);
