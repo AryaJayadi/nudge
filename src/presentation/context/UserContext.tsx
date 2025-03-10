@@ -63,11 +63,11 @@ export function UserProvider({children}: { children: ReactNode }) {
             if (isAuthenticated(value?.data.session)) {
                 if (value?.data.user) {
                     setUser(value.data.user);
-                } else {
-                    navigate(location.pathname === REDIRECT_PATH ? DEFAULT_PATH : REDIRECT_PATH, { state: { from: location } });
+                } else if (location.pathname !== REDIRECT_PATH) {
+                    navigate(REDIRECT_PATH, { state: { from: location } });
                 }
-            } else {
-                navigate(location.pathname === REDIRECT_PATH ? DEFAULT_PATH : REDIRECT_PATH, { state: { from: location } });
+            } else if (location.pathname !== REDIRECT_PATH) {
+                navigate(REDIRECT_PATH, { state: { from: location } });
             }
         }
     }, [user, value, navigate, location]);

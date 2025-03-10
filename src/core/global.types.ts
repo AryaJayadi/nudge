@@ -1,7 +1,10 @@
-import {Tables} from "@/core/supabase.ts";
+import {Database, Tables} from "@/core/supabase.ts";
 
-export type UserConsentForm = Tables<'user_consent_form'>;
+declare global {
+    type UserConsentForm = Tables<'user_consent_form'>;
+    type InsertUserConsentForm = Database["public"]["Tables"]["user_consent_form"]["Insert"];
 
-export type UserFinishSurveys = Tables<'user_finish_surveys'>;
+    type UserFinishSurveys = Tables<'user_finish_surveys'>;
 
-export type UserResponses = Tables<'user_responses'>;
+    type UserResponses = Tables<'user_responses'>;
+}

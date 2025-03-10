@@ -1,6 +1,8 @@
 import UserDataSource from "@/data/datasource/UserDataSource.ts";
 import supabase from "@/core/DatabaseSupabase.tsx";
 import {AuthResponse, PostgrestError, PostgrestResponse} from "@supabase/supabase-js";
+import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
+import {Database} from "@/core/supabase.ts";
 
 export default class UserSupabaseDataSource implements UserDataSource {
 
@@ -36,5 +38,27 @@ export default class UserSupabaseDataSource implements UserDataSource {
 
         if(error) return error;
         return data ?? false;
+    }
+
+    async insertUserConsent(form: InsertUserConsentForm): Promise<UserConsentForm | PostgrestError> {
+        const {data, error} = await supabase
+            .from('user_consent_form')
+            .insert([
+                form
+            ]);
+
+        if (error) return error;
+        return data;
+    }
+
+    async insertUserFinishSurvey(form: InsertUserFinishSurvey): Promise<UserFinishSurveys | PostgrestError> {
+        const {data, error} = await supabase
+            .from("user_finish_surveys")
+            .insert([
+                form
+            ])
+
+        if (error) return error;
+        return data;
     }
 }
