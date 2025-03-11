@@ -5,20 +5,24 @@ import {RecordRepositoryDataSource} from "@/data/repository/RecordRepositoryData
 import {RecordGetByCategory} from "@/domain/usecase/RecordGetByCategory.ts";
 import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
 import {useUser} from "@/presentation/context/UserContext.tsx";
+import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
 
 export default function ProductPageViewModel(category: RecordCategory) {
-    const [records, setRecords] = useState<Record[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const {
+        data: records,
+        error: recordsError,
+        loading: recordsLoading,
+        refetch: recordsRefetch,
+    } = useSupabaseQuery(recordGetByCategory)
     const {incBalance} = useUser();
 
     const recordDataSource = useMemo(() => new RecordSupabaseDataSource(), []);
     const recordRepository = useMemo(() => new RecordRepositoryDataSource(recordDataSource), [recordDataSource]);
 
     const recordGetByCategoryUseCase = useMemo(() => new RecordGetByCategory(recordRepository), [recordRepository]);
-
     const recordGetByCategory = useCallback(async () => {
         return await recordGetByCategoryUseCase.invoke(category)
-    }, [recordGetByCategoryUseCase])
+    }, [recordGetByCategoryUseCase, category])
 
     function onPurchaseWin(amount: number, profit: number) {
         const res = amount * (profit / 100);
@@ -30,18 +34,11 @@ export default function ProductPageViewModel(category: RecordCategory) {
         incBalance(-res);
     }
 
-    useEffect(() => {
-        if(loading) {
-            recordGetByCategory().then((res) => {
-                setRecords(res);
-                setLoading(false);
-            })
-        }
-    }, [loading]);
-
     return {
-        loading,
         records,
+        recordsError,
+        recordsLoading,
+        recordsRefetch,
         onPurchaseWin,
         onPurchaseLose
     }

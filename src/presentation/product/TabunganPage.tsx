@@ -7,8 +7,9 @@ import RecordCard from "@/components/record-card.tsx";
 
 export const TabunganPage = () => {
     const {
-        loading,
         records,
+        recordsError,
+        recordsLoading,
         onPurchaseWin,
         onPurchaseLose
     } = useViewModel(RecordCategory.SAVING);
@@ -18,7 +19,7 @@ export const TabunganPage = () => {
     return (
         <>
             {
-                loading ?
+                recordsLoading ?
                     Array.from({length: length}).map((_, i) => (
                         <SkeletonCard key={i} />
                     )) :
