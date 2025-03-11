@@ -7,7 +7,7 @@ import {UserSignUp} from "@/domain/usecase/UserSignUp.ts";
 import {useToast} from "@/components/ui/use-toast.ts";
 import {useLocalStorage} from "usehooks-ts";
 import {isAuthenticated} from "@/lib/utils.ts";
-import {useLocation, useNavigate} from "react-router";
+import {redirect, useLocation, useNavigate} from "react-router";
 import {UserCheckConsent} from "@/domain/usecase/UserCheckConsent.ts";
 import {UserCheckSurvey} from "@/domain/usecase/UserCheckSurvey.ts";
 
@@ -46,8 +46,10 @@ export function UserProvider({children}: { children: ReactNode }) {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const REDIRECT_PATH = "/auth/login"
-    const DEFAULT_PATH = "/app/beranda"
+    const LOGIN_PATH = "/auth/login";
+    const REGISTER_PATH = "/auth/register";
+    const DEFAULT_PATH = "/app/beranda";
+    const WHITELIST_PATH = [LOGIN_PATH, REGISTER_PATH]
 
     const userDataSource = useMemo(() => new UserSupabaseDataSource(), []);
     const userRepository = useMemo(() => new UserRepositoryDataSource(userDataSource), [userDataSource]);
@@ -77,11 +79,11 @@ export function UserProvider({children}: { children: ReactNode }) {
             if (isAuthenticated(value?.data.session)) {
                 if (value?.data.user) {
                     setUser(value.data.user);
-                } else if (location.pathname !== REDIRECT_PATH) {
-                    navigate(REDIRECT_PATH, { state: { from: location } });
+                } else if (!WHITELIST_PATH.includes(location.pathname)) {
+                    navigate(LOGIN_PATH, { state: { from: location } });
                 }
-            } else if (location.pathname !== REDIRECT_PATH) {
-                navigate(REDIRECT_PATH, { state: { from: location } });
+            } else if (!WHITELIST_PATH.includes(location.pathname)) {
+                navigate(LOGIN_PATH, { state: { from: location } });
             }
         }
     }, [user, value, navigate, location]);
@@ -110,7 +112,7 @@ export function UserProvider({children}: { children: ReactNode }) {
             console.log(res);
         }
 
-        navigate(REDIRECT_PATH);
+        navigate(LOGIN_PATH);
 
         return res;
     }
