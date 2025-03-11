@@ -37,22 +37,6 @@ const UserContext = createContext<UserContextType>({
 });
 
 export function UserProvider({children}: { children: ReactNode }) {
-    const [value, setValue, ] = useLocalStorage<AuthResponse | null>('auth', null)
-    const [user, setUser] = useState<User | null>(null);
-    const [balance, setBalance] = useState<number>(30000000);
-    const [hasConsent, setHasConsent] = useState<boolean>(false);
-    const [hasSurvey, setHasSurvey] = useState<boolean>(false);
-    const {toast} = useToast();
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    const LOGIN_PATH = "/auth/login";
-    const REGISTER_PATH = "/auth/register";
-    const DEFAULT_PATH = "/app/beranda";
-    const WHITELIST_PATH = [LOGIN_PATH, REGISTER_PATH]
-
-    const from = location.state?.from || DEFAULT_PATH;
-
     const userDataSource = useMemo(() => new UserSupabaseDataSource(), []);
     const userRepository = useMemo(() => new UserRepositoryDataSource(userDataSource), [userDataSource]);
 
@@ -75,6 +59,21 @@ export function UserProvider({children}: { children: ReactNode }) {
     const checkSurvey = useCallback(async (userId: string) => {
         return await userCheckSurveyUseCase.invoke(userId);
     }, [userCheckSurveyUseCase])
+
+    const LOGIN_PATH = "/auth/login";
+    const REGISTER_PATH = "/auth/register";
+    const DEFAULT_PATH = "/app/beranda";
+    const WHITELIST_PATH = [LOGIN_PATH, REGISTER_PATH]
+    const FROM = location.state?.from || DEFAULT_PATH;
+
+    const [value, setValue, ] = useLocalStorage<AuthResponse | null>('auth', null)
+    const [user, setUser] = useState<User | null>(null);
+    const [balance, setBalance] = useState<number>(30000000);
+    const [hasConsent, setHasConsent] = useState<boolean>(false);
+    const [hasSurvey, setHasSurvey] = useState<boolean>(false);
+    const {toast} = useToast();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (user === null) {
@@ -102,7 +101,7 @@ export function UserProvider({children}: { children: ReactNode }) {
         setValue(res);
         setUser(res.data.user);
 
-        navigate(from, {replace: true})
+        navigate(FROM, {replace: true})
 
         return res;
     }
