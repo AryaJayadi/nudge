@@ -79,14 +79,30 @@ export function UserProvider({children}: { children: ReactNode }) {
     }, [userSignUpUseCase])
 
     const userCheckConsentUseCase = useMemo(() => new UserCheckConsent(userRepository), [userRepository]);
-    const checkConsent = useCallback(async () => {
-        return await userCheckConsentUseCase.invoke(user?.id ?? "");
-    }, [userCheckConsentUseCase, user?.id])
+    const checkConsent = useCallback(async (userId: string) => {
+        return await userCheckConsentUseCase.invoke(userId);
+    }, [userCheckConsentUseCase])
+    const {
+        data: hasConsentData,
+        error: hasConsentError,
+        loading: hasConsentLoading,
+        refetch: hasConsentRefetch
+    } = useSupabaseQuery(
+        useCallback(() => checkConsent(user?.id ?? ""), [checkConsent])
+    );
 
     const userCheckSurveyUseCase = useMemo(() => new UserCheckSurvey(userRepository), [userRepository]);
     const checkSurvey = useCallback(async (userId: string) => {
         return await userCheckSurveyUseCase.invoke(userId);
     }, [userCheckSurveyUseCase])
+    const {
+        data: hasSurveyData,
+        error: hasSurveyError,
+        loading: hasSurveyLoading,
+        refetch: hasSurveyRefetch
+    } = useSupabaseQuery(
+        useCallback(() => checkSurvey(user?.id ?? ""), [checkSurvey])
+    );
 
     async function login(email: string, password: string) {
         const res = await userSignIn(email, password);
