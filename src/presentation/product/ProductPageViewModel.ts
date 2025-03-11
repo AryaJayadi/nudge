@@ -8,14 +8,6 @@ import {useUser} from "@/presentation/context/UserContext.tsx";
 import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
 
 export default function ProductPageViewModel(category: RecordCategory) {
-    const {
-        data: records,
-        error: recordsError,
-        loading: recordsLoading,
-        refetch: recordsRefetch,
-    } = useSupabaseQuery(recordGetByCategory)
-    const {incBalance} = useUser();
-
     const recordDataSource = useMemo(() => new RecordSupabaseDataSource(), []);
     const recordRepository = useMemo(() => new RecordRepositoryDataSource(recordDataSource), [recordDataSource]);
 
@@ -23,6 +15,14 @@ export default function ProductPageViewModel(category: RecordCategory) {
     const recordGetByCategory = useCallback(async () => {
         return await recordGetByCategoryUseCase.invoke(category)
     }, [recordGetByCategoryUseCase, category])
+
+    const {
+        data: records,
+        error: recordsError,
+        loading: recordsLoading,
+        refetch: recordsRefetch,
+    } = useSupabaseQuery(recordGetByCategory)
+    const {incBalance} = useUser();
 
     function onPurchaseWin(amount: number, profit: number) {
         const res = amount * (profit / 100);
