@@ -1,5 +1,5 @@
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {PostgrestError} from "@supabase/supabase-js";
 
 export function useSupabaseQuery<T>(
@@ -9,24 +9,24 @@ export function useSupabaseQuery<T>(
     const [error, setError] = useState<PostgrestError | null>(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        async function fetchData() {
-            setLoading(true);
-            const response = await queryFn();
+    const fetchData = useCallback(async () => {
+        setLoading(true);
+        const response = await queryFn();
 
-            if (response.success) {
-                setData(response.data);
-                setError(null);
-            } else {
-                setError(response.error);
-                setData(null);
-            }
-
-            setLoading(false);
+        if (response.success) {
+            setData(response.data);
+            setError(null);
+        } else {
+            setError(response.error);
+            setData(null);
         }
 
-        fetchData();
+        setLoading(false);
     }, [queryFn]);
 
-    return {data, error, loading};
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    return { data, error, loading, refetch: fetchData };
 }
