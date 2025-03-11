@@ -1,6 +1,7 @@
 import {AuthResponse, PostgrestError, PostgrestResponse} from "@supabase/supabase-js";
 import {InsertUserConsentForm} from "@/domain/model/request/InsertUserConsentForm.ts";
 import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
+import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export interface UserRepository {
 
@@ -8,9 +9,9 @@ export interface UserRepository {
 
     signIn(email: string, password: string): Promise<AuthResponse>;
 
-    checkConsent(userId: string): Promise<boolean | PostgrestError>;
+    checkConsent(userId: string): Promise<BaseSupabaseResponse<boolean>>;
 
-    checkSurvey(userId: string): Promise<boolean | PostgrestError>;
+    checkSurvey(userId: string): Promise<BaseSupabaseResponse<boolean>>;
 
     insertUserConsent(data: InsertUserConsentForm): Promise<UserConsentForm | PostgrestError>;
 

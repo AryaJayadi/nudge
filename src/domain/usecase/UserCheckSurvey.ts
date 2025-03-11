@@ -1,8 +1,9 @@
 import {PostgrestError} from "@supabase/supabase-js";
 import {UserRepository} from "@/domain/repository/UserRepository.ts";
+import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 interface UserCheckSurveyUseCase {
-    invoke(userId: string): Promise<boolean | PostgrestError>;
+    invoke(userId: string): Promise<BaseSupabaseResponse<boolean>>;
 }
 
 export class UserCheckSurvey implements UserCheckSurveyUseCase {
@@ -12,7 +13,7 @@ export class UserCheckSurvey implements UserCheckSurveyUseCase {
         this.repository = _repository;
     }
 
-    invoke(userId: string): Promise<boolean | PostgrestError> {
+    invoke(userId: string): Promise<BaseSupabaseResponse<boolean>> {
         return this.repository.checkSurvey(userId);
     }
 

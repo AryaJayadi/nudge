@@ -2,6 +2,7 @@ import UserDataSource from "@/data/datasource/UserDataSource.ts";
 import supabase from "@/core/DatabaseSupabase.tsx";
 import {AuthResponse, PostgrestError} from "@supabase/supabase-js";
 import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
+import {BaseSupabaseResponse, mapSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export default class UserSupabaseDataSource implements UserDataSource {
 
@@ -17,26 +18,24 @@ export default class UserSupabaseDataSource implements UserDataSource {
         return res;
     }
 
-    async checkConsent(userId: string): Promise<boolean | PostgrestError> {
-        const {data, error} = await supabase
+    async checkConsent(userId: string): Promise<BaseSupabaseResponse<boolean>> {
+        const res = await supabase
             .from("user_consent_form")
             .select("consent_agreement")
             .eq("user_id", userId)
             .single<boolean>();
 
-        if(error) return error;
-        return data ?? false;
+        return mapSupabaseResponse(res, (data) => data ?? false);
     }
 
-    async checkSurvey(userId: string): Promise<boolean | PostgrestError> {
-        const {data, error} = await supabase
+    async checkSurvey(userId: string): Promise<BaseSupabaseResponse<boolean>> {
+        const res = await supabase
             .from("user_finish_surveys")
             .select("has_finished")
             .eq("user_id", userId)
             .single<boolean>();
 
-        if(error) return error;
-        return data ?? false;
+        return mapSupabaseResponse(res, (data) => data ?? false);
     }
 
     async insertUserConsent(form: InsertUserConsentForm): Promise<UserConsentForm | PostgrestError> {

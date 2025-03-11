@@ -2,6 +2,7 @@ import {UserRepository} from "@/domain/repository/UserRepository.ts";
 import {AuthResponse, PostgrestError, PostgrestResponse} from "@supabase/supabase-js";
 import {InsertUserConsentForm} from "@/domain/model/request/InsertUserConsentForm.ts";
 import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
+import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export class UserRepositoryDataSource implements UserRepository {
     datasource: UserRepository;
@@ -18,11 +19,11 @@ export class UserRepositoryDataSource implements UserRepository {
         return this.datasource.signIn(email, password);
     }
 
-    checkConsent(userId: string): Promise<boolean | PostgrestError> {
+    checkConsent(userId: string): Promise<BaseSupabaseResponse<boolean>> {
         return this.datasource.checkConsent(userId);
     }
 
-    checkSurvey(userId: string): Promise<boolean | PostgrestError> {
+    checkSurvey(userId: string): Promise<BaseSupabaseResponse<boolean>> {
         return this.datasource.checkSurvey(userId);
     }
 
