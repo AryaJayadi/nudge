@@ -8,6 +8,8 @@ import {useToast} from "@/components/ui/use-toast.ts";
 import {useLocalStorage} from "usehooks-ts";
 import {isAuthenticated} from "@/lib/utils.ts";
 import {useLocation, useNavigate} from "react-router";
+import {UserCheckConsent} from "@/domain/usecase/UserCheckConsent.ts";
+import {UserCheckSurvey} from "@/domain/usecase/UserCheckSurvey.ts";
 
 interface UserContextType {
     user: User | null;
@@ -38,6 +40,8 @@ export function UserProvider({children}: { children: ReactNode }) {
     const [value, setValue, ] = useLocalStorage<AuthResponse | null>('auth', null)
     const [user, setUser] = useState<User | null>(null);
     const [balance, setBalance] = useState<number>(30000000);
+    const [hasConsent, setHasConsent] = useState<boolean>(false);
+    const [hasSurvey, setHasSurvey] = useState<boolean>(false);
     const {toast} = useToast();
     const location = useLocation();
     const navigate = useNavigate();
@@ -49,14 +53,24 @@ export function UserProvider({children}: { children: ReactNode }) {
     const userRepository = useMemo(() => new UserRepositoryDataSource(userDataSource), [userDataSource]);
 
     const userSignInUseCase = useMemo(() => new UserSignIn(userDataSource), [userRepository]);
-    const userSignUpUseCase = useMemo(() => new UserSignUp(userRepository), [userRepository]);
-
     const userSignIn = useCallback(async (email: string, password: string) => {
         return await userSignInUseCase.invoke(email, password);
     }, [userSignInUseCase]);
+
+    const userSignUpUseCase = useMemo(() => new UserSignUp(userRepository), [userRepository]);
     const userSignUp = useCallback(async (email: string, password: string) => {
         return await userSignUpUseCase.invoke(email, password);
     }, [userSignUpUseCase])
+
+    const userCheckConsentUseCase = useMemo(() => new UserCheckConsent(userRepository), [userRepository]);
+    const checkConsent = useCallback(async (userId: string) => {
+        return await userCheckConsentUseCase.invoke(userId);
+    }, [userCheckConsentUseCase])
+
+    const userCheckSurveyUseCase = useMemo(() => new UserCheckSurvey(userRepository), [userRepository]);
+    const checkSurvey = useCallback(async (userId: string) => {
+        return await userCheckSurveyUseCase.invoke(userId);
+    }, [userCheckSurveyUseCase])
 
     useEffect(() => {
         if (user === null) {
@@ -88,7 +102,17 @@ export function UserProvider({children}: { children: ReactNode }) {
     }
 
     async function register(email: string, password: string) {
-        return await userSignUp(email, password);
+        const res = await userSignUp(email, password);
+
+        if(res.error) {
+            console.log(res.error);
+        } else if (res.data.user == null) {
+            console.log(res);
+        }
+
+        navigate(REDIRECT_PATH);
+
+        return res;
     }
 
     function logout() {

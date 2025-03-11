@@ -57,8 +57,6 @@ export default function RegisterPageViewModel(register: (email: string, password
 
         emailRef.current['value'] = "";
         passRef.current['value'] = "";
-
-        navigate(from, {replace: true})
     }
 
     return {
