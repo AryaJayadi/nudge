@@ -51,6 +51,8 @@ export function UserProvider({children}: { children: ReactNode }) {
     const DEFAULT_PATH = "/app/beranda";
     const WHITELIST_PATH = [LOGIN_PATH, REGISTER_PATH]
 
+    const from = location.state?.from || DEFAULT_PATH;
+
     const userDataSource = useMemo(() => new UserSupabaseDataSource(), []);
     const userRepository = useMemo(() => new UserRepositoryDataSource(userDataSource), [userDataSource]);
 
@@ -100,6 +102,8 @@ export function UserProvider({children}: { children: ReactNode }) {
         setValue(res);
         setUser(res.data.user);
 
+        navigate(from, {replace: true})
+
         return res;
     }
 
@@ -112,7 +116,7 @@ export function UserProvider({children}: { children: ReactNode }) {
             console.log(res);
         }
 
-        navigate(LOGIN_PATH);
+        navigate(LOGIN_PATH, {replace: true});
 
         return res;
     }
