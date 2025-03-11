@@ -5,11 +5,7 @@ import {useLocalStorage} from "usehooks-ts";
 import {AuthResponse} from "@supabase/supabase-js";
 
 export default function HomePageViewModel(login: (email: string, password: string) => Promise<AuthResponse>) {
-    const navigate = useNavigate()
-    const location = useLocation()
     const {toast} = useToast()
-
-    const from = location.state?.from || "/"
 
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passRef = useRef<HTMLInputElement | null>(null);
@@ -55,8 +51,6 @@ export default function HomePageViewModel(login: (email: string, password: strin
 
         emailRef.current['value'] = "";
         passRef.current['value'] = "";
-
-        navigate(from, {replace: true})
     }
 
     return {
