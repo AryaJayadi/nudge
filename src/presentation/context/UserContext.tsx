@@ -40,7 +40,7 @@ const UserContext = createContext<UserContextType>({
 export function UserProvider({children}: { children: ReactNode }) {
     const [value, setValue, ] = useLocalStorage<AuthResponse | null>('auth', null)
     const [user, setUser] = useState<User | null>(null);
-    const [balance, setBalance] = useState<number>(30000000);
+    const [balance, setBalance] = useState<number>(1000000000);
     const {toast} = useToast();
     const location = useLocation();
     const navigate = useNavigate();
@@ -79,30 +79,28 @@ export function UserProvider({children}: { children: ReactNode }) {
     }, [userSignUpUseCase])
 
     const userCheckConsentUseCase = useMemo(() => new UserCheckConsent(userRepository), [userRepository]);
-    const checkConsent = useCallback(async (userId: string) => {
-        return await userCheckConsentUseCase.invoke(userId);
-    }, [userCheckConsentUseCase])
+    const checkConsent = useCallback(async () => {
+        if(user === null) return false;
+        return await userCheckConsentUseCase.invoke(user.id);
+    }, [userCheckConsentUseCase, user])
     const {
         data: hasConsentData,
         error: hasConsentError,
         loading: hasConsentLoading,
         refetch: hasConsentRefetch
-    } = useSupabaseQuery(
-        useCallback(() => checkConsent(user?.id ?? ""), [checkConsent])
-    );
+    } = useSupabaseQuery(checkConsent);
 
     const userCheckSurveyUseCase = useMemo(() => new UserCheckSurvey(userRepository), [userRepository]);
-    const checkSurvey = useCallback(async (userId: string) => {
-        return await userCheckSurveyUseCase.invoke(userId);
-    }, [userCheckSurveyUseCase])
+    const checkSurvey = useCallback(async () => {
+        if (user === null) return false;
+        return await userCheckSurveyUseCase.invoke(user.id);
+    }, [userCheckSurveyUseCase, user])
     const {
         data: hasSurveyData,
         error: hasSurveyError,
         loading: hasSurveyLoading,
         refetch: hasSurveyRefetch
-    } = useSupabaseQuery(
-        useCallback(() => checkSurvey(user?.id ?? ""), [checkSurvey])
-    );
+    } = useSupabaseQuery(checkSurvey);
 
     async function login(email: string, password: string) {
         const res = await userSignIn(email, password);
