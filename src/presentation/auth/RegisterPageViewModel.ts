@@ -1,9 +1,6 @@
 import {useLocation, useNavigate} from "react-router";
 import {useToast} from "@/components/ui/use-toast.ts";
-import {useCallback, useMemo, useRef} from "react";
-import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataSource.ts";
-import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
-import {UserSignUp} from "@/domain/usecase/UserSignUp.ts";
+import {useRef} from "react";
 import {AuthResponse} from "@supabase/supabase-js";
 
 export default function RegisterPageViewModel(register: (email: string, password: string) => Promise<AuthResponse>) {

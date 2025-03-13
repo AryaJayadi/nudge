@@ -1,10 +1,5 @@
-import {Button} from "@/components/ui/button.tsx";
-import {Bell} from "lucide-react";
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
 import BottomNav from "@/components/bottom-nav.tsx";
 import {Outlet, useLocation} from "react-router";
-import {useUser} from "@/presentation/context/UserContext.tsx";
-import {formatCurrency} from "@/lib/utils.ts";
 import Navbar from "@/components/navbar.tsx";
 
 

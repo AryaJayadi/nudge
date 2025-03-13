@@ -1,4 +1,4 @@
-import {AuthResponse, PostgrestError, PostgrestResponse} from "@supabase/supabase-js";
+import {AuthResponse} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export default interface UserDataSource {

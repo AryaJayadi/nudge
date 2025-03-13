@@ -1,6 +1,6 @@
 import UserDataSource from "@/data/datasource/UserDataSource.ts";
 import supabase from "@/core/DatabaseSupabase.tsx";
-import {AuthResponse, PostgrestError} from "@supabase/supabase-js";
+import {AuthResponse} from "@supabase/supabase-js";
 import {BaseSupabaseResponse, mapSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export default class UserSupabaseDataSource implements UserDataSource {

@@ -1,6 +1,6 @@
 import "@/styles/globals.css"
 import Questionnaire from "@/components/questionnaire"
-import {QuestionnaireProvider, useQuestionnaire} from "@/presentation/context/QuestionnaireContext.tsx";
+import {QuestionnaireProvider} from "@/presentation/context/QuestionnaireContext.tsx";
 
 export const QuestionnairePage = () => {
 

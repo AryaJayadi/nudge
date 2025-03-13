@@ -1,7 +1,5 @@
 import {useRef} from "react";
 import {useToast} from "@/components/ui/use-toast.ts";
-import {useLocation, useNavigate} from "react-router";
-import {useLocalStorage} from "usehooks-ts";
 import {AuthResponse} from "@supabase/supabase-js";
 
 export default function HomePageViewModel(login: (email: string, password: string) => Promise<AuthResponse>) {

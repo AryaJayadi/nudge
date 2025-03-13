@@ -1,4 +1,3 @@
-import {PostgrestError} from "@supabase/supabase-js";
 import {UserRepository} from "@/domain/repository/UserRepository.ts";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 

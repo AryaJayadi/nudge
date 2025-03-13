@@ -1,5 +1,4 @@
-import {useCallback, useEffect, useMemo, useState} from "react";
-import {Record} from "@/domain/model/Record.ts";
+import {useCallback, useMemo} from "react";
 import RecordSupabaseDataSource from "@/data/datasource/supabase/RecordSupabaseDataSource.ts";
 import {RecordRepositoryDataSource} from "@/data/repository/RecordRepositoryDataSource.ts";
 import {RecordGetByCategory} from "@/domain/usecase/RecordGetByCategory.ts";

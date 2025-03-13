@@ -1,13 +1,10 @@
-import {useState, useRef, useEffect} from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
+import {useRef, useState} from "react"
+import {Button} from "@/components/ui/button"
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
+import {Progress} from "@/components/ui/progress"
 import QuestionPage from "@/components/question-page"
-import { questions } from "@/lib/questions"
-import { CheckCircle2 } from "lucide-react"
+import {CheckCircle2} from "lucide-react"
 import CustomScrollbar from "@/components/custom-scrollbar"
-import {Question} from "@/domain/model/Question.ts";
-import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
 import {useQuestionnaire} from "@/presentation/context/QuestionnaireContext.tsx";
 import {useUser} from "@/presentation/context/UserContext.tsx";
 import {useNavigate} from "react-router";

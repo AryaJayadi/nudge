@@ -1,5 +1,5 @@
 import {UserRepository} from "@/domain/repository/UserRepository.ts";
-import {AuthResponse, PostgrestError, PostgrestResponse} from "@supabase/supabase-js";
+import {AuthResponse} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export class UserRepositoryDataSource implements UserRepository {
