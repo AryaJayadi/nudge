@@ -1,4 +1,3 @@
-import {useLocation, useNavigate} from "react-router";
 import {useToast} from "@/components/ui/use-toast.ts";
 import {useRef} from "react";
 import {AuthResponse} from "@supabase/supabase-js";

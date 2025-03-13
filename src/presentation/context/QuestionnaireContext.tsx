@@ -20,7 +20,7 @@ const QuestionnaireContext = createContext<QuestionnaireContextType>({
     loading: true,
     questions: [],
     responses: [],
-    handleAnswerChange: value => {},
+    handleAnswerChange: () => {},
     submitAnswer: () => {},
 })
 
