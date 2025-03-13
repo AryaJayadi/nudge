@@ -38,25 +38,31 @@ export default class UserSupabaseDataSource implements UserDataSource {
         return mapSupabaseResponse(res, (data) => data ?? false);
     }
 
-    async insertUserConsent(form: InsertUserConsentForm): Promise<UserConsentForm | PostgrestError> {
-        const {data, error} = await supabase
+    async insertUserConsent(form: InsertUserConsentForm): Promise<BaseSupabaseResponse<UserConsentForm>> {
+        const res = await supabase
             .from('user_consent_form')
-            .insert([
-                form
-            ]);
+            .upsert(form)
+            .select<UserConsentForm>();
 
-        if (error) return error;
-        return data;
+        return mapSupabaseResponse(res, (data) => {
+            if (data && Array.isArray(data) && data.length > 0) {
+                return data[0] as UserConsentForm;
+            }
+            return null;
+        });
     }
 
-    async insertUserFinishSurvey(form: InsertUserFinishSurvey): Promise<UserFinishSurveys | PostgrestError> {
-        const {data, error} = await supabase
+    async insertUserFinishSurvey(form: InsertUserFinishSurvey): Promise<BaseSupabaseResponse<UserFinishSurveys>> {
+        const res = await supabase
             .from("user_finish_surveys")
-            .insert([
-                form
-            ])
+            .upsert(form)
+            .select<UserFinishSurveys>();
 
-        if (error) return error;
-        return data;
+        return mapSupabaseResponse(res, (data) => {
+            if (data && Array.isArray(data) && data.length > 0) {
+                return data[0] as UserFinishSurveys;
+            }
+            return null;
+        });
     }
 }

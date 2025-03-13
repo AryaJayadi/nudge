@@ -27,11 +27,11 @@ export class UserRepositoryDataSource implements UserRepository {
         return this.datasource.checkSurvey(userId);
     }
 
-    insertUserConsent(data: InsertUserConsentForm): Promise<UserConsentForm | PostgrestError> {
+    insertUserConsent(data: InsertUserConsentForm): Promise<BaseSupabaseResponse<UserConsentForm>> {
         return this.datasource.insertUserConsent(data);
     }
 
-    insertUserFinishSurvey(data: InsertUserFinishSurvey): Promise<UserFinishSurveys | PostgrestError> {
+    insertUserFinishSurvey(data: InsertUserFinishSurvey): Promise<BaseSupabaseResponse<UserFinishSurveys>> {
         return this.datasource.insertUserFinishSurvey(data);
     }
 }

@@ -13,7 +13,7 @@ export default interface UserDataSource {
 
     checkSurvey(userId: string): Promise<BaseSupabaseResponse<boolean>>;
 
-    insertUserConsent(data: InsertUserConsentForm): Promise<UserConsentForm | PostgrestError>;
+    insertUserConsent(data: InsertUserConsentForm): Promise<BaseSupabaseResponse<UserConsentForm>>;
 
-    insertUserFinishSurvey(data: InsertUserFinishSurvey): Promise<UserFinishSurveys | PostgrestError>;
+    insertUserFinishSurvey(data: InsertUserFinishSurvey): Promise<BaseSupabaseResponse<UserFinishSurveys>>;
 }
