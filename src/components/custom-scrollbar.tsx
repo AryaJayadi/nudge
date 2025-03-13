@@ -2,10 +2,10 @@ import {useEffect, useState, useRef, type RefObject} from "react"
 import {cn} from "@/lib/utils"
 
 interface CustomScrollbarProps {
-    containerRef: RefObject<HTMLDivElement>
-    contentRef: RefObject<HTMLDivElement>
-    height: number
-    className?: string
+    containerRef: React.RefObject<HTMLDivElement | null>;
+    contentRef: React.RefObject<HTMLDivElement | null>;
+    height: number;
+    className?: string;
 }
 
 export default function CustomScrollbar({containerRef, contentRef, height, className}: CustomScrollbarProps) {
@@ -75,7 +75,7 @@ export default function CustomScrollbar({containerRef, contentRef, height, class
         const handleMouseMove = (e: MouseEvent) => {
             if (!isDragging || !trackRef.current || !containerRef.current || !contentRef.current) return
 
-            const trackRect = trackRef.current.getBoundingClientRect()
+            // const trackRect = trackRef.current.getBoundingClientRect()
             const deltaY = e.clientY - startY
             const deltaPercentage = deltaY / (height - thumbHeight)
 
