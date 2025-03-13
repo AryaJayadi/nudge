@@ -29,7 +29,7 @@ export default class QuestionSupabaseDataSource implements QuestionDataSource {
         const res = await supabase
             .from("user_responses")
             .upsert(data)
-            .select<UserResponses>();
+            .select();
 
         return mapSupabaseResponse(res, (data) => {
             if (data && Array.isArray(data) && data.length > 0) {

@@ -41,7 +41,7 @@ export default class UserSupabaseDataSource implements UserDataSource {
         const res = await supabase
             .from('user_consent_form')
             .upsert(form)
-            .select<UserConsentForm>();
+            .select();
 
         return mapSupabaseResponse(res, (data) => {
             if (data && Array.isArray(data) && data.length > 0) {
@@ -55,7 +55,7 @@ export default class UserSupabaseDataSource implements UserDataSource {
         const res = await supabase
             .from("user_finish_surveys")
             .upsert(form)
-            .select<UserFinishSurveys>();
+            .select();
 
         return mapSupabaseResponse(res, (data) => {
             if (data && Array.isArray(data) && data.length > 0) {
