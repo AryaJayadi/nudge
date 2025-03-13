@@ -52,17 +52,17 @@ const router = createBrowserRouter([
                 element: <Navigate to="/app/beranda" replace />
             },
             {
-                path: "consent",
-                element: <ConsentPage />
-            },
-            {
-                path: "questionnaire",
-                element: <QuestionnairePage />
-            },
-            {
                 path: "",
                 element: <ProtectedRoute isAuthenticated={isAuthenticated} redirectPath={"/auth/login"}/>,
                 children: [
+                    {
+                        path: "consent",
+                        element: <ConsentPage />
+                    },
+                    {
+                        path: "questionnaire",
+                        element: <QuestionnairePage />
+                    },
                     {
                         path: "app",
                         element: <BaseLayout/>,
