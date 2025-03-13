@@ -4,11 +4,7 @@ import {useRef} from "react";
 import {AuthResponse} from "@supabase/supabase-js";
 
 export default function RegisterPageViewModel(register: (email: string, password: string) => Promise<AuthResponse>) {
-    const navigate = useNavigate()
-    const location = useLocation()
     const {toast} = useToast()
-
-    const from = location.state?.from || "/auth/login"
 
     const emailRef = useRef<HTMLInputElement | null>(null);
     const passRef = useRef<HTMLInputElement | null>(null);
