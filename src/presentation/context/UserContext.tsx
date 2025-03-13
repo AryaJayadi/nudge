@@ -48,22 +48,10 @@ export function UserProvider({children}: { children: ReactNode }) {
     const LOGIN_PATH = "/auth/login";
     const REGISTER_PATH = "/auth/register";
     const DEFAULT_PATH = "/app/beranda";
+    const CONSENT_PATH = "/app/consent";
+    const QUESTIONNAIRE_PATH = "/app/questionnaire";
     const WHITELIST_PATH = [LOGIN_PATH, REGISTER_PATH]
     const FROM = location.state?.from || DEFAULT_PATH;
-
-    useEffect(() => {
-        if (user === null) {
-            if (isAuthenticated(value?.data.session)) {
-                if (value?.data.user) {
-                    setUser(value.data.user);
-                } else if (!WHITELIST_PATH.includes(location.pathname)) {
-                    navigate(LOGIN_PATH, { state: { from: location } });
-                }
-            } else if (!WHITELIST_PATH.includes(location.pathname)) {
-                navigate(LOGIN_PATH, { state: { from: location } });
-            }
-        }
-    }, [user, value, navigate, location]);
 
     const userDataSource = useMemo(() => new UserSupabaseDataSource(), []);
     const userRepository = useMemo(() => new UserRepositoryDataSource(userDataSource), [userDataSource]);
@@ -102,6 +90,26 @@ export function UserProvider({children}: { children: ReactNode }) {
         refetch: hasSurveyRefetch
     } = useSupabaseQuery(checkSurvey);
 
+    useEffect(() => {
+        if (user === null) {
+            if (isAuthenticated(value?.data.session)) {
+                if (value?.data.user) {
+                    setUser(value.data.user);
+                } else if (!WHITELIST_PATH.includes(location.pathname)) {
+                    navigate(LOGIN_PATH, { state: { from: location } });
+                }
+            } else if (!WHITELIST_PATH.includes(location.pathname)) {
+                navigate(LOGIN_PATH, { state: { from: location } });
+            }
+        } else if (user) {
+            if (hasConsentData === false) {
+                navigate(CONSENT_PATH, { state: { from: location } });
+            } else if (hasSurveyData === false) {
+                navigate(QUESTIONNAIRE_PATH, { state: { from: location } });
+            }
+        }
+    }, [user, value, navigate, location]);
+
     async function login(email: string, password: string) {
         const res = await userSignIn(email, password);
 
@@ -113,6 +121,8 @@ export function UserProvider({children}: { children: ReactNode }) {
 
         setValue(res);
         setUser(res.data.user);
+        hasConsentRefetch();
+        hasSurveyRefetch();
 
         navigate(FROM, {replace: true})
 
