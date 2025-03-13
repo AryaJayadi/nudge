@@ -41,7 +41,7 @@ export default function Navbar() {
                     </Button>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="rounded-full text-white hover:bg-blue-700">
+                            <Button variant="ghost" size="icon" className="rounded-full text-black hover:bg-blue-700">
                                 <Avatar>
                                     <AvatarImage src="/placeholder.svg?height=32&width=32" alt={userName} />
                                     <AvatarFallback>{user?.email?.charAt(0)}</AvatarFallback>
