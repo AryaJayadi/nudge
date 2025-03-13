@@ -13,7 +13,7 @@ interface QuestionnaireContextType {
     questions: Question[];
     responses: InsertUserResponseSupabase[];
     handleAnswerChange: (question: Question, answer: string) => void;
-    submitAnswer: () => void;
+    submitAnswer: (callback: () => void) => void;
 }
 
 const QuestionnaireContext = createContext<QuestionnaireContextType>({
@@ -87,10 +87,8 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
         });
     }
 
-    async function submitAnswer() {
-        const res = await insertResponses(responses);
-        console.log(user);
-        console.log(res);
+    async function submitAnswer(callback: () => void) {
+        insertResponses(responses).then(() => callback());
     }
 
     return (
