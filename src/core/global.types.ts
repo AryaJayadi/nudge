@@ -8,4 +8,5 @@ declare global {
     type InsertUserFinishSurvey = Database["public"]["Tables"]["user_finish_surveys"]["Insert"];
 
     type UserResponses = Tables<'user_responses'>;
+    type InsertUserResponse = Database["public"]["Tables"]["user_responses"]["Insert"];
 }

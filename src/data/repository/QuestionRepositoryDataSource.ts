@@ -1,9 +1,8 @@
 import {QuestionRepository} from "@/domain/repository/QuestionRepository.ts";
 import QuestionDataSource from "@/data/datasource/QuestionDataSource.ts";
 import {Question} from "@/domain/model/Question.ts";
-import {UserResponses} from "@/core/global.types.ts";
-import {PostgrestError} from "@supabase/supabase-js";
 import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
+import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export class QuestionRepositoryDataSource implements QuestionRepository{
     private datasource: QuestionDataSource
@@ -16,7 +15,7 @@ export class QuestionRepositoryDataSource implements QuestionRepository{
         return this.datasource.getQuestions();
     }
 
-    insertResponses(data: InsertUserResponseSupabase[]): Promise<UserResponses[] | PostgrestError> {
+    insertResponses(data: InsertUserResponseSupabase[]): Promise<BaseSupabaseResponse<UserResponses[]>> {
         return this.datasource.insertResponses(data);
     }
 

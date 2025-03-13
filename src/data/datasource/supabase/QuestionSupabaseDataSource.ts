@@ -2,8 +2,7 @@ import QuestionDataSource from "@/data/datasource/QuestionDataSource.ts";
 import {Question} from "@/domain/model/Question.ts";
 import supabase from "@/core/DatabaseSupabase.tsx";
 import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
-import {UserResponses} from "@/core/global.types.ts";
-import {PostgrestError} from "@supabase/supabase-js";
+import {BaseSupabaseResponse, mapSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export default class QuestionSupabaseDataSource implements QuestionDataSource {
 
@@ -26,8 +25,18 @@ export default class QuestionSupabaseDataSource implements QuestionDataSource {
         return response.data as Question[];
     }
 
-    async insertResponses(data: InsertUserResponseSupabase[]): Promise<UserResponses[] | PostgrestError> {
-        console.log(data);
-        return data;
+    async insertResponses(data: InsertUserResponseSupabase[]): Promise<BaseSupabaseResponse<UserResponses[]>> {
+        const res = await supabase
+            .from("user_responses")
+            .upsert(data)
+            .select<UserResponses>();
+
+        return mapSupabaseResponse(res, (data) => {
+            if (data && Array.isArray(data) && data.length > 0) {
+                return data as UserResponses[];
+            }
+
+            return [];
+        });
     }
 }
