@@ -34,7 +34,7 @@ export default function Navbar() {
                     <div className="hidden md:flex">
                         <span className="font-medium">{formatCurrency(balance)}</span>
                     </div>
-                    <Button variant="ghost" size="icon" className="text-white hover:bg-blue-700" asChild>
+                    <Button variant="ghost" size="icon" className="text-white hover:bg-blue-700 hover:text-white" asChild>
                         <Link to="/app/transactions">
                             <History className="h-5 w-5" />
                             <span className="sr-only">Transaction History</span>
@@ -56,9 +56,9 @@ export default function Navbar() {
                                     <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
                                 </div>
                             </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Settings</DropdownMenuItem>
+                            {/*<DropdownMenuSeparator />*/}
+                            {/*<DropdownMenuItem>Profile</DropdownMenuItem>*/}
+                            {/*<DropdownMenuItem>Settings</DropdownMenuItem>*/}
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
