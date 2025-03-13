@@ -4,10 +4,9 @@ import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataS
 import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
 import {UserSignIn} from "@/domain/usecase/UserSignIn.ts";
 import {UserSignUp} from "@/domain/usecase/UserSignUp.ts";
-import {useToast} from "@/components/ui/use-toast.ts";
 import {useLocalStorage} from "usehooks-ts";
 import {isAuthenticated} from "@/lib/utils.ts";
-import {redirect, useLocation, useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {UserCheckConsent} from "@/domain/usecase/UserCheckConsent.ts";
 import {UserCheckSurvey} from "@/domain/usecase/UserCheckSurvey.ts";
 import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
@@ -50,7 +49,6 @@ export function UserProvider({children}: { children: ReactNode }) {
     const [value, setValue,] = useLocalStorage<AuthResponse | null>('auth', null)
     const [user, setUser] = useState<User | null>(null);
     const [balance, setBalance] = useState<number>(1000000000);
-    const {toast} = useToast();
     const location = useLocation();
     const navigate = useNavigate();
 

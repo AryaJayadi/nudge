@@ -1,10 +1,9 @@
 import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
-import {UserResponses} from "@/core/global.types.ts";
-import {PostgrestError} from "@supabase/supabase-js";
 import {QuestionRepository} from "@/domain/repository/QuestionRepository.ts";
+import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 interface QuestionInsertResponsesUseCase {
-    invoke(data: InsertUserResponseSupabase[]): Promise<UserResponses[] | PostgrestError>;
+    invoke(data: InsertUserResponseSupabase[]): Promise<BaseSupabaseResponse<UserResponses[]>>;
 }
 
 export default class QuestionInsertResponses implements QuestionInsertResponsesUseCase {
@@ -14,7 +13,7 @@ export default class QuestionInsertResponses implements QuestionInsertResponsesU
         this.repository = _repository;
     }
 
-    invoke(data: InsertUserResponseSupabase[]): Promise<UserResponses[] | PostgrestError> {
+    invoke(data: InsertUserResponseSupabase[]): Promise<BaseSupabaseResponse<UserResponses[]>> {
         return this.repository.insertResponses(data);
     }
 }
