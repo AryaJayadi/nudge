@@ -8,7 +8,7 @@ export type BaseSupabaseResponse<T> = {
 
 export function mapSupabaseResponse<T, U>(
     response: { data: T | null; error: PostgrestError | null },
-    transform: (data: T | null) => U = (data) => data as unknown as U
+    transform: (data: T | null) => U | null = (data) => data as unknown as U
 ): BaseSupabaseResponse<U> {
     if (response.error) {
         return {
