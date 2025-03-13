@@ -11,6 +11,8 @@ import {redirect, useLocation, useNavigate} from "react-router";
 import {UserCheckConsent} from "@/domain/usecase/UserCheckConsent.ts";
 import {UserCheckSurvey} from "@/domain/usecase/UserCheckSurvey.ts";
 import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
+import {UserFinishConsent} from "@/domain/usecase/UserFinishConsent.ts";
+import {UserFinishSurvey} from "@/domain/usecase/UserFinishSurvey.ts";
 
 interface UserContextType {
     user: User | null;
@@ -65,6 +67,16 @@ export function UserProvider({children}: { children: ReactNode }) {
     const userSignUp = useCallback(async (email: string, password: string) => {
         return await userSignUpUseCase.invoke(email, password);
     }, [userSignUpUseCase])
+
+    const userFinishConsentUseCase = useMemo(() => new UserFinishConsent(userRepository), [userRepository]);
+    const userFinishConsent = useCallback(async (form : InsertUserConsentForm) => {
+        return await userFinishConsentUseCase.invoke(form);
+    }, [userFinishConsentUseCase]);
+
+    const userFinishSurveyUseCase = useMemo(() => new UserFinishSurvey(userRepository), [userRepository]);
+    const userFinishSurvey = useCallback(async (form : InsertUserFinishSurvey) => {
+        return await userFinishSurveyUseCase.invoke(form);
+    }, [userFinishSurveyUseCase]);
 
     const userCheckConsentUseCase = useMemo(() => new UserCheckConsent(userRepository), [userRepository]);
     const checkConsent = useCallback(async () => {

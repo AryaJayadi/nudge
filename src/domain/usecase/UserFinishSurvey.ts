@@ -1,5 +1,4 @@
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
-import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
 import {UserRepository} from "@/domain/repository/UserRepository.ts";
 
 interface UserFinishSurveyUseCase {

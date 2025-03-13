@@ -1,7 +1,5 @@
 import {UserRepository} from "@/domain/repository/UserRepository.ts";
 import {AuthResponse, PostgrestError, PostgrestResponse} from "@supabase/supabase-js";
-import {InsertUserConsentForm} from "@/domain/model/request/InsertUserConsentForm.ts";
-import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export class UserRepositoryDataSource implements UserRepository {
