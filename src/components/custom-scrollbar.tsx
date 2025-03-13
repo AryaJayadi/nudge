@@ -2,8 +2,8 @@ import {useEffect, useState, useRef, type RefObject} from "react"
 import {cn} from "@/lib/utils"
 
 interface CustomScrollbarProps {
-    containerRef: React.RefObject<HTMLDivElement | null>;
-    contentRef: React.RefObject<HTMLDivElement | null>;
+    containerRef: RefObject<HTMLDivElement | null>;
+    contentRef: RefObject<HTMLDivElement | null>;
     height: number;
     className?: string;
 }
