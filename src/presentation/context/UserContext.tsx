@@ -23,6 +23,8 @@ interface UserContextType {
     register: (email: string, password: string) => Promise<AuthResponse>;
     logout: () => void;
     incBalance: (amount: number) => number;
+    onConsent: () => void;
+    onFinishSurvey: () => void;
 }
 
 const UserContext = createContext<UserContextType>({
@@ -36,11 +38,15 @@ const UserContext = createContext<UserContextType>({
     register: async () => Promise.reject(new Error("No UserProvider found")),
     logout: () => {
     },
-    incBalance: (amount: number) => amount
+    incBalance: (amount: number) => amount,
+    onConsent: () => {
+    },
+    onFinishSurvey: () => {
+    },
 });
 
 export function UserProvider({children}: { children: ReactNode }) {
-    const [value, setValue, ] = useLocalStorage<AuthResponse | null>('auth', null)
+    const [value, setValue,] = useLocalStorage<AuthResponse | null>('auth', null)
     const [user, setUser] = useState<User | null>(null);
     const [balance, setBalance] = useState<number>(1000000000);
     const {toast} = useToast();
@@ -69,18 +75,18 @@ export function UserProvider({children}: { children: ReactNode }) {
     }, [userSignUpUseCase])
 
     const userFinishConsentUseCase = useMemo(() => new UserFinishConsent(userRepository), [userRepository]);
-    const userFinishConsent = useCallback(async (form : InsertUserConsentForm) => {
+    const userFinishConsent = useCallback(async (form: InsertUserConsentForm) => {
         return await userFinishConsentUseCase.invoke(form);
     }, [userFinishConsentUseCase]);
 
     const userFinishSurveyUseCase = useMemo(() => new UserFinishSurvey(userRepository), [userRepository]);
-    const userFinishSurvey = useCallback(async (form : InsertUserFinishSurvey) => {
+    const userFinishSurvey = useCallback(async (form: InsertUserFinishSurvey) => {
         return await userFinishSurveyUseCase.invoke(form);
     }, [userFinishSurveyUseCase]);
 
     const userCheckConsentUseCase = useMemo(() => new UserCheckConsent(userRepository), [userRepository]);
     const checkConsent = useCallback(async () => {
-        if(user === null) return false;
+        if (user === null) return false;
         return await userCheckConsentUseCase.invoke(user.id);
     }, [userCheckConsentUseCase, user])
     const {
@@ -108,16 +114,16 @@ export function UserProvider({children}: { children: ReactNode }) {
                 if (value?.data.user) {
                     setUser(value.data.user);
                 } else if (!WHITELIST_PATH.includes(location.pathname)) {
-                    navigate(LOGIN_PATH, { state: { from: location } });
+                    navigate(LOGIN_PATH, {state: {from: location}});
                 }
             } else if (!WHITELIST_PATH.includes(location.pathname)) {
-                navigate(LOGIN_PATH, { state: { from: location } });
+                navigate(LOGIN_PATH, {state: {from: location}});
             }
         } else if (user) {
             if (hasConsentData === false) {
-                navigate(CONSENT_PATH, { state: { from: location } });
+                navigate(CONSENT_PATH, {state: {from: location}});
             } else if (hasSurveyData === false) {
-                navigate(QUESTIONNAIRE_PATH, { state: { from: location } });
+                navigate(QUESTIONNAIRE_PATH, {state: {from: location}});
             }
         }
     }, [user, value, navigate, location]);
@@ -125,7 +131,7 @@ export function UserProvider({children}: { children: ReactNode }) {
     async function login(email: string, password: string) {
         const res = await userSignIn(email, password);
 
-        if(res.error) {
+        if (res.error) {
             console.log(res.error);
         } else if (res.data.user == null) {
             console.log(res);
@@ -144,7 +150,7 @@ export function UserProvider({children}: { children: ReactNode }) {
     async function register(email: string, password: string) {
         const res = await userSignUp(email, password);
 
-        if(res.error) {
+        if (res.error) {
             console.log(res.error);
         } else if (res.data.user == null) {
             console.log(res);
@@ -166,11 +172,23 @@ export function UserProvider({children}: { children: ReactNode }) {
     }
 
     function onConsent() {
+        if (user === null || user.id == null) return;
+        userFinishConsent({
+            user_id: user.id,
+            consent_agreement: true
+        })
+    }
 
+    function onFinishSurvey() {
+        if (user === null || user.id == null) return;
+        userFinishSurvey({
+            user_id: user.id,
+            has_finished: true
+        })
     }
 
     return (
-        <UserContext.Provider value={{user, setUser, balance, setBalance, login, register, logout, incBalance}}>
+        <UserContext.Provider value={{user, setUser, balance, setBalance, login, register, logout, incBalance, onConsent, onFinishSurvey}}>
             {children}
         </UserContext.Provider>
     );
