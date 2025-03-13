@@ -1,5 +1,5 @@
 import {createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState} from "react";
-import {AuthResponse, User} from "@supabase/supabase-js";
+import {AuthResponse, PostgrestError, User} from "@supabase/supabase-js";
 import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataSource.ts";
 import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
 import {UserSignIn} from "@/domain/usecase/UserSignIn.ts";
@@ -13,6 +13,7 @@ import {UserCheckSurvey} from "@/domain/usecase/UserCheckSurvey.ts";
 import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
 import {UserFinishConsent} from "@/domain/usecase/UserFinishConsent.ts";
 import {UserFinishSurvey} from "@/domain/usecase/UserFinishSurvey.ts";
+import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 interface UserContextType {
     user: User | null;
@@ -86,7 +87,13 @@ export function UserProvider({children}: { children: ReactNode }) {
 
     const userCheckConsentUseCase = useMemo(() => new UserCheckConsent(userRepository), [userRepository]);
     const checkConsent = useCallback(async () => {
-        if (user === null) return false;
+        if (user === null) {
+            return {
+                success: false,
+                data: null,
+                error: { message: "User is not logged in", details: "", hint: "", code: "" } as PostgrestError
+            } as BaseSupabaseResponse<boolean>;
+        }
         return await userCheckConsentUseCase.invoke(user.id);
     }, [userCheckConsentUseCase, user])
     const {
@@ -98,9 +105,15 @@ export function UserProvider({children}: { children: ReactNode }) {
 
     const userCheckSurveyUseCase = useMemo(() => new UserCheckSurvey(userRepository), [userRepository]);
     const checkSurvey = useCallback(async () => {
-        if (user === null) return false;
+        if (user === null) {
+            return {
+                success: false,
+                data: null,
+                error: { message: "User is not logged in", details: "", hint: "", code: "" } as PostgrestError
+            } as BaseSupabaseResponse<boolean>;
+        }
         return await userCheckSurveyUseCase.invoke(user.id);
-    }, [userCheckSurveyUseCase, user])
+    }, [userCheckSurveyUseCase, user]);
     const {
         data: hasSurveyData,
         error: hasSurveyError,
