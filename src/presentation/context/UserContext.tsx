@@ -96,8 +96,8 @@ export function UserProvider({children}: { children: ReactNode }) {
     }, [userCheckConsentUseCase, user])
     const {
         data: hasConsentData,
-        error: hasConsentError,
-        loading: hasConsentLoading,
+        // error: hasConsentError,
+        // loading: hasConsentLoading,
         refetch: hasConsentRefetch
     } = useSupabaseQuery(checkConsent);
 
@@ -114,8 +114,8 @@ export function UserProvider({children}: { children: ReactNode }) {
     }, [userCheckSurveyUseCase, user]);
     const {
         data: hasSurveyData,
-        error: hasSurveyError,
-        loading: hasSurveyLoading,
+        // error: hasSurveyError,
+        // loading: hasSurveyLoading,
         refetch: hasSurveyRefetch
     } = useSupabaseQuery(checkSurvey);
 
