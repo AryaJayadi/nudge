@@ -9,19 +9,27 @@ import CustomScrollbar from "@/components/custom-scrollbar"
 import {Question} from "@/domain/model/Question.ts";
 import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserResponseSupabase.ts";
 import {useQuestionnaire} from "@/presentation/context/QuestionnaireContext.tsx";
+import {useUser} from "@/presentation/context/UserContext.tsx";
+import {useNavigate} from "react-router";
 
 export default function Questionnaire() {
+    const {
+        onFinishSurvey
+    } = useUser();
     const {
         loading,
         questions,
         responses,
         submitAnswer
     } = useQuestionnaire();
+    const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(0)
     const [isComplete, setIsComplete] = useState(false)
 
     const containerRef = useRef<HTMLDivElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
+
+    const DEFAULT_PATH = "/app/beranda";
 
     const QUESTIONS_PER_PAGE = 10
     const totalPages = Math.ceil(questions.length / QUESTIONS_PER_PAGE)
@@ -49,9 +57,12 @@ export default function Questionnaire() {
     }
 
     const handleSubmit = () => {
-        // Here you would typically send the answers to your backend
-        submitAnswer();
+        submitAnswer(onFinishSurvey);
         setIsComplete(true)
+    }
+
+    const handleContinue = () => {
+        navigate(DEFAULT_PATH, {replace: true})
     }
 
     if(loading) {
@@ -73,6 +84,11 @@ export default function Questionnaire() {
                         We appreciate your time and input. Your responses will help us improve our services.
                     </p>
                 </CardContent>
+                <CardFooter className="flex justify-end">
+                    <Button onClick={handleContinue}>
+                        Continue
+                    </Button>
+                </CardFooter>
             </Card>
         )
     }
