@@ -48,8 +48,8 @@ export function UserProvider({children}: { children: ReactNode }) {
     const LOGIN_PATH = "/auth/login";
     const REGISTER_PATH = "/auth/register";
     const DEFAULT_PATH = "/app/beranda";
-    const CONSENT_PATH = "/app/consent";
-    const QUESTIONNAIRE_PATH = "/app/questionnaire";
+    const CONSENT_PATH = "/consent";
+    const QUESTIONNAIRE_PATH = "/questionnaire";
     const WHITELIST_PATH = [LOGIN_PATH, REGISTER_PATH]
     const FROM = location.state?.from || DEFAULT_PATH;
 
@@ -151,6 +151,10 @@ export function UserProvider({children}: { children: ReactNode }) {
     function incBalance(amount: number) {
         setBalance((prev) => prev + amount);
         return balance;
+    }
+
+    function onConsent() {
+
     }
 
     return (

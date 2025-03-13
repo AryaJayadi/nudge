@@ -16,6 +16,7 @@ import {AuthResponse, Session} from "@supabase/supabase-js";
 import {QuestionnairePage} from "@/presentation/questionnaire/QuestionnairePage.tsx";
 import {isAuthenticated} from "@/lib/utils.ts";
 import {UserProvider} from "@/presentation/context/UserContext.tsx";
+import {ConsentPage} from "@/presentation/consent/ConsentPage.tsx";
 
 interface ProtectedRouteProps {
     isAuthenticated: (session: Session | null | undefined) => boolean;
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
             {
                 path: "",
                 element: <Navigate to="/app/beranda" replace />
+            },
+            {
+                path: "consent",
+                element: <ConsentPage />
             },
             {
                 path: "questionnaire",
