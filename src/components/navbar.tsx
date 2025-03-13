@@ -16,7 +16,8 @@ import {Link} from "react-router";
 export default function Navbar() {
     const {
         user,
-        balance
+        balance,
+        logout
     } = useUser();
 
     const userName = user?.email ? user.email.split("@")[0] : "loading...";
@@ -59,7 +60,7 @@ export default function Navbar() {
                             <DropdownMenuItem>Profile</DropdownMenuItem>
                             <DropdownMenuItem>Settings</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
+                            <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <div className="md:hidden">

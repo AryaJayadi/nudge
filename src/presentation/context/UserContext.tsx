@@ -134,6 +134,7 @@ export function UserProvider({children}: { children: ReactNode }) {
     }
 
     function logout() {
+        setValue(null);
         setUser(null);
     }
 
