@@ -2,5 +2,7 @@ import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse
 
 export interface TransactionHistoryDataSource {
 
+    getTransactionHistories(userId: string): Promise<BaseSupabaseResponse<TransactionHistory[]>>;
+
     insertTransactionHistories(data: InsertTransactionHistory[]): Promise<BaseSupabaseResponse<TransactionHistory[]>>;
 }

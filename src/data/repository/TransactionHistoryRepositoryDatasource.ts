@@ -8,6 +8,11 @@ export class TransactionHistoryRepositoryDatasource implements TransactionHistor
     constructor(_datasource: TransactionHistoryDataSource) {
         this.datasource = _datasource;
     }
+
+    getTransactionHistories(userId: string): Promise<BaseSupabaseResponse<TransactionHistory[]>> {
+        return this.datasource.getTransactionHistories(userId);
+    }
+
     insertTransactionHistories(data: InsertTransactionHistory[]): Promise<BaseSupabaseResponse<TransactionHistory[]>> {
         return this.datasource.insertTransactionHistories(data);
     }
