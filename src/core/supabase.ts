@@ -1170,6 +1170,87 @@ export type Database = {
         }
         Relationships: []
       }
+      temp_ik_nudgegamification: {
+        Row: {
+          "% Loss": string | null
+          "% Profit": string | null
+          benefits: string | null
+          "Bunga / Potensi Return": string | null
+          category_id: number | null
+          "Default Options": number | null
+          features: string | null
+          "Framing Effect": number | null
+          Gamification: number | null
+          Incentives: number | null
+          "Loss Aversion": string | null
+          "Nudge  Info": string | null
+          Personalization: number | null
+          "Premi / Setoran / Maks. Pinjaman": string | null
+          product_id: string | null
+          product_name: string | null
+          product_title: string | null
+          "Risk Level": string | null
+          risks: string | null
+          "Saldo Awal": number | null
+          Saliency: number | null
+          "Social Proof": number | null
+          "T&C": string | null
+          "Timing (Just-in-Time Nudging)": number | null
+        }
+        Insert: {
+          "% Loss"?: string | null
+          "% Profit"?: string | null
+          benefits?: string | null
+          "Bunga / Potensi Return"?: string | null
+          category_id?: number | null
+          "Default Options"?: number | null
+          features?: string | null
+          "Framing Effect"?: number | null
+          Gamification?: number | null
+          Incentives?: number | null
+          "Loss Aversion"?: string | null
+          "Nudge  Info"?: string | null
+          Personalization?: number | null
+          "Premi / Setoran / Maks. Pinjaman"?: string | null
+          product_id?: string | null
+          product_name?: string | null
+          product_title?: string | null
+          "Risk Level"?: string | null
+          risks?: string | null
+          "Saldo Awal"?: number | null
+          Saliency?: number | null
+          "Social Proof"?: number | null
+          "T&C"?: string | null
+          "Timing (Just-in-Time Nudging)"?: number | null
+        }
+        Update: {
+          "% Loss"?: string | null
+          "% Profit"?: string | null
+          benefits?: string | null
+          "Bunga / Potensi Return"?: string | null
+          category_id?: number | null
+          "Default Options"?: number | null
+          features?: string | null
+          "Framing Effect"?: number | null
+          Gamification?: number | null
+          Incentives?: number | null
+          "Loss Aversion"?: string | null
+          "Nudge  Info"?: string | null
+          Personalization?: number | null
+          "Premi / Setoran / Maks. Pinjaman"?: string | null
+          product_id?: string | null
+          product_name?: string | null
+          product_title?: string | null
+          "Risk Level"?: string | null
+          risks?: string | null
+          "Saldo Awal"?: number | null
+          Saliency?: number | null
+          "Social Proof"?: number | null
+          "T&C"?: string | null
+          "Timing (Just-in-Time Nudging)"?: number | null
+        }
+        Relationships: []
+      }
       temp_ik_nudgemechanism: {
         Row: {
           category_id: number | null
@@ -1203,6 +1284,30 @@ export type Database = {
           record_description?: string | null
           record_name?: string | null
           record_title?: string | null
+        }
+        Relationships: []
+      }
+      temp_ik_nudgeperpage: {
+        Row: {
+          "Category ID": string | null
+          Content: string | null
+          Feedback: string | null
+          "Nudge Elements": string | null
+          "Weight(Jika Tertarik)": string | null
+        }
+        Insert: {
+          "Category ID"?: string | null
+          Content?: string | null
+          Feedback?: string | null
+          "Nudge Elements"?: string | null
+          "Weight(Jika Tertarik)"?: string | null
+        }
+        Update: {
+          "Category ID"?: string | null
+          Content?: string | null
+          Feedback?: string | null
+          "Nudge Elements"?: string | null
+          "Weight(Jika Tertarik)"?: string | null
         }
         Relationships: []
       }
@@ -3140,6 +3245,45 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      transaction_history: {
+        Row: {
+          created_at: string
+          id: number
+          record_id: string | null
+          user_id: string | null
+          win: boolean | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          record_id?: string | null
+          user_id?: string | null
+          win?: boolean | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          record_id?: string | null
+          user_id?: string | null
+          win?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transaction_history_record_id_fkey"
+            columns: ["record_id"]
+            isOneToOne: false
+            referencedRelation: "records"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transaction_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       tw_interaction: {
         Row: {
