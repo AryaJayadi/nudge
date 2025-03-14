@@ -12,4 +12,7 @@ declare global {
 
     type PublicUser = Tables<'users'>;
     type InsertPublicUser = Database["public"]["Tables"]["users"]["Insert"];
+
+    type TransactionHistory = Tables<'transaction_history'>;
+    type InsertTransactionHistory = Database["public"]["Tables"]["transaction_history"]["Insert"];
 }
