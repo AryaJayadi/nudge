@@ -34,23 +34,7 @@ export default function ProductPageViewModel(category: RecordCategory) {
         refetch: recordsRefetch,
     } = useSupabaseQuery(recordGetByCategory)
 
-    const transactionHistoryGetByIdUseCase = useMemo(() => new TransactionHistoryGetById(transactionHistoryRepository), [transactionHistoryRepository]);
-    const getTransactionHistory = useCallback(async () => {
-        if (user === null) {
-            return {
-                success: false,
-                data: null,
-                error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
-            } as BaseSupabaseResponse<TransactionHistory[]>;
-        }
-        return await transactionHistoryGetByIdUseCase.invoke(user.id);
-    }, [transactionHistoryRepository, user]);
-    const {
-        data: transactionHistory,
-        error: transactionHistoryError,
-        loading: transactionHistoryLoading,
-        refetch: transactionHistoryRefetch,
-    } = useSupabaseQuery(getTransactionHistory)
+    
 
     function onPurchaseWin(amount: number, profit: number) {
         const res = amount * (profit / 100);
@@ -67,10 +51,6 @@ export default function ProductPageViewModel(category: RecordCategory) {
         recordsError,
         recordsLoading,
         recordsRefetch,
-        transactionHistory,
-        transactionHistoryError,
-        transactionHistoryLoading,
-        transactionHistoryRefetch,
         onPurchaseWin,
         onPurchaseLose
     }
