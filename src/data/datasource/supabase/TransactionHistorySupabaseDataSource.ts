@@ -16,24 +16,7 @@ export class TransactionHistorySupabaseDataSource implements TransactionHistoryD
     async getTransactionHistoriesWithDetails(userId: string): Promise<BaseSupabaseResponse<TransactionHistoryWithDetails[]>> {
         const res = await supabase
             .from("transaction_history")
-            .select(`
-              id,
-              created_at,
-              win,
-              record_id,
-              user_id,
-              records:record_id (
-                id,
-                record_name,
-                record_description,
-                record_code,
-                record_title,
-                record_categories:category_id (
-                  id,
-                  category_name
-                )
-              )
-            `)
+            .select("*, records(*, record_categories(*))")
             .eq('user_id', userId)
             .order('created_at', { ascending: false });
 

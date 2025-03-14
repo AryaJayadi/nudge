@@ -1,8 +1,12 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
 import TransactionHistoryCard from "@/components/transaction-history-card.tsx";
+import useViewModel from "./BerandaPageViewModel.ts"
 
 export const BerandaPage = () => {
+    const {
+
+    } = useViewModel();
     return (
         <>
             <Card className="bg-gradient-to-r from-yellow-100 to-yellow-200 border-yellow-300">

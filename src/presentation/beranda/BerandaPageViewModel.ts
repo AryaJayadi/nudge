@@ -1,4 +1,4 @@
-import {useCallback, useMemo} from "react";
+import {useCallback, useEffect, useMemo} from "react";
 import {TransactionHistorySupabaseDataSource} from "@/data/datasource/supabase/TransactionHistorySupabaseDataSource.ts";
 import {TransactionHistoryRepositoryDatasource} from "@/data/repository/TransactionHistoryRepositoryDatasource.ts";
 import {useUser} from "@/presentation/context/UserContext.tsx";
@@ -6,6 +6,7 @@ import {TransactionHistoryGetById} from "@/domain/usecase/TransactionHistoryGetB
 import {PostgrestError} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
+import {TransactionHistoryGetWithDetails} from "@/domain/usecase/TransactionHistoryGetWithDetails.ts";
 
 export default function BerandaPageViewModel() {
     const {
@@ -15,28 +16,23 @@ export default function BerandaPageViewModel() {
     const transactionHistoryDataSource = useMemo(() => new TransactionHistorySupabaseDataSource(), []);
     const transactionHistoryRepository = useMemo(() => new TransactionHistoryRepositoryDatasource(transactionHistoryDataSource), [transactionHistoryDataSource]);
 
-    const transactionHistoryGetByIdUseCase = useMemo(() => new TransactionHistoryGetById(transactionHistoryRepository), [transactionHistoryRepository]);
-    const getTransactionHistory = useCallback(async () => {
+    const transactionHistoryGetWithDetailsUseCase = useMemo(() => new TransactionHistoryGetWithDetails(transactionHistoryDataSource), [transactionHistoryDataSource]);
+    const getTransactionHistories = useCallback(async () => {
         if (user === null) {
             return {
                 success: false,
                 data: null,
                 error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
-            } as BaseSupabaseResponse<TransactionHistory[]>;
+            } as BaseSupabaseResponse<TransactionHistoryWithDetails[]>;
         }
-        return await transactionHistoryGetByIdUseCase.invoke(user.id);
-    }, [transactionHistoryRepository, user]);
-    const {
-        data: transactionHistory,
-        error: transactionHistoryError,
-        loading: transactionHistoryLoading,
-        refetch: transactionHistoryRefetch,
-    } = useSupabaseQuery(getTransactionHistory)
+        return await transactionHistoryGetWithDetailsUseCase.invoke(user.id);
+    }, [transactionHistoryGetWithDetailsUseCase, user])
+
+    useEffect(() => {
+        getTransactionHistories()
+    }, []);
 
     return {
-        transactionHistory,
-        transactionHistoryError,
-        transactionHistoryLoading,
-        transactionHistoryRefetch
+
     }
 }
