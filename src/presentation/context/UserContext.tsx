@@ -175,20 +175,23 @@ export function UserProvider({children}: { children: ReactNode }) {
             return res;
         }
 
-        await Promise.allSettled([
-            publicUserInsert({
-                id: res.data.user.id,
-                email: res.data.user.email
-            }),
-            userFinishConsent({
-                user_id: res.data.user.id,
-                consent_agreement: false
-            }),
-            userFinishSurvey({
-                user_id: res.data.user.id,
-                has_finished: false
-            })
-        ]);
+        const userId = res.data.user.id;
+
+        publicUserInsert({
+            id: userId,
+            email: res.data.user.email
+        }).then(async () => {
+            await Promise.allSettled([
+                userFinishConsent({
+                    user_id: userId,
+                    consent_agreement: false
+                }),
+                userFinishSurvey({
+                    user_id: userId,
+                    has_finished: false
+                })
+            ]);
+        })
 
         navigate(LOGIN_PATH, {replace: true});
 
