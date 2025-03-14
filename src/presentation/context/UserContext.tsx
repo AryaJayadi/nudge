@@ -89,7 +89,7 @@ export function UserProvider({children}: { children: ReactNode }) {
             return {
                 success: false,
                 data: null,
-                error: { message: "User is not logged in", details: "", hint: "", code: "" } as PostgrestError
+                error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
             } as BaseSupabaseResponse<boolean>;
         }
         return await userCheckConsentUseCase.invoke(user.id);
@@ -107,7 +107,7 @@ export function UserProvider({children}: { children: ReactNode }) {
             return {
                 success: false,
                 data: null,
-                error: { message: "User is not logged in", details: "", hint: "", code: "" } as PostgrestError
+                error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
             } as BaseSupabaseResponse<boolean>;
         }
         return await userCheckSurveyUseCase.invoke(user.id);
@@ -163,9 +163,22 @@ export function UserProvider({children}: { children: ReactNode }) {
 
         if (res.error) {
             console.log(res.error);
+            return res;
         } else if (res.data.user == null) {
             console.log(res);
+            return res;
         }
+
+        await Promise.allSettled([
+            userFinishConsent({
+                user_id: res.data.user.id,
+                consent_agreement: false
+            }),
+            userFinishSurvey({
+                user_id: res.data.user.id,
+                has_finished: false
+            })
+        ]);
 
         navigate(LOGIN_PATH, {replace: true});
 
@@ -187,7 +200,7 @@ export function UserProvider({children}: { children: ReactNode }) {
         userFinishConsent({
             user_id: user.id,
             consent_agreement: true
-        })
+        });
     }
 
     function onFinishSurvey() {
@@ -195,11 +208,22 @@ export function UserProvider({children}: { children: ReactNode }) {
         userFinishSurvey({
             user_id: user.id,
             has_finished: true
-        })
+        });
     }
 
     return (
-        <UserContext.Provider value={{user, setUser, balance, setBalance, login, register, logout, incBalance, onConsent, onFinishSurvey}}>
+        <UserContext.Provider value={{
+            user,
+            setUser,
+            balance,
+            setBalance,
+            login,
+            register,
+            logout,
+            incBalance,
+            onConsent,
+            onFinishSurvey
+        }}>
             {children}
         </UserContext.Provider>
     );
