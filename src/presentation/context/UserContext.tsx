@@ -13,6 +13,7 @@ import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
 import {UserFinishConsent} from "@/domain/usecase/UserFinishConsent.ts";
 import {UserFinishSurvey} from "@/domain/usecase/UserFinishSurvey.ts";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
+import {PublicUserInsert} from "@/domain/usecase/PublicUserInsert.tsx";
 
 interface UserContextType {
     user: User | null;
@@ -71,7 +72,12 @@ export function UserProvider({children}: { children: ReactNode }) {
     const userSignUpUseCase = useMemo(() => new UserSignUp(userRepository), [userRepository]);
     const userSignUp = useCallback(async (email: string, password: string) => {
         return await userSignUpUseCase.invoke(email, password);
-    }, [userSignUpUseCase])
+    }, [userSignUpUseCase]);
+
+    const publicUserInsertUseCase = useMemo(() => new PublicUserInsert(userRepository), [userRepository]);
+    const publicUserInsert = useCallback(async (data: InsertPublicUser) => {
+        return await publicUserInsertUseCase.invoke(data);
+    }, [publicUserInsertUseCase]);
 
     const userFinishConsentUseCase = useMemo(() => new UserFinishConsent(userRepository), [userRepository]);
     const userFinishConsent = useCallback(async (form: InsertUserConsentForm) => {
@@ -170,6 +176,10 @@ export function UserProvider({children}: { children: ReactNode }) {
         }
 
         await Promise.allSettled([
+            publicUserInsert({
+                id: res.data.user.id,
+                email: res.data.user.email
+            }),
             userFinishConsent({
                 user_id: res.data.user.id,
                 consent_agreement: false
