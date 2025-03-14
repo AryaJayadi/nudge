@@ -13,7 +13,7 @@ import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
 import {UserFinishConsent} from "@/domain/usecase/UserFinishConsent.ts";
 import {UserFinishSurvey} from "@/domain/usecase/UserFinishSurvey.ts";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
-import {PublicUserInsert} from "@/domain/usecase/PublicUserInsert.tsx";
+import {PublicUserInsert} from "@/domain/usecase/PublicUserInsert.ts";
 
 interface UserContextType {
     user: User | null;
