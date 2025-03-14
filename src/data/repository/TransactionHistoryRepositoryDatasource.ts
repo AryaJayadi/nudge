@@ -13,6 +13,10 @@ export class TransactionHistoryRepositoryDatasource implements TransactionHistor
         return this.datasource.getTransactionHistories(userId);
     }
 
+    getTransactionHistoriesWithDetails(userId: string): Promise<BaseSupabaseResponse<TransactionHistoryWithDetails[]>> {
+        return this.datasource.getTransactionHistoriesWithDetails(userId);
+    }
+
     insertTransactionHistories(data: InsertTransactionHistory[]): Promise<BaseSupabaseResponse<TransactionHistory[]>> {
         return this.datasource.insertTransactionHistories(data);
     }
