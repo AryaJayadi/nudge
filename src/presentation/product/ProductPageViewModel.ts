@@ -40,14 +40,9 @@ export default function ProductPageViewModel(category: RecordCategory) {
         return await transactionHistoryInsertUseCase.invoke(data);
     }, [transactionHistoryInsertUseCase])
 
-    function onPurchaseWin(amount: number, profit: number) {
+    function onPurchase(amount: number, profit: number, win: boolean) {
         const res = amount * (profit / 100);
-        incBalance(res);
-    }
-
-    function onPurchaseLose(amount: number, profit: number) {
-        const res = amount * (profit / 100);
-        incBalance(-res);
+        incBalance(win ? res : -res);
     }
 
     return {
@@ -55,7 +50,6 @@ export default function ProductPageViewModel(category: RecordCategory) {
         recordsError,
         recordsLoading,
         recordsRefetch,
-        onPurchaseWin,
-        onPurchaseLose
+        onPurchase
     }
 }

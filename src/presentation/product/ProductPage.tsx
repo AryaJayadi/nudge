@@ -14,8 +14,7 @@ export const ProductPage = ({category}: Props) => {
         records,
         recordsError,
         recordsLoading,
-        onPurchaseWin,
-        onPurchaseLose
+        onPurchase
     } = useViewModel(category);
 
     const length = 4;
@@ -44,8 +43,7 @@ export const ProductPage = ({category}: Props) => {
                             profit={12.5}
                             price={5000000}
                             risk={30}
-                            onWin={onPurchaseWin}
-                            onLose={onPurchaseLose}
+                            onPurchase={onPurchase}
                         />
                         <ProductCard
                             key={index}

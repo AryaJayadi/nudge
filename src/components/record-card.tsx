@@ -10,11 +10,10 @@ interface RecordCardProps {
     profit: number
     price: number
     risk: number
-    onWin: (amt: number, profit: number) => void
-    onLose: (amt: number, profit: number) => void
+    onPurchase: (amt: number, profit: number, win: boolean) => void
 }
 
-export default function RecordCard({title, description, profit, price, risk, onWin, onLose}: RecordCardProps) {
+export default function RecordCard({title, description, profit, price, risk, onPurchase}: RecordCardProps) {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     return (
@@ -53,8 +52,7 @@ export default function RecordCard({title, description, profit, price, risk, onW
                 profit={profit}
                 price={price}
                 risk={risk}
-                onWin={onWin}
-                onLose={onLose}
+                onPurchase={onPurchase}
             />
         </>
     )

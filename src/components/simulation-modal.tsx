@@ -16,11 +16,10 @@ interface SimulationModalProps {
     profit: number
     price: number
     risk: number
-    onWin: (amt: number, profit: number) => void
-    onLose: (amt: number, profit: number) => void
+    onPurchase(amt: number, profit: number, win: boolean): void;
 }
 
-export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, onLose}: SimulationModalProps) {
+export function SimulationModal({isOpen, onClose, profit, price, risk, onPurchase}: SimulationModalProps) {
     const [isSimulating, setIsSimulating] = useState(false)
     const [currentNumber, setCurrentNumber] = useState<number | null>(null)
     const [result, setResult] = useState<"win" | "lose" | null>()
@@ -99,9 +98,9 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, on
 
     useEffect(() => {
         if (result === "win") {
-            onWin(price, profit)
+            onPurchase(price, profit, true)
         } else if (result === "lose") {
-            onLose(price, profit)
+            onPurchase(price, profit, false)
         }
     }, [result]);
 
@@ -179,11 +178,9 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, onWin, on
                         {result ? "Close" : "Cancel"}
                     </Button>
                     {!isSimulating && !result && (
-                        <>
-                            <Button onClick={startSimulation} className="bg-blue-600 hover:bg-blue-700">
-                                Simulate
-                            </Button>
-                        </>
+                        <Button onClick={startSimulation} className="bg-blue-600 hover:bg-blue-700">
+                            Simulate
+                        </Button>
                     )}
                 </DialogFooter>
             </DialogContent>
