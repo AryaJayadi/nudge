@@ -10,6 +10,7 @@ import {TransactionHistoryRepositoryDatasource} from "@/data/repository/Transact
 import {TransactionHistoryGetById} from "@/domain/usecase/TransactionHistoryGetById.ts";
 import {PostgrestError} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
+import {TransactionHistoryInsert} from "@/domain/usecase/TransactionHistoryInsert.ts";
 
 export default function ProductPageViewModel(category: RecordCategory) {
     const {
@@ -34,7 +35,10 @@ export default function ProductPageViewModel(category: RecordCategory) {
         refetch: recordsRefetch,
     } = useSupabaseQuery(recordGetByCategory)
 
-    
+    const transactionHistoryInsertUseCase = useMemo(() => new TransactionHistoryInsert(transactionHistoryRepository), [transactionHistoryRepository]);
+    const insertTransactionHistory = useCallback(async (data: InsertTransactionHistory[]) => {
+        return await transactionHistoryInsertUseCase.invoke(data);
+    }, [transactionHistoryInsertUseCase])
 
     function onPurchaseWin(amount: number, profit: number) {
         const res = amount * (profit / 100);
