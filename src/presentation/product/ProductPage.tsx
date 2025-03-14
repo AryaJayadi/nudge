@@ -43,6 +43,7 @@ export const ProductPage = ({category}: Props) => {
                             profit={12.5}
                             price={5000000}
                             risk={30}
+                            record={o}
                             onPurchase={onPurchase}
                         />
                         <ProductCard

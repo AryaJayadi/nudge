@@ -3,6 +3,7 @@ import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import {SimulationModal} from "@/components/simulation-modal"
 import {formatCurrency} from "@/lib/utils.ts";
+import {Record} from "@/domain/model/Record.ts";
 
 interface RecordCardProps {
     title: string
@@ -10,10 +11,11 @@ interface RecordCardProps {
     profit: number
     price: number
     risk: number
-    onPurchase: (amt: number, profit: number, win: boolean) => void
+    record: Record;
+    onPurchase: (record: Record, win: boolean) => void;
 }
 
-export default function RecordCard({title, description, profit, price, risk, onPurchase}: RecordCardProps) {
+export default function RecordCard({title, description, profit, price, risk, record, onPurchase}: RecordCardProps) {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     return (
@@ -52,6 +54,7 @@ export default function RecordCard({title, description, profit, price, risk, onP
                 profit={profit}
                 price={price}
                 risk={risk}
+                record={record}
                 onPurchase={onPurchase}
             />
         </>
