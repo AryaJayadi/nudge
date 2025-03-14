@@ -1,4 +1,5 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
+import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
 
 export const BerandaPage = () => {
     return (
@@ -24,6 +25,8 @@ export const BerandaPage = () => {
                     </p>
                 </CardContent>
             </Card>
+
+            <NudgeRecommendation />
         </>
     )
 }
