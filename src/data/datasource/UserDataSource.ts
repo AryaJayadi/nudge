@@ -14,4 +14,6 @@ export default interface UserDataSource {
     insertUserConsent(data: InsertUserConsentForm): Promise<BaseSupabaseResponse<UserConsentForm>>;
 
     insertUserFinishSurvey(data: InsertUserFinishSurvey): Promise<BaseSupabaseResponse<UserFinishSurveys>>;
+
+    insertPublicUser(data: InsertPublicUser): Promise<BaseSupabaseResponse<PublicUser>>;
 }

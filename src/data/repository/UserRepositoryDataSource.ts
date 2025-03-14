@@ -1,6 +1,8 @@
 import {UserRepository} from "@/domain/repository/UserRepository.ts";
 import {AuthResponse} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
+import {InsertUserConsentForm} from "@/domain/model/request/InsertUserConsentForm.ts";
+import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
 
 export class UserRepositoryDataSource implements UserRepository {
     datasource: UserRepository;
@@ -31,5 +33,9 @@ export class UserRepositoryDataSource implements UserRepository {
 
     insertUserFinishSurvey(data: InsertUserFinishSurvey): Promise<BaseSupabaseResponse<UserFinishSurveys>> {
         return this.datasource.insertUserFinishSurvey(data);
+    }
+
+    insertPublicUser(data: InsertPublicUser): Promise<BaseSupabaseResponse<PublicUser>> {
+        return this.datasource.insertPublicUser(data);
     }
 }

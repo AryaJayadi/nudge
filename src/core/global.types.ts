@@ -9,4 +9,7 @@ declare global {
 
     type UserResponses = Tables<'user_responses'>;
     type InsertUserResponse = Database["public"]["Tables"]["user_responses"]["Insert"];
+
+    type PublicUser = Tables<'users'>;
+    type InsertPublicUser = Database["public"]["Tables"]["users"]["Insert"];
 }

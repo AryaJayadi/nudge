@@ -2,6 +2,8 @@ import UserDataSource from "@/data/datasource/UserDataSource.ts";
 import supabase from "@/core/DatabaseSupabase.tsx";
 import {AuthResponse} from "@supabase/supabase-js";
 import {BaseSupabaseResponse, mapSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
+import {InsertUserConsentForm} from "@/domain/model/request/InsertUserConsentForm.ts";
+import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
 
 export default class UserSupabaseDataSource implements UserDataSource {
 
@@ -63,5 +65,19 @@ export default class UserSupabaseDataSource implements UserDataSource {
             }
             return null;
         });
+    }
+
+    async insertPublicUser(data: InsertPublicUser): Promise<BaseSupabaseResponse<PublicUser>> {
+        const res = await supabase
+            .from("users")
+            .upsert(data)
+            .select();
+
+        return mapSupabaseResponse(res, (data) => {
+            if (data && Array.isArray(data) && data.length > 0) {
+                return data[0] as PublicUser;
+            }
+            return null;
+        })
     }
 }
