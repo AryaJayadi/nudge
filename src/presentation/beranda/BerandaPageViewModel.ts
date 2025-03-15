@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import {TransactionHistorySupabaseDataSource} from "@/data/datasource/supabase/TransactionHistorySupabaseDataSource.ts";
 import {TransactionHistoryRepositoryDatasource} from "@/data/repository/TransactionHistoryRepositoryDatasource.ts";
 import {useUser} from "@/presentation/context/UserContext.tsx";
@@ -12,6 +12,7 @@ export default function BerandaPageViewModel() {
     const {
         user
     } = useUser();
+    const [transactions, setTransactions] = useState<TransactionHistoryWithDetails[]>([])
 
     const transactionHistoryDataSource = useMemo(() => new TransactionHistorySupabaseDataSource(), []);
     const transactionHistoryRepository = useMemo(() => new TransactionHistoryRepositoryDatasource(transactionHistoryDataSource), [transactionHistoryDataSource]);
@@ -29,10 +30,15 @@ export default function BerandaPageViewModel() {
     }, [transactionHistoryGetWithDetailsUseCase, user])
 
     useEffect(() => {
-        getTransactionHistories()
-    }, []);
+        if (user) {
+            getTransactionHistories()
+                .then((res) => {
+                    if(res.error === null) setTransactions(res.data);
+                })
+        }
+    }, [user]);
 
     return {
-
+        transactions
     }
 }
