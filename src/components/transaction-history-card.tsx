@@ -1,56 +1,34 @@
-import { ArrowRight, ArrowUpRight, ArrowDownLeft, ShoppingCart, CreditCard } from "lucide-react"
-
+import {
+    ArrowRight,
+    CreditCard,
+    PiggyBank,
+    TrendingUp,
+    Shield
+} from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {Link} from "react-router";
 
-const transactions = [
-    {
-        id: "1",
-        description: "Transfer ke Budi",
-        date: "24 Jun 2023",
-        amount: "-Rp 250.000",
-        type: "outgoing",
-    },
-    {
-        id: "2",
-        description: "Terima dari Sarah",
-        date: "22 Jun 2023",
-        amount: "+Rp 500.000",
-        type: "incoming",
-    },
-    {
-        id: "3",
-        description: "Pembayaran Listrik",
-        date: "20 Jun 2023",
-        amount: "-Rp 350.000",
-        type: "bill",
-    },
-    {
-        id: "4",
-        description: "Belanja Supermarket",
-        date: "18 Jun 2023",
-        amount: "-Rp 175.000",
-        type: "shopping",
-    },
-]
-
-const getTransactionIcon = (type: string) => {
-    switch (type) {
-        case "outgoing":
-            return <ArrowUpRight className="h-4 w-4 text-red-500" />
-        case "incoming":
-            return <ArrowDownLeft className="h-4 w-4 text-green-500" />
-        case "shopping":
-            return <ShoppingCart className="h-4 w-4 text-blue-500" />
-        case "bill":
-            return <CreditCard className="h-4 w-4 text-orange-500" />
+const getTransactionIcon = (categoryId: number | null) => {
+    switch (categoryId) {
+        case 1:
+            return <PiggyBank className="h-4 w-4" />
+        case 2:
+            return <CreditCard className="h-4 w-4" />
+        case 3:
+            return <TrendingUp className="h-4 w-4" />
+        case 4:
+            return <Shield className="h-4 w-4" />
         default:
-            return <CreditCard className="h-4 w-4 text-gray-500" />
+            return <CreditCard className="h-4 w-4" />
     }
 }
 
-export default function TransactionHistoryCard() {
+interface Props {
+    transactions: TransactionHistoryWithDetails[];
+}
+
+export default function TransactionHistoryCard({transactions}: Props) {
     return (
         <Card className="w-full max-w-md">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -68,17 +46,17 @@ export default function TransactionHistoryCard() {
                         <div key={transaction.id} className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
                                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-muted">
-                                    {getTransactionIcon(transaction.type)}
+                                    {getTransactionIcon(transaction.records.category_id)}
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium leading-none">{transaction.description}</p>
-                                    <p className="text-xs text-muted-foreground">{transaction.date}</p>
+                                    <p className="text-sm font-medium leading-none">{transaction.records.record_title}</p>
+                                    <p className="text-xs text-muted-foreground">{transaction.created_at}</p>
                                 </div>
                             </div>
                             <div
-                                className={`text-sm font-medium ${transaction.amount.startsWith("+") ? "text-green-600" : "text-red-600"}`}
+                                className={`text-sm font-medium ${transaction.win ? "text-green-600" : "text-red-600"}`}
                             >
-                                {transaction.amount}
+                                {1000000}
                             </div>
                         </div>
                     ))}

@@ -21,7 +21,7 @@ declare global {
     type RecordCategory = Tables<'record_categories'>
 
     type TransactionHistoryWithDetails = TransactionHistory & {
-        record: Record & {
+        records: Record & {
             category: RecordCategory;
         }
     }

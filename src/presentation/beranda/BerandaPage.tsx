@@ -5,7 +5,7 @@ import useViewModel from "./BerandaPageViewModel.ts"
 
 export const BerandaPage = () => {
     const {
-
+        transactions
     } = useViewModel();
     return (
         <>
@@ -31,9 +31,9 @@ export const BerandaPage = () => {
                 </CardContent>
             </Card>
 
-            <NudgeRecommendation />
+            <NudgeRecommendation/>
 
-            <TransactionHistoryCard />
+            <TransactionHistoryCard transactions={transactions}/>
         </>
     )
 }

@@ -17,7 +17,7 @@ export default function BerandaPageViewModel() {
     const transactionHistoryDataSource = useMemo(() => new TransactionHistorySupabaseDataSource(), []);
     const transactionHistoryRepository = useMemo(() => new TransactionHistoryRepositoryDatasource(transactionHistoryDataSource), [transactionHistoryDataSource]);
 
-    const transactionHistoryGetWithDetailsUseCase = useMemo(() => new TransactionHistoryGetWithDetails(transactionHistoryDataSource), [transactionHistoryDataSource]);
+    const transactionHistoryGetWithDetailsUseCase = useMemo(() => new TransactionHistoryGetWithDetails(transactionHistoryRepository), [transactionHistoryRepository]);
     const getTransactionHistories = useCallback(async () => {
         if (user === null) {
             return {
