@@ -27,3 +27,8 @@ export function isAuthenticated(session: Session | null | undefined): boolean {
     return false;
   }
 }
+
+export function formatDate(isoString: string) {
+  const date = new Date(isoString);
+  return new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short" }).format(date);
+};

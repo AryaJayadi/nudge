@@ -1,7 +1,7 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
-import TransactionHistoryCard from "@/components/transaction-history-card.tsx";
 import useViewModel from "./BerandaPageViewModel.ts"
+import {TransactionHistoryCard} from "@/components/transaction-history-card.tsx";
 
 export const BerandaPage = () => {
     const {
