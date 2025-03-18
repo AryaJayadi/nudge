@@ -16,12 +16,12 @@ declare global {
     type TransactionHistory = Tables<'transaction_history'>;
     type InsertTransactionHistory = Database["public"]["Tables"]["transaction_history"]["Insert"];
 
-    type Record = Tables<'records'>
+    type Records = Tables<'records'>
 
     type RecordCategory = Tables<'record_categories'>
 
     type TransactionHistoryWithDetails = TransactionHistory & {
-        records: Record & {
+        records: Records & {
             category: RecordCategory;
         }
     }
