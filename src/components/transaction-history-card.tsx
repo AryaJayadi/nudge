@@ -30,18 +30,6 @@ interface Props {
 }
 
 export const TransactionHistoryCard = ({transactions}: Props) => {
-    const LENGTH = 4;
-
-    function processTransactions(transactions: TransactionHistoryWithDetails[]) : TransactionHistoryWithDetails[] {
-        let res = [];
-        const len = transactions.length;
-        if(len > LENGTH) {
-            for(let i = 0; i < LENGTH; i++) res.push(transactions[i]);
-        } else if (len < LENGTH) {
-            for (let i = 0; i < len; i++) res.push(transactions[i]);
-        }
-        return transactions;
-    }
 
     return (
         <Card className="w-full max-w-md">

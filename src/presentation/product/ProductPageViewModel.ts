@@ -7,9 +7,6 @@ import {useUser} from "@/presentation/context/UserContext.tsx";
 import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
 import {TransactionHistorySupabaseDataSource} from "@/data/datasource/supabase/TransactionHistorySupabaseDataSource.ts";
 import {TransactionHistoryRepositoryDatasource} from "@/data/repository/TransactionHistoryRepositoryDatasource.ts";
-import {TransactionHistoryGetById} from "@/domain/usecase/TransactionHistoryGetById.ts";
-import {PostgrestError} from "@supabase/supabase-js";
-import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 import {TransactionHistoryInsert} from "@/domain/usecase/TransactionHistoryInsert.ts";
 import {Record} from "@/domain/model/Record.ts";
 

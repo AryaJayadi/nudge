@@ -2,10 +2,8 @@ import {useCallback, useEffect, useMemo, useState} from "react";
 import {TransactionHistorySupabaseDataSource} from "@/data/datasource/supabase/TransactionHistorySupabaseDataSource.ts";
 import {TransactionHistoryRepositoryDatasource} from "@/data/repository/TransactionHistoryRepositoryDatasource.ts";
 import {useUser} from "@/presentation/context/UserContext.tsx";
-import {TransactionHistoryGetById} from "@/domain/usecase/TransactionHistoryGetById.ts";
 import {PostgrestError} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
-import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
 import {TransactionHistoryGetWithDetails} from "@/domain/usecase/TransactionHistoryGetWithDetails.ts";
 
 export default function BerandaPageViewModel() {
@@ -33,7 +31,7 @@ export default function BerandaPageViewModel() {
         if (user) {
             getTransactionHistories()
                 .then((res) => {
-                    if(res.error === null) setTransactions(res.data);
+                    if(res.data !== null) setTransactions(res.data);
                 })
         }
     }, [user]);
