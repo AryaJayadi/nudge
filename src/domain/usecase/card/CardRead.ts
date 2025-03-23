@@ -12,7 +12,7 @@ export class CardRead implements CardReadUseCase {
     constructor(_repository: CardRepository) {
         this.repository = _repository;
     }
-    
+
     invoke(): Promise<BaseSupabaseResponse<Card[]>> {
         return this.repository.read();
     }
