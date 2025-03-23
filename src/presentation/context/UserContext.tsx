@@ -5,7 +5,6 @@ import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSour
 import {UserSignIn} from "@/domain/usecase/user/UserSignIn.ts";
 import {UserSignUp} from "@/domain/usecase/user/UserSignUp.ts";
 import {useLocalStorage} from "usehooks-ts";
-import {isAuthenticated} from "@/lib/utils.ts";
 import {useLocation, useNavigate} from "react-router";
 import {UserCheckConsent} from "@/domain/usecase/UserCheckConsent.ts";
 import {UserCheckSurvey} from "@/domain/usecase/UserCheckSurvey.ts";
