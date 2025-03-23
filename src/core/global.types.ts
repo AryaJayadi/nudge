@@ -20,6 +20,8 @@ declare global {
     type UserFinishSurveys = Tables<'user_finish_surveys'>;
     type InsertUserFinishSurvey = DB["user_finish_surveys"]["Insert"];
 
+    type Product = Tables<'nudge_product'>
+
     type UserResponses = Tables<'user_responses'>;
     type InsertUserResponse = DB["user_responses"]["Insert"];
 
