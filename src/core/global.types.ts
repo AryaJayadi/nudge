@@ -34,6 +34,8 @@ declare global {
         }
     }
 
+    type Card = Tables<'nudge_card'>
+
     type UserResponses = Tables<'user_responses'>;
     type InsertUserResponse = DB["user_responses"]["Insert"];
 
