@@ -24,19 +24,11 @@ export default function ProductPageViewModel(categoryId: number) {
         incBalance
     } = useUser();
 
-    const transactionHistoryDataSource = useMemo(() => new TransactionHistorySupabaseDataSource(), []);
-    const transactionHistoryRepository = useMemo(() => new TransactionHistoryRepositoryDatasource(transactionHistoryDataSource), [transactionHistoryDataSource]);
-
     const productDataSource = useMemo(() => new ProductSupabaseDataSource(), []);
     const productRepository = useMemo(() => new ProductRepositoryDataSource(productDataSource), [productDataSource]);
 
     const userTransactionDataSource = useMemo(() => new UserTransactionSupabaseDataSource(), []);
     const userTransactionRepository = useMemo(() => new UserTransactionRepositoryDataSource(userTransactionDataSource), [userTransactionDataSource]);
-
-    const transactionHistoryInsertUseCase = useMemo(() => new TransactionHistoryInsert(transactionHistoryRepository), [transactionHistoryRepository]);
-    const insertTransactionHistory = useCallback(async (data: InsertTransactionHistory[]) => {
-        return await transactionHistoryInsertUseCase.invoke(data);
-    }, [transactionHistoryInsertUseCase])
 
     const productReadByCategoryUseCase = useMemo(() => new ProductReadyByCategory(productRepository), [productRepository]);
     const productRead = useCallback(async () => {
