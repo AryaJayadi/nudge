@@ -96,7 +96,7 @@ export default class UserSupabaseDataSource implements UserDataSource {
     }
 
     async update(uid: string, data: UpdateUser): Promise<BaseSupabaseResponse<User>> {
-        const res = this.table
+        const res = await this.table
             .update(data)
             .eq("id", uid)
             .select();
