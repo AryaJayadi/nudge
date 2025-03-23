@@ -2,5 +2,7 @@ import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse
 
 export interface ProductRepository {
 
-    read(): Promise<BaseSupabaseResponse<Product[]>>
+    read(): Promise<BaseSupabaseResponse<Product[]>>;
+
+    readByCategory(categoryId: number): Promise<BaseSupabaseResponse<Product[]>>;
 }

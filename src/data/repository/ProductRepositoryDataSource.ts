@@ -13,4 +13,8 @@ export class ProductRepositoryDataSource implements ProductRepository {
     read(): Promise<BaseSupabaseResponse<Product[]>> {
         return this.datasource.read();
     }
+
+    readByCategory(categoryId: number): Promise<BaseSupabaseResponse<Product[]>> {
+        return this.datasource.readByCategory(categoryId);
+    }
 }
