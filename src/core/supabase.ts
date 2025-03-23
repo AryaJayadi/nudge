@@ -923,6 +923,7 @@ export type Database = {
       }
       nudge_user: {
         Row: {
+          balance: number
           created_at: string
           email: string | null
           id: string
@@ -930,6 +931,7 @@ export type Database = {
           phone: string | null
         }
         Insert: {
+          balance?: number
           created_at?: string
           email?: string | null
           id?: string
@@ -937,6 +939,7 @@ export type Database = {
           phone?: string | null
         }
         Update: {
+          balance?: number
           created_at?: string
           email?: string | null
           id?: string
