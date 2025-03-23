@@ -27,8 +27,6 @@ import {UserUpdate} from "@/domain/usecase/user/UserUpdate.ts";
 interface UserContextType {
     user: User | null;
     setUser: (value: (((prevState: (User | null)) => (User | null)) | User | null)) => void;
-    balance: number;
-    setBalance: (value: (((prevState: number) => number) | number)) => void;
     login: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
     register: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
     updateUser: (data: UpdateUser) => Promise<BaseSupabaseResponse<User>>;
@@ -41,9 +39,6 @@ interface UserContextType {
 const UserContext = createContext<UserContextType>({
     user: null,
     setUser: () => {
-    },
-    balance: 0,
-    setBalance: () => {
     },
     login: async () => Promise.reject(new Error("No UserProvider found")),
     register: async () => Promise.reject(new Error("No UserProvider found")),
@@ -60,7 +55,6 @@ const UserContext = createContext<UserContextType>({
 export function UserProvider({children}: { children: ReactNode }) {
     const [value, setValue,] = useLocalStorage<User | null>('auth', null)
     const [user, setUser] = useState<User | null>(null);
-    const [balance, setBalance] = useState<number>(1000000000);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -226,11 +220,11 @@ export function UserProvider({children}: { children: ReactNode }) {
     }
 
     function incBalance(amount: number) {
+        const res = user?.balance + amount;
         updateUser({
-            balance: user?.balance + amount
+            balance: res
         });
-        setBalance((prev) => prev + amount);
-        return balance;
+        return res;
     }
 
     function onConsent() {
@@ -251,8 +245,6 @@ export function UserProvider({children}: { children: ReactNode }) {
         <UserContext.Provider value={{
             user,
             setUser,
-            balance,
-            setBalance,
             login,
             register,
             updateUser,
