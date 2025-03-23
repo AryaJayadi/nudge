@@ -56,13 +56,15 @@ export default function ProductPageViewModel(categoryId: number) {
 
     function onPurchase(product: Product, win: boolean) {
         if(user === null) return;
+        const multiplier = win ? product.profit : product.loss;
+        const res = product.saldo_awal * multiplier * (win ? 1 : -1);
         userTransactionCreate({
             nudge_user_id: user.id,
             nudge_product_id: product.id,
-            win: win
+            win: win,
+            price: res
         } as InsertUserTransaction)
-        const res = 5000000 * (12.5 / 100);
-        incBalance(win ? res : -res);
+        incBalance(res);
     }
 
     return {
