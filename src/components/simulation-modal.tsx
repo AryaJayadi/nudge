@@ -2,14 +2,13 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogFooter,
 } from "@/components/ui/dialog"
 import {Button} from "@/components/ui/button"
-import {useState, useEffect, useRef} from "react"
-import {CheckCircle2, XCircle, AlertCircle} from "lucide-react"
-import {Record} from "@/domain/model/Record.ts";
+import {useEffect, useRef, useState} from "react"
+import {AlertCircle, CheckCircle2, XCircle} from "lucide-react"
 
 interface SimulationModalProps {
     isOpen: boolean;

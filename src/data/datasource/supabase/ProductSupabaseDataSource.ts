@@ -1,7 +1,6 @@
 import {ProductDataSource} from "@/data/datasource/ProductDataSource.ts";
 import {BaseSupabaseResponse, mapSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 import supabase from "@/core/DatabaseSupabase.tsx";
-import {data} from "autoprefixer";
 
 export class ProductSupabaseDataSource implements ProductDataSource {
 

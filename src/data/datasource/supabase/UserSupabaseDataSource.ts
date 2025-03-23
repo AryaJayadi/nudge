@@ -4,6 +4,7 @@ import {BaseSupabaseResponse, mapSupabaseResponse} from "@/domain/model/response
 import {InsertUserConsentForm} from "@/domain/model/request/InsertUserConsentForm.ts";
 import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
 import {singleSupabaseResponseMapper} from "@/lib/utils.ts";
+import {PostgrestError} from "@supabase/supabase-js";
 
 export default class UserSupabaseDataSource implements UserDataSource {
 
@@ -30,7 +31,11 @@ export default class UserSupabaseDataSource implements UserDataSource {
                 .eq("phone", data.phone)
 
             return singleSupabaseResponseMapper(res);
-        }
+        } else return {
+            success: false,
+            data: null,
+            error: {message: "email and phone is not inputted", details: "", hint: "", code: ""} as PostgrestError
+        } as BaseSupabaseResponse<User>;
     }
 
     async checkConsent(userId: string): Promise<BaseSupabaseResponse<boolean>> {

@@ -1,7 +1,6 @@
 import {useState} from "react"
 import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
-import {SimulationModal} from "@/components/simulation-modal"
 import {formatCurrency} from "@/lib/utils.ts";
 import {Record} from "@/domain/model/Record.ts";
 
@@ -11,12 +10,15 @@ interface RecordCardProps {
     profit: number
     price: number
     risk: number
-    record: Record;
+    // record: Record;
     onPurchase: (record: Record, win: boolean) => void;
 }
 
-export default function RecordCard({title, description, profit, price, risk, record, onPurchase}: RecordCardProps) {
+// export default function RecordCard({title, description, profit, price, risk, record, onPurchase}: RecordCardProps) {
+export default function RecordCard({title, description, profit, price, risk}: RecordCardProps) {
     const [isModalOpen, setIsModalOpen] = useState(false)
+
+    console.log(isModalOpen);
 
     return (
         <>
@@ -48,15 +50,15 @@ export default function RecordCard({title, description, profit, price, risk, rec
                 </CardFooter>
             </Card>
 
-            <SimulationModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                profit={profit}
-                price={price}
-                risk={risk}
-                record={record}
-                onPurchase={onPurchase}
-            />
+            {/*<SimulationModal*/}
+            {/*    isOpen={isModalOpen}*/}
+            {/*    onClose={() => setIsModalOpen(false)}*/}
+            {/*    profit={profit}*/}
+            {/*    price={price}*/}
+            {/*    risk={risk}*/}
+            {/*    record={record}*/}
+            {/*    onPurchase={onPurchase}*/}
+            {/*/>*/}
         </>
     )
 }

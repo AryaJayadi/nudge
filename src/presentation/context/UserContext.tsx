@@ -6,19 +6,13 @@ import {UserSignIn} from "@/domain/usecase/user/UserSignIn.ts";
 import {UserSignUp} from "@/domain/usecase/user/UserSignUp.ts";
 import {useLocalStorage} from "usehooks-ts";
 import {useLocation, useNavigate} from "react-router";
-import {UserCheckConsent} from "@/domain/usecase/UserCheckConsent.ts";
-import {UserCheckSurvey} from "@/domain/usecase/UserCheckSurvey.ts";
 import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
-import {UserFinishConsent} from "@/domain/usecase/UserFinishConsent.ts";
-import {UserFinishSurvey} from "@/domain/usecase/UserFinishSurvey.ts";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
-import {PublicUserInsert} from "@/domain/usecase/PublicUserInsert.ts";
 import {UserConsentSupabaseDataSource} from "@/data/datasource/supabase/UserConsentSupabaseDataSource.ts";
 import {UserConsentRepositoryDataSource} from "@/data/repository/UserConsentRepositoryDataSource.ts";
 import {UserSurveySupabaseDataSource} from "@/data/datasource/supabase/UserSurveySupabaseDataSource.ts";
 import {UserSurveyRepositoryDataSource} from "@/data/repository/UserSurveyRepositoryDataSource.ts";
 import {UserConsentRead} from "@/domain/usecase/user_consent/UserConsentRead.ts";
-import {data} from "autoprefixer";
 import {UserSurveyRead} from "@/domain/usecase/user_survey/UserSurveyRead.ts";
 import {UserConsentUpdate} from "@/domain/usecase/user_consent/UserConsentUpdate.ts";
 import {UserSurveyUpdate} from "@/domain/usecase/user_survey/UserSurveyUpdate.ts";
@@ -220,6 +214,7 @@ export function UserProvider({children}: { children: ReactNode }) {
     }
 
     function incBalance(amount: number) {
+        if(!user) return 0;
         const res = user?.balance + amount;
         updateUser({
             balance: res

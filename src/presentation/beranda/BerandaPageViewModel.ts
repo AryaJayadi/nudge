@@ -1,10 +1,7 @@
 import {useCallback, useEffect, useMemo, useState} from "react";
-import {TransactionHistorySupabaseDataSource} from "@/data/datasource/supabase/TransactionHistorySupabaseDataSource.ts";
-import {TransactionHistoryRepositoryDatasource} from "@/data/repository/TransactionHistoryRepositoryDatasource.ts";
 import {useUser} from "@/presentation/context/UserContext.tsx";
 import {PostgrestError} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
-import {TransactionHistoryGetWithDetails} from "@/domain/usecase/TransactionHistoryGetWithDetails.ts";
 import {UserTransactionSupabaseDataSource} from "@/data/datasource/supabase/UserTransactionSupabaseDataSource.ts";
 import {UserTransactionRepositoryDataSource} from "@/data/repository/UserTransactionRepositoryDataSource.ts";
 import {UserTransactionReadByUser} from "@/domain/usecase/user_transaction/UserTransactionReadByUser.ts";

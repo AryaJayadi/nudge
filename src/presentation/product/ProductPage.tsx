@@ -1,9 +1,6 @@
 import useViewModel from "@/presentation/product/ProductPageViewModel.ts";
-import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
 import SkeletonCard from "@/components/skeleton-card.tsx";
-import RecordCard from "@/components/record-card.tsx";
 import ProductCard from "@/components/product-card.tsx";
-import {PiggyBank} from "lucide-react";
 import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
 
 interface Props {
@@ -15,7 +12,6 @@ export const ProductPage = ({categoryId}: Props) => {
         products,
         productsError,
         productsLoading,
-        productsRefetch,
         cards,
         onPurchase
     } = useViewModel(categoryId);

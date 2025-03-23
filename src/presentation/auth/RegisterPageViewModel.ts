@@ -1,6 +1,5 @@
 import {useToast} from "@/components/ui/use-toast.ts";
 import {useRef} from "react";
-import {AuthResponse} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export default function RegisterPageViewModel(register: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>) {
@@ -33,7 +32,7 @@ export default function RegisterPageViewModel(register: (data: InsertUser) => Pr
             email: email,
             phone: phone,
             password: pass
-        });
+        } as InsertUser);
 
         if(res.error) {
             toast({

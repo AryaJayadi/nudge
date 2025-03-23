@@ -31,7 +31,7 @@ export default function HomePageViewModel(login: (data: InsertUser) => Promise<B
             email: emailOrPhone.includes("@") ? emailOrPhone : null,
             phone: emailOrPhone.includes("@") ? null : emailOrPhone,
             password: pass
-        });
+        } as InsertUser);
 
         if(res.error) {
             toast({
