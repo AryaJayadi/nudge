@@ -26,7 +26,7 @@ const getTransactionIcon = (categoryId: number | null) => {
 }
 
 interface Props {
-    transactions: TransactionHistoryWithDetails[];
+    transactions: UserTransactionWithDetails[];
 }
 
 export const TransactionHistoryCard = ({transactions}: Props) => {
@@ -53,17 +53,17 @@ export const TransactionHistoryCard = ({transactions}: Props) => {
                             <div key={transaction.id} className="flex items-center justify-between">
                                 <div className="flex items-center space-x-3">
                                     <div className="flex h-9 w-9 items-center justify-center rounded-full bg-muted">
-                                        {getTransactionIcon(transaction.records.category_id)}
+                                        {getTransactionIcon(transaction.product.nudge_category_id)}
                                     </div>
                                     <div>
-                                        <p className="text-sm font-medium leading-none">{transaction.records.record_title}</p>
+                                        <p className="text-sm font-medium leading-none">{transaction.product.product_title}</p>
                                         <p className="text-xs text-muted-foreground">{formatDate(transaction.created_at)}</p>
                                     </div>
                                 </div>
                                 <div
                                     className={`text-sm font-medium ${transaction.win ? "text-green-600" : "text-red-600"}`}
                                 >
-                                    {formatCurrency(1000000)}
+                                    {formatCurrency(transaction.product.saldo_awal ?? 0)}
                                 </div>
                             </div>
                         );
