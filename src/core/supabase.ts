@@ -1006,6 +1006,45 @@ export type Database = {
           },
         ]
       }
+      nudge_user_transaction: {
+        Row: {
+          created_at: string
+          id: number
+          nudge_product_id: number | null
+          nudge_user_id: string | null
+          win: boolean
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          nudge_product_id?: number | null
+          nudge_user_id?: string | null
+          win?: boolean
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          nudge_product_id?: number | null
+          nudge_user_id?: string | null
+          win?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nudge_user_transaction_nudge_product_id_fkey"
+            columns: ["nudge_product_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_product"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nudge_user_transaction_nudge_user_id_fkey"
+            columns: ["nudge_user_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pages: {
         Row: {
           created_at: string | null
@@ -4005,6 +4044,42 @@ export type Database = {
           waktu_nyaman_penawaran?: string | null
           waktu_promosi?: string | null
           year_month?: string | null
+        }
+        Relationships: []
+      }
+      temp_interaction_log: {
+        Row: {
+          next_recommended: string[] | null
+          policy_after: number | null
+          policy_before: number | null
+          product_bought: string[] | null
+          product_offered: string[] | null
+          reward_after: number | null
+          reward_before: number | null
+          state_id: string | null
+          timestamp: string | null
+        }
+        Insert: {
+          next_recommended?: string[] | null
+          policy_after?: number | null
+          policy_before?: number | null
+          product_bought?: string[] | null
+          product_offered?: string[] | null
+          reward_after?: number | null
+          reward_before?: number | null
+          state_id?: string | null
+          timestamp?: string | null
+        }
+        Update: {
+          next_recommended?: string[] | null
+          policy_after?: number | null
+          policy_before?: number | null
+          product_bought?: string[] | null
+          product_offered?: string[] | null
+          reward_after?: number | null
+          reward_before?: number | null
+          state_id?: string | null
+          timestamp?: string | null
         }
         Relationships: []
       }
