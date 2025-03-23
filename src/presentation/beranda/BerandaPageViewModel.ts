@@ -5,34 +5,37 @@ import {useUser} from "@/presentation/context/UserContext.tsx";
 import {PostgrestError} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 import {TransactionHistoryGetWithDetails} from "@/domain/usecase/TransactionHistoryGetWithDetails.ts";
+import {UserTransactionSupabaseDataSource} from "@/data/datasource/supabase/UserTransactionSupabaseDataSource.ts";
+import {UserTransactionRepositoryDataSource} from "@/data/repository/UserTransactionRepositoryDataSource.ts";
+import {UserTransactionReadByUser} from "@/domain/usecase/user_transaction/UserTransactionReadByUser.ts";
 
 export default function BerandaPageViewModel() {
     const {
         user
     } = useUser();
-    const [transactions, setTransactions] = useState<TransactionHistoryWithDetails[]>([])
+    const [transactions, setTransactions] = useState<UserTransaction[]>([])
 
-    const transactionHistoryDataSource = useMemo(() => new TransactionHistorySupabaseDataSource(), []);
-    const transactionHistoryRepository = useMemo(() => new TransactionHistoryRepositoryDatasource(transactionHistoryDataSource), [transactionHistoryDataSource]);
+    const userTransactionDataSource = useMemo(() => new UserTransactionSupabaseDataSource(), []);
+    const userTransactionRepository = useMemo(() => new UserTransactionRepositoryDataSource(userTransactionDataSource), [userTransactionDataSource]);
 
-    const transactionHistoryGetWithDetailsUseCase = useMemo(() => new TransactionHistoryGetWithDetails(transactionHistoryRepository), [transactionHistoryRepository]);
-    const getTransactionHistories = useCallback(async () => {
+    const userTransactionReadByUserUseCase = useMemo(() => new UserTransactionReadByUser(userTransactionRepository), [userTransactionRepository]);
+    const userTransactionReadByUser = useCallback(async () => {
         if (user === null) {
             return {
                 success: false,
                 data: null,
                 error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
-            } as BaseSupabaseResponse<TransactionHistoryWithDetails[]>;
+            } as BaseSupabaseResponse<UserTransaction[]>;
         }
-        return await transactionHistoryGetWithDetailsUseCase.invoke(user.id);
-    }, [transactionHistoryGetWithDetailsUseCase, user])
+        return await userTransactionReadByUserUseCase.invoke(user.id);
+    }, [userTransactionReadByUserUseCase, user])
 
     useEffect(() => {
         if (user) {
-            getTransactionHistories()
+            userTransactionReadByUser()
                 .then((res) => {
-                    if(res.data !== null) setTransactions(res.data);
-                })
+                    if(res.data !== null) setTransactions(res.data)
+                });
         }
     }, [user]);
 
