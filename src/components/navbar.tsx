@@ -16,7 +16,6 @@ import {Link} from "react-router";
 export default function Navbar() {
     const {
         user,
-        balance,
         logout
     } = useUser();
 
@@ -32,7 +31,7 @@ export default function Navbar() {
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="hidden md:flex">
-                        <span className="font-medium">{formatCurrency(balance)}</span>
+                        <span className="font-medium">{formatCurrency(user?.balance ?? 0)}</span>
                     </div>
                     <Button variant="ghost" size="icon" className="text-white hover:bg-blue-700 hover:text-white" asChild>
                         <Link to="/app/transactions">
@@ -64,7 +63,7 @@ export default function Navbar() {
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <div className="md:hidden">
-                        <span className="text-sm font-medium">{formatCurrency(balance)}</span>
+                        <span className="text-sm font-medium">{formatCurrency(user?.balance ?? 0)}</span>
                     </div>
                 </div>
             </div>
