@@ -9,6 +9,10 @@ import {TransactionHistorySupabaseDataSource} from "@/data/datasource/supabase/T
 import {TransactionHistoryRepositoryDatasource} from "@/data/repository/TransactionHistoryRepositoryDatasource.ts";
 import {TransactionHistoryInsert} from "@/domain/usecase/TransactionHistoryInsert.ts";
 import {Record} from "@/domain/model/Record.ts";
+import {ProductSupabaseDataSource} from "@/data/datasource/supabase/ProductSupabaseDataSource.ts";
+import {ProductRepositoryDataSource} from "@/data/repository/ProductRepositoryDataSource.ts";
+import {ProductRead} from "@/domain/usecase/product/ProductRead.ts";
+import {data} from "autoprefixer";
 
 export default function ProductPageViewModel(category: RecordCategory) {
     const {
@@ -21,6 +25,9 @@ export default function ProductPageViewModel(category: RecordCategory) {
 
     const transactionHistoryDataSource = useMemo(() => new TransactionHistorySupabaseDataSource(), []);
     const transactionHistoryRepository = useMemo(() => new TransactionHistoryRepositoryDatasource(transactionHistoryDataSource), [transactionHistoryDataSource]);
+
+    const productDataSource = useMemo(() => new ProductSupabaseDataSource(), []);
+    const productRepository = useMemo(() => new ProductRepositoryDataSource(productDataSource), [productDataSource]);
 
     const recordGetByCategoryUseCase = useMemo(() => new RecordGetByCategory(recordRepository), [recordRepository]);
     const recordGetByCategory = useCallback(async () => {
@@ -38,6 +45,17 @@ export default function ProductPageViewModel(category: RecordCategory) {
         return await transactionHistoryInsertUseCase.invoke(data);
     }, [transactionHistoryInsertUseCase])
 
+    const productReadUseCase = useMemo(() => new ProductRead(productRepository), [productRepository]);
+    const productRead = useCallback(async () => {
+        return await productReadUseCase.invoke();
+    }, [productReadUseCase]);
+    const {
+        data: products,
+        error: productsError,
+        loading: productsLoading,
+        refetch: productsRefetch,
+    } = useSupabaseQuery(productRead)
+
     function onPurchase(record: Record, win: boolean) {
         if(user === null) return;
         insertTransactionHistory([{
@@ -54,6 +72,10 @@ export default function ProductPageViewModel(category: RecordCategory) {
         recordsError,
         recordsLoading,
         recordsRefetch,
+        products,
+        productsError,
+        productsLoading,
+        productsRefetch,
         onPurchase
     }
 }
