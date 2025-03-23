@@ -802,6 +802,41 @@ export type Database = {
         }
         Relationships: []
       }
+      nudge_card: {
+        Row: {
+          content: string
+          id: number
+          label: string
+          nudge_category_id: number
+          nudge_element: string
+          weight: number
+        }
+        Insert: {
+          content: string
+          id?: number
+          label: string
+          nudge_category_id: number
+          nudge_element: string
+          weight: number
+        }
+        Update: {
+          content?: string
+          id?: number
+          label?: string
+          nudge_category_id?: number
+          nudge_element?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nudge_card_nudge_category_id_fkey"
+            columns: ["nudge_category_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_category"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       nudge_category: {
         Row: {
           category_name: string
@@ -1826,27 +1861,38 @@ export type Database = {
       }
       temp_ik_nudgeperpage: {
         Row: {
-          "Category ID": string | null
-          Content: string | null
-          Feedback: string | null
-          "Nudge Elements": string | null
-          "Weight(Jika Tertarik)": string | null
+          content: string
+          id: number
+          label: string
+          nudge_category_id: number
+          nudge_element: string
+          weight: number
         }
         Insert: {
-          "Category ID"?: string | null
-          Content?: string | null
-          Feedback?: string | null
-          "Nudge Elements"?: string | null
-          "Weight(Jika Tertarik)"?: string | null
+          content: string
+          id?: number
+          label: string
+          nudge_category_id: number
+          nudge_element: string
+          weight: number
         }
         Update: {
-          "Category ID"?: string | null
-          Content?: string | null
-          Feedback?: string | null
-          "Nudge Elements"?: string | null
-          "Weight(Jika Tertarik)"?: string | null
+          content?: string
+          id?: number
+          label?: string
+          nudge_category_id?: number
+          nudge_element?: string
+          weight?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "temp_ik_nudgeperpage_nudge_category_id_fkey"
+            columns: ["nudge_category_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_category"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       temp_ik_purchaseproduct: {
         Row: {
