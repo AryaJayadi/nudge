@@ -27,7 +27,7 @@ const ProtectedRoute: (p: ProtectedRouteProps) => (JSX.Element) = (p: ProtectedR
     const [value, , ] = useLocalStorage<AuthResponse | null>('auth', null)
     const location = useLocation()
 
-    if (!p.isAuthenticated(value?.data.session)) {
+    if (!value) {
         return <Navigate to={p.redirectPath} state={{from: location}}/>
     }
 
