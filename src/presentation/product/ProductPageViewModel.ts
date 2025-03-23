@@ -17,6 +17,9 @@ import {ProductReadyByCategory} from "@/domain/usecase/product/ProductReadyByCat
 import {UserTransactionSupabaseDataSource} from "@/data/datasource/supabase/UserTransactionSupabaseDataSource.ts";
 import {UserTransactionRepositoryDataSource} from "@/data/repository/UserTransactionRepositoryDataSource.ts";
 import {UserTransactionCreate} from "@/domain/usecase/user_transaction/UserTransactionCreate.ts";
+import {CardSupabaseDataSource} from "@/data/datasource/supabase/CardSupabaseDataSource.ts";
+import {CardRepositoryDataSource} from "@/data/repository/CardRepositoryDataSource.ts";
+import {CardRead} from "@/domain/usecase/card/CardRead.ts";
 
 export default function ProductPageViewModel(categoryId: number) {
     const {
@@ -30,6 +33,9 @@ export default function ProductPageViewModel(categoryId: number) {
     const userTransactionDataSource = useMemo(() => new UserTransactionSupabaseDataSource(), []);
     const userTransactionRepository = useMemo(() => new UserTransactionRepositoryDataSource(userTransactionDataSource), [userTransactionDataSource]);
 
+    const cardDataSource = useMemo(() => new CardSupabaseDataSource(), []);
+    const cardRepository = useMemo(() => new CardRepositoryDataSource(cardDataSource),[cardDataSource]);
+
     const productReadByCategoryUseCase = useMemo(() => new ProductReadyByCategory(productRepository), [productRepository]);
     const productRead = useCallback(async () => {
         return await productReadByCategoryUseCase.invoke(categoryId);
@@ -40,6 +46,17 @@ export default function ProductPageViewModel(categoryId: number) {
         loading: productsLoading,
         refetch: productsRefetch,
     } = useSupabaseQuery(productRead)
+
+    const cardReadUseCase = useMemo(() => new CardRead(cardRepository), [cardRepository]);
+    const cardRead = useCallback(async () => {
+        return await cardReadUseCase.invoke(categoryId);
+    }, [cardReadUseCase, categoryId])
+    const {
+        data: cards,
+        error: cardsError,
+        loading: cardsLoading,
+        refetch: cardsRefetch,
+    } = useSupabaseQuery(cardRead)
 
     const userTransactionCreateUseCase = useMemo(() => new UserTransactionCreate(userTransactionRepository), [userTransactionRepository]);
     const userTransactionCreate = useCallback(async (data: InsertUserTransaction) => {
@@ -64,6 +81,10 @@ export default function ProductPageViewModel(categoryId: number) {
         productsError,
         productsLoading,
         productsRefetch,
+        cards,
+        cardsError,
+        cardsLoading,
+        cardsRefetch,
         onPurchase
     }
 }
