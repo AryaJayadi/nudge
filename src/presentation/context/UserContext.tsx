@@ -114,6 +114,12 @@ export function UserProvider({children}: { children: ReactNode }) {
         }
         return await userConsentReadUseCase.invoke(user.id);
     }, [userConsentReadUseCase, user]);
+    const {
+        data: hasConsentData,
+        // error: hasConsentError,
+        // loading: hasConsentLoading,
+        refetch: hasConsentRefetch
+    } = useSupabaseQuery(userConsentRead);
 
     const userSurveyReadUseCase = useMemo(() => new UserSurveyRead(userSurveyRepository), [userSurveyRepository]);
     const userSurveyRead = useCallback(async () => {
@@ -126,42 +132,12 @@ export function UserProvider({children}: { children: ReactNode }) {
         }
         return await userSurveyReadUseCase.invoke(user.id);
     }, [userSurveyReadUseCase, user]);
-
-    const userCheckConsentUseCase = useMemo(() => new UserCheckConsent(userRepository), [userRepository]);
-    const checkConsent = useCallback(async () => {
-        if (user === null) {
-            return {
-                success: false,
-                data: null,
-                error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
-            } as BaseSupabaseResponse<boolean>;
-        }
-        return await userCheckConsentUseCase.invoke(user.id);
-    }, [userCheckConsentUseCase, user])
-    const {
-        data: hasConsentData,
-        // error: hasConsentError,
-        // loading: hasConsentLoading,
-        refetch: hasConsentRefetch
-    } = useSupabaseQuery(checkConsent);
-
-    const userCheckSurveyUseCase = useMemo(() => new UserCheckSurvey(userRepository), [userRepository]);
-    const checkSurvey = useCallback(async () => {
-        if (user === null) {
-            return {
-                success: false,
-                data: null,
-                error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
-            } as BaseSupabaseResponse<boolean>;
-        }
-        return await userCheckSurveyUseCase.invoke(user.id);
-    }, [userCheckSurveyUseCase, user]);
     const {
         data: hasSurveyData,
         // error: hasSurveyError,
         // loading: hasSurveyLoading,
         refetch: hasSurveyRefetch
-    } = useSupabaseQuery(checkSurvey);
+    } = useSupabaseQuery(userSurveyRead);
 
     useEffect(() => {
         if (user === null) {
