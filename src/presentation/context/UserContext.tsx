@@ -88,11 +88,6 @@ export function UserProvider({children}: { children: ReactNode }) {
         return await userSignUpUseCase.invoke(data);
     }, [userSignUpUseCase]);
 
-    const publicUserInsertUseCase = useMemo(() => new PublicUserInsert(userRepository), [userRepository]);
-    const publicUserInsert = useCallback(async (data: InsertPublicUser) => {
-        return await publicUserInsertUseCase.invoke(data);
-    }, [publicUserInsertUseCase]);
-
     const userConsentUpdateUseCase = useMemo(() => new UserConsentUpdate(userConsentRepository), [userConsentRepository]);
     const userConsentUpdate = useCallback(async (uid: string, data: UpdateUserConsent) => {
         return await userConsentUpdateUseCase.invoke(uid, data);
