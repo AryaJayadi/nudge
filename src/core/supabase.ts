@@ -822,94 +822,94 @@ export type Database = {
       }
       nudge_product: {
         Row: {
-          bunga_potensireturn: string | null
-          condition: string | null
-          content: string | null
+          bunga_potensireturn: string
+          condition: string
+          content: string
           created_at: string
-          defaultoptions: string | null
-          fitur: string | null
-          framingeffect: string | null
-          gamification: string | null
+          defaultoptions: string
+          fitur: string
+          framingeffect: string
+          gamification: string
           id: number
-          incentives: number | null
-          keuntungan: string | null
-          loss: string | null
-          lossaversion: string | null
+          incentives: number
+          keuntungan: string
+          loss: number
+          lossaversion: string
           nudge_category_id: number
           nudge_info: string | null
-          personalization: string | null
-          premi_setoran_makspinjam: string | null
-          product_id: string | null
-          product_name: string | null
-          product_title: string | null
-          profit: number | null
-          risiko: string | null
-          risklevel: string | null
-          saldo_awal: number | null
-          saliency: string | null
-          socialproof: string | null
-          timing_justintimenudging: string | null
-          weight_risk: string | null
+          personalization: string
+          premi_setoran_makspinjam: string
+          product_id: string
+          product_name: string
+          product_title: string
+          profit: number
+          risiko: string
+          risklevel: string
+          saldo_awal: number
+          saliency: string
+          socialproof: string
+          timing_justintimenudging: string
+          weight_risk: number
         }
         Insert: {
-          bunga_potensireturn?: string | null
-          condition?: string | null
-          content?: string | null
+          bunga_potensireturn: string
+          condition: string
+          content: string
           created_at?: string
-          defaultoptions?: string | null
-          fitur?: string | null
-          framingeffect?: string | null
-          gamification?: string | null
+          defaultoptions: string
+          fitur: string
+          framingeffect: string
+          gamification: string
           id?: number
-          incentives?: number | null
-          keuntungan?: string | null
-          loss?: string | null
-          lossaversion?: string | null
+          incentives: number
+          keuntungan: string
+          loss: number
+          lossaversion: string
           nudge_category_id: number
           nudge_info?: string | null
-          personalization?: string | null
-          premi_setoran_makspinjam?: string | null
-          product_id?: string | null
-          product_name?: string | null
-          product_title?: string | null
-          profit?: number | null
-          risiko?: string | null
-          risklevel?: string | null
-          saldo_awal?: number | null
-          saliency?: string | null
-          socialproof?: string | null
-          timing_justintimenudging?: string | null
-          weight_risk?: string | null
+          personalization: string
+          premi_setoran_makspinjam: string
+          product_id: string
+          product_name: string
+          product_title: string
+          profit: number
+          risiko: string
+          risklevel: string
+          saldo_awal: number
+          saliency: string
+          socialproof: string
+          timing_justintimenudging: string
+          weight_risk: number
         }
         Update: {
-          bunga_potensireturn?: string | null
-          condition?: string | null
-          content?: string | null
+          bunga_potensireturn?: string
+          condition?: string
+          content?: string
           created_at?: string
-          defaultoptions?: string | null
-          fitur?: string | null
-          framingeffect?: string | null
-          gamification?: string | null
+          defaultoptions?: string
+          fitur?: string
+          framingeffect?: string
+          gamification?: string
           id?: number
-          incentives?: number | null
-          keuntungan?: string | null
-          loss?: string | null
-          lossaversion?: string | null
+          incentives?: number
+          keuntungan?: string
+          loss?: number
+          lossaversion?: string
           nudge_category_id?: number
           nudge_info?: string | null
-          personalization?: string | null
-          premi_setoran_makspinjam?: string | null
-          product_id?: string | null
-          product_name?: string | null
-          product_title?: string | null
-          profit?: number | null
-          risiko?: string | null
-          risklevel?: string | null
-          saldo_awal?: number | null
-          saliency?: string | null
-          socialproof?: string | null
-          timing_justintimenudging?: string | null
-          weight_risk?: string | null
+          personalization?: string
+          premi_setoran_makspinjam?: string
+          product_id?: string
+          product_name?: string
+          product_title?: string
+          profit?: number
+          risiko?: string
+          risklevel?: string
+          saldo_awal?: number
+          saliency?: string
+          socialproof?: string
+          timing_justintimenudging?: string
+          weight_risk?: number
         }
         Relationships: [
           {
