@@ -17,6 +17,9 @@ import {UserConsentSupabaseDataSource} from "@/data/datasource/supabase/UserCons
 import {UserConsentRepositoryDataSource} from "@/data/repository/UserConsentRepositoryDataSource.ts";
 import {UserSurveySupabaseDataSource} from "@/data/datasource/supabase/UserSurveySupabaseDataSource.ts";
 import {UserSurveyRepositoryDataSource} from "@/data/repository/UserSurveyRepositoryDataSource.ts";
+import {UserConsentRead} from "@/domain/usecase/user_consent/UserConsentRead.ts";
+import {data} from "autoprefixer";
+import {UserSurveyRead} from "@/domain/usecase/user_survey/UserSurveyRead.ts";
 
 interface UserContextType {
     user: User | null;
@@ -87,6 +90,30 @@ export function UserProvider({children}: { children: ReactNode }) {
     const publicUserInsert = useCallback(async (data: InsertPublicUser) => {
         return await publicUserInsertUseCase.invoke(data);
     }, [publicUserInsertUseCase]);
+
+    const userConsentReadUseCase = useMemo(() => new UserConsentRead(userConsentRepository), [userConsentRepository]);
+    const userConsentRead = useCallback(async () => {
+        if (user === null) {
+            return {
+                success: false,
+                data: null,
+                error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
+            } as BaseSupabaseResponse<boolean>;
+        }
+        return await userConsentReadUseCase.invoke(user.id);
+    }, [userConsentReadUseCase, user]);
+
+    const userSurveyReadUseCase = useMemo(() => new UserSurveyRead(userSurveyRepository), [userSurveyRepository]);
+    const userSurveyRead = useCallback(async () => {
+        if (user === null) {
+            return {
+                success: false,
+                data: null,
+                error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
+            } as BaseSupabaseResponse<boolean>;
+        }
+        return await userSurveyReadUseCase.invoke(user.id);
+    }, [userSurveyReadUseCase, user]);
 
     const userFinishConsentUseCase = useMemo(() => new UserFinishConsent(userRepository), [userRepository]);
     const userFinishConsent = useCallback(async (form: InsertUserConsentForm) => {
