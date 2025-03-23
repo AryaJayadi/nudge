@@ -13,7 +13,7 @@ export default function BerandaPageViewModel() {
     const {
         user
     } = useUser();
-    const [transactions, setTransactions] = useState<UserTransaction[]>([])
+    const [transactions, setTransactions] = useState<UserTransactionWithDetails[]>([])
 
     const userTransactionDataSource = useMemo(() => new UserTransactionSupabaseDataSource(), []);
     const userTransactionRepository = useMemo(() => new UserTransactionRepositoryDataSource(userTransactionDataSource), [userTransactionDataSource]);
@@ -25,7 +25,7 @@ export default function BerandaPageViewModel() {
                 success: false,
                 data: null,
                 error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
-            } as BaseSupabaseResponse<UserTransaction[]>;
+            } as BaseSupabaseResponse<UserTransactionWithDetails[]>;
         }
         return await userTransactionReadByUserUseCase.invoke(user.id);
     }, [userTransactionReadByUserUseCase, user])
