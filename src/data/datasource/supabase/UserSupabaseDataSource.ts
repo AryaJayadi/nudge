@@ -4,19 +4,34 @@ import {AuthResponse} from "@supabase/supabase-js";
 import {BaseSupabaseResponse, mapSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 import {InsertUserConsentForm} from "@/domain/model/request/InsertUserConsentForm.ts";
 import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
+import {singleSupabaseResponseMapper} from "@/lib/utils.ts";
 
 export default class UserSupabaseDataSource implements UserDataSource {
 
-    async signUp(email: string, password: string): Promise<AuthResponse> {
-        const res = await supabase.auth.signUp({email, password});
-        console.log(res);
-        return res;
+    private readonly table = supabase.from("nudge_user");
+
+    async signUp(data: InsertUser): Promise<BaseSupabaseResponse<User>> {
+        const res = await this.table
+            .upsert(data)
+            .select();
+
+        return singleSupabaseResponseMapper(res);
     }
 
-    async signIn(email: string, password: string): Promise<AuthResponse> {
-        const res = await supabase.auth.signInWithPassword({email, password});
-        console.log(res);
-        return res;
+    async signIn(data: InsertUser): Promise<BaseSupabaseResponse<User>> {
+        if (data.email) {
+            const res = await this.table
+                .select("*")
+                .eq("email", data.email)
+
+            return singleSupabaseResponseMapper(res);
+        } else if (data.phone) {
+            const res = await this.table
+                .select("*")
+                .eq("phone", data.phone)
+
+            return singleSupabaseResponseMapper(res);
+        }
     }
 
     async checkConsent(userId: string): Promise<BaseSupabaseResponse<boolean>> {

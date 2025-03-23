@@ -1,11 +1,10 @@
-import {AuthResponse} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export interface UserRepository {
 
-    signUp(email: string, password: string): Promise<AuthResponse>;
+    signUp(data: InsertUser): Promise<BaseSupabaseResponse<User>>;
 
-    signIn(email: string, password: string): Promise<AuthResponse>;
+    signIn(data: InsertUser): Promise<BaseSupabaseResponse<User>>;
 
     checkConsent(userId: string): Promise<BaseSupabaseResponse<boolean>>;
 

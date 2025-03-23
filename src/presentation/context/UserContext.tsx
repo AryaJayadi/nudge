@@ -2,8 +2,8 @@ import {createContext, ReactNode, useCallback, useContext, useEffect, useMemo, u
 import {AuthResponse, PostgrestError, User} from "@supabase/supabase-js";
 import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataSource.ts";
 import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
-import {UserSignIn} from "@/domain/usecase/UserSignIn.ts";
-import {UserSignUp} from "@/domain/usecase/UserSignUp.ts";
+import {UserSignIn} from "@/domain/usecase/user/UserSignIn.ts";
+import {UserSignUp} from "@/domain/usecase/user/UserSignUp.ts";
 import {useLocalStorage} from "usehooks-ts";
 import {isAuthenticated} from "@/lib/utils.ts";
 import {useLocation, useNavigate} from "react-router";

@@ -1,8 +1,8 @@
-import {AuthResponse} from "@supabase/supabase-js";
 import {UserRepository} from "@/domain/repository/UserRepository.ts";
+import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
 export interface UserSignInUseCase {
-    invoke: (email: string, password: string) => Promise<AuthResponse>;
+    invoke: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
 }
 
 export class UserSignIn implements UserSignInUseCase {
@@ -12,8 +12,7 @@ export class UserSignIn implements UserSignInUseCase {
         this.repository = _repository;
     }
 
-    invoke(email: string, password: string): Promise<AuthResponse> {
-        return this.repository.signIn(email, password);
+    invoke(data: InsertUser): Promise<BaseSupabaseResponse<User>> {
+        return this.repository.signIn(data);
     }
-
 }

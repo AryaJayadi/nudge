@@ -11,12 +11,12 @@ export class UserRepositoryDataSource implements UserRepository {
         this.datasource = _datasource;
     }
 
-    signUp(email: string, password: string): Promise<AuthResponse> {
-        return this.datasource.signUp(email, password);
+    signUp(data: InsertUser): Promise<BaseSupabaseResponse<User>> {
+        return this.datasource.signUp(data);
     }
 
-    signIn(email: string, password: string): Promise<AuthResponse> {
-        return this.datasource.signIn(email, password);
+    signIn(data: InsertUser): Promise<BaseSupabaseResponse<User>> {
+        return this.datasource.signIn(data);
     }
 
     checkConsent(userId: string): Promise<BaseSupabaseResponse<boolean>> {

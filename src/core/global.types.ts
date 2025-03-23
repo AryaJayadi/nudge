@@ -1,6 +1,9 @@
 import {Database, Tables} from "@/core/supabase.ts";
 
 declare global {
+    type User = Tables<'nudge_user'>;
+    type InsertUser = Database["public"]["Tables"]["nudge_user"]["Insert"];
+
     type UserConsentForm = Tables<'user_consent_form'>;
     type InsertUserConsentForm = Database["public"]["Tables"]["user_consent_form"]["Insert"];
 
