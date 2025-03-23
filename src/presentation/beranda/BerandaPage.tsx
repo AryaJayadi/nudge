@@ -2,8 +2,13 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
 import useViewModel from "./BerandaPageViewModel.ts"
 import {TransactionHistoryCard} from "@/components/transaction-history-card.tsx";
+import {useUser} from "@/presentation/context/UserContext.tsx";
+import {formatCurrency} from "@/lib/utils.ts";
 
 export const BerandaPage = () => {
+    const {
+        user
+    } = useUser();
     const {
         transactions
     } = useViewModel();
@@ -14,7 +19,7 @@ export const BerandaPage = () => {
                     <CardTitle className="text-base text-yellow-800">Total Saldo</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold mb-1 text-yellow-900">Rp 3.000.000.000</div>
+                    <div className="text-2xl font-bold mb-1 text-yellow-900">{formatCurrency(user?.balance ?? 0)}</div>
                     <div className="text-sm text-yellow-700">+2,5% dari bulan lalu</div>
                 </CardContent>
             </Card>
