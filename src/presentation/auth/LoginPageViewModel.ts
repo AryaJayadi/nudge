@@ -1,8 +1,8 @@
 import {useRef} from "react";
 import {useToast} from "@/components/ui/use-toast.ts";
-import {AuthResponse} from "@supabase/supabase-js";
+import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
-export default function HomePageViewModel(login: (email: string, password: string) => Promise<AuthResponse>) {
+export default function HomePageViewModel(login: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>) {
     const {toast} = useToast()
 
     const emailRef = useRef<HTMLInputElement | null>(null);
@@ -23,10 +23,15 @@ export default function HomePageViewModel(login: (email: string, password: strin
             });
             return;
         }
-        const email: string = emailRef.current['value'];
+
+        const emailOrPhone: string = emailRef.current['value'];
         const pass: string = passRef.current['value'];
 
-        const res = await login(email, pass);
+        const res = await login({
+            email: emailOrPhone.includes("@") ? emailOrPhone : null,
+            phone: emailOrPhone.includes("@") ? null : emailOrPhone,
+            password: pass
+        });
 
         if(res.error) {
             toast({
@@ -34,7 +39,7 @@ export default function HomePageViewModel(login: (email: string, password: strin
                 description: `${res.error.message}`,
             });
             return;
-        } else if(res.data.user == null) {
+        } else if(res.data == null) {
             toast({
                 title: "Login failed!",
                 description: `Failed to find user`,
@@ -44,7 +49,7 @@ export default function HomePageViewModel(login: (email: string, password: strin
 
         toast({
             title: "Login success!",
-            description: `Welcome, ${res.data.user?.email}!`,
+            description: `Welcome, ${res.data?.email}!`,
         });
 
         emailRef.current['value'] = "";
