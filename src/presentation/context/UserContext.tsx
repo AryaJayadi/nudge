@@ -127,16 +127,6 @@ export function UserProvider({children}: { children: ReactNode }) {
         return await userSurveyReadUseCase.invoke(user.id);
     }, [userSurveyReadUseCase, user]);
 
-    const userFinishConsentUseCase = useMemo(() => new UserFinishConsent(userRepository), [userRepository]);
-    const userFinishConsent = useCallback(async (form: InsertUserConsentForm) => {
-        return await userFinishConsentUseCase.invoke(form);
-    }, [userFinishConsentUseCase]);
-
-    const userFinishSurveyUseCase = useMemo(() => new UserFinishSurvey(userRepository), [userRepository]);
-    const userFinishSurvey = useCallback(async (form: InsertUserFinishSurvey) => {
-        return await userFinishSurveyUseCase.invoke(form);
-    }, [userFinishSurveyUseCase]);
-
     const userCheckConsentUseCase = useMemo(() => new UserCheckConsent(userRepository), [userRepository]);
     const checkConsent = useCallback(async () => {
         if (user === null) {
@@ -219,19 +209,6 @@ export function UserProvider({children}: { children: ReactNode }) {
             return res;
         }
 
-        const userId = res.data.id;
-
-        await Promise.allSettled([
-            userFinishConsent({
-                user_id: userId,
-                consent_agreement: false
-            }),
-            userFinishSurvey({
-                user_id: userId,
-                has_finished: false
-            })
-        ]);
-
         navigate(LOGIN_PATH, {replace: true});
 
         return res;
@@ -249,18 +226,16 @@ export function UserProvider({children}: { children: ReactNode }) {
 
     function onConsent() {
         if (user === null || user.id == null) return;
-        userFinishConsent({
-            user_id: user.id,
-            consent_agreement: true
-        });
+        userConsentUpdate(user.id, {
+            done: true
+        })
     }
 
     function onFinishSurvey() {
         if (user === null || user.id == null) return;
-        userFinishSurvey({
-            user_id: user.id,
-            has_finished: true
-        });
+        userSurveyUpdate(user.id, {
+            done: true
+        })
     }
 
     return (
