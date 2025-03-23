@@ -226,6 +226,9 @@ export function UserProvider({children}: { children: ReactNode }) {
     }
 
     function incBalance(amount: number) {
+        updateUser({
+            balance: user?.balance + amount
+        });
         setBalance((prev) => prev + amount);
         return balance;
     }
