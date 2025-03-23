@@ -7,7 +7,7 @@ import {SimulationModal} from "@/components/simulation-modal.tsx";
 
 interface Props {
     product: Product;
-    onPurchase: () => void;
+    onPurchase: (product: Product, win: boolean) => void;
 }
 
 export default function ProductCard({product, onPurchase}: Props) {

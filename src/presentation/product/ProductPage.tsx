@@ -37,7 +37,7 @@ export const ProductPage = ({categoryId}: Props) => {
             {
                 products &&
                 products.map((o, index) => (
-                    <ProductCard key={index} product={o} onPurchase={() => console.log(`Buka ${o.product_title}`)}/>
+                    <ProductCard key={index} product={o} onPurchase={onPurchase}/>
                 ))
             }
         </>
