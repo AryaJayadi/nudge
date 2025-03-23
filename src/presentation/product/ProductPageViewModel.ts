@@ -13,15 +13,13 @@ import {ProductSupabaseDataSource} from "@/data/datasource/supabase/ProductSupab
 import {ProductRepositoryDataSource} from "@/data/repository/ProductRepositoryDataSource.ts";
 import {ProductRead} from "@/domain/usecase/product/ProductRead.ts";
 import {data} from "autoprefixer";
+import {ProductReadyByCategory} from "@/domain/usecase/product/ProductReadyByCategory.ts";
 
-export default function ProductPageViewModel(category: RecordCategory) {
+export default function ProductPageViewModel(categoryId: number) {
     const {
         user,
         incBalance
     } = useUser();
-
-    const recordDataSource = useMemo(() => new RecordSupabaseDataSource(), []);
-    const recordRepository = useMemo(() => new RecordRepositoryDataSource(recordDataSource), [recordDataSource]);
 
     const transactionHistoryDataSource = useMemo(() => new TransactionHistorySupabaseDataSource(), []);
     const transactionHistoryRepository = useMemo(() => new TransactionHistoryRepositoryDatasource(transactionHistoryDataSource), [transactionHistoryDataSource]);
@@ -29,26 +27,15 @@ export default function ProductPageViewModel(category: RecordCategory) {
     const productDataSource = useMemo(() => new ProductSupabaseDataSource(), []);
     const productRepository = useMemo(() => new ProductRepositoryDataSource(productDataSource), [productDataSource]);
 
-    const recordGetByCategoryUseCase = useMemo(() => new RecordGetByCategory(recordRepository), [recordRepository]);
-    const recordGetByCategory = useCallback(async () => {
-        return await recordGetByCategoryUseCase.invoke(category)
-    }, [recordGetByCategoryUseCase, category])
-    const {
-        data: records,
-        error: recordsError,
-        loading: recordsLoading,
-        refetch: recordsRefetch,
-    } = useSupabaseQuery(recordGetByCategory)
-
     const transactionHistoryInsertUseCase = useMemo(() => new TransactionHistoryInsert(transactionHistoryRepository), [transactionHistoryRepository]);
     const insertTransactionHistory = useCallback(async (data: InsertTransactionHistory[]) => {
         return await transactionHistoryInsertUseCase.invoke(data);
     }, [transactionHistoryInsertUseCase])
 
-    const productReadUseCase = useMemo(() => new ProductRead(productRepository), [productRepository]);
+    const productReadByCategoryUseCase = useMemo(() => new ProductReadyByCategory(productRepository), [productRepository]);
     const productRead = useCallback(async () => {
-        return await productReadUseCase.invoke();
-    }, [productReadUseCase]);
+        return await productReadByCategoryUseCase.invoke(categoryId);
+    }, [productReadByCategoryUseCase, categoryId]);
     const {
         data: products,
         error: productsError,
@@ -68,10 +55,6 @@ export default function ProductPageViewModel(category: RecordCategory) {
     }
 
     return {
-        records,
-        recordsError,
-        recordsLoading,
-        recordsRefetch,
         products,
         productsError,
         productsLoading,

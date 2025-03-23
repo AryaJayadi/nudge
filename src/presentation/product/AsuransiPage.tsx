@@ -5,7 +5,7 @@ export const AsuransiPage = () => {
 
     return (
         <>
-            <ProductPage category={RecordCategory.INSURANCE} />
+            <ProductPage categoryId={RecordCategory.INSURANCE} />
         </>
     )
 }

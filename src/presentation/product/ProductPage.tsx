@@ -6,30 +6,27 @@ import ProductCard from "@/components/product-card.tsx";
 import {PiggyBank} from "lucide-react";
 
 interface Props {
-    category: RecordCategory;
+    categoryId: number;
 }
 
-export const ProductPage = ({category}: Props) => {
+export const ProductPage = ({categoryId}: Props) => {
     const {
-        records,
-        recordsError,
-        recordsLoading,
         products,
         productsError,
         productsLoading,
         productsRefetch,
         onPurchase
-    } = useViewModel(category);
+    } = useViewModel(categoryId);
 
     const length = 4;
 
-    if (recordsError) {
+    if (productsError) {
         return (
             <div>Error</div>
         )
     }
 
-    if (recordsLoading) {
+    if (productsLoading) {
         Array.from({length: length}).map((_, i) => (
             <SkeletonCard key={i}/>
         ))
@@ -37,21 +34,6 @@ export const ProductPage = ({category}: Props) => {
 
     return (
         <>
-            {
-                records &&
-                records.map((o, index) => (
-                    <>
-                        <RecordCard
-                            title={o.record_title}
-                            description={o.record_description}
-                            profit={12.5}
-                            price={5000000}
-                            risk={30}
-                            record={o}
-                            onPurchase={onPurchase}
-                        />
-                    </>
-                ))}
             {
                 products &&
                 products.map((o, index) => (

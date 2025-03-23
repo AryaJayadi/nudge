@@ -1,6 +1,6 @@
 export enum RecordCategory {
-    SAVING = "Tabungan",
-    INVESTMENT = "Investasi",
-    LOAN = "Kredit",
-    INSURANCE = "Asuransi"
+    SAVING = 1,
+    INVESTMENT = 2,
+    LOAN = 3,
+    INSURANCE = 4
 }

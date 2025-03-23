@@ -5,7 +5,7 @@ export const TabunganPage = () => {
 
     return (
         <>
-            <ProductPage category={RecordCategory.SAVING} />
+            <ProductPage categoryId={RecordCategory.SAVING} />
         </>
     )
 }
