@@ -13,6 +13,10 @@ import {UserFinishConsent} from "@/domain/usecase/UserFinishConsent.ts";
 import {UserFinishSurvey} from "@/domain/usecase/UserFinishSurvey.ts";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 import {PublicUserInsert} from "@/domain/usecase/PublicUserInsert.ts";
+import {UserConsentSupabaseDataSource} from "@/data/datasource/supabase/UserConsentSupabaseDataSource.ts";
+import {UserConsentRepositoryDataSource} from "@/data/repository/UserConsentRepositoryDataSource.ts";
+import {UserSurveySupabaseDataSource} from "@/data/datasource/supabase/UserSurveySupabaseDataSource.ts";
+import {UserSurveyRepositoryDataSource} from "@/data/repository/UserSurveyRepositoryDataSource.ts";
 
 interface UserContextType {
     user: User | null;
@@ -60,6 +64,12 @@ export function UserProvider({children}: { children: ReactNode }) {
     const WHITELIST_PATH = [LOGIN_PATH, REGISTER_PATH]
     const FROM = location.state?.from || DEFAULT_PATH;
 
+    const userConsentDataSource = useMemo(() => new UserConsentSupabaseDataSource(), []);
+    const userConsentRepository = useMemo(() => new UserConsentRepositoryDataSource(userConsentDataSource), [userConsentDataSource]);
+
+    const userSurveyDataSource = useMemo(() => new UserSurveySupabaseDataSource(), []);
+    const userSurveyRepository = useMemo(() => new UserSurveyRepositoryDataSource(userSurveyDataSource), [userSurveyDataSource]);
+
     const userDataSource = useMemo(() => new UserSupabaseDataSource(), []);
     const userRepository = useMemo(() => new UserRepositoryDataSource(userDataSource), [userDataSource]);
 
@@ -68,7 +78,7 @@ export function UserProvider({children}: { children: ReactNode }) {
         return await userSignInUseCase.invoke(data);
     }, [userSignInUseCase]);
 
-    const userSignUpUseCase = useMemo(() => new UserSignUp(userRepository), [userRepository]);
+    const userSignUpUseCase = useMemo(() => new UserSignUp(userRepository, userConsentRepository, userSurveyRepository), [userRepository]);
     const userSignUp = useCallback(async (data: InsertUser) => {
         return await userSignUpUseCase.invoke(data);
     }, [userSignUpUseCase]);
