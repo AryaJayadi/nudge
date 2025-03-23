@@ -4,6 +4,7 @@ import SkeletonCard from "@/components/skeleton-card.tsx";
 import RecordCard from "@/components/record-card.tsx";
 import ProductCard from "@/components/product-card.tsx";
 import {PiggyBank} from "lucide-react";
+import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
 
 interface Props {
     categoryId: number;
@@ -15,6 +16,7 @@ export const ProductPage = ({categoryId}: Props) => {
         productsError,
         productsLoading,
         productsRefetch,
+        cards,
         onPurchase
     } = useViewModel(categoryId);
 
@@ -34,6 +36,12 @@ export const ProductPage = ({categoryId}: Props) => {
 
     return (
         <>
+            {
+                cards &&
+                cards.map((o, index) => (
+                    <NudgeRecommendation key={index} card={o}/>
+                ))
+            }
             {
                 products &&
                 products.map((o, index) => (

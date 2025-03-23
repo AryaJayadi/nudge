@@ -31,7 +31,10 @@ export const BerandaPage = () => {
                 </CardContent>
             </Card>
 
-            <NudgeRecommendation/>
+            <NudgeRecommendation card={{
+                content: "Tingkatkan tabungan Anda dengan Deposito Berjangka. Dapatkan bunga hingga 5,5% per tahun!",
+                label: "Buka Deposito"
+            } as Card}/>
 
             <TransactionHistoryCard transactions={transactions}/>
         </>
