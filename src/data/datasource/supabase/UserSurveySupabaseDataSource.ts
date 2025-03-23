@@ -9,7 +9,9 @@ export class UserSurveySupabaseDataSource implements UserSurveyDataSource {
 
     async create(uid: string): Promise<BaseSupabaseResponse<UserSurvey>> {
         const res = await this.table
-            .upsert(uid)
+            .upsert({
+                nudge_user_id: uid
+            } as InsertUserSurvey)
             .select();
 
         return singleSupabaseResponseMapper(res);

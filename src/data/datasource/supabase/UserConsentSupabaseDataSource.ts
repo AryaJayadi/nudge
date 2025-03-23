@@ -9,7 +9,9 @@ export class UserConsentSupabaseDataSource implements UserConsentDataSource {
 
     async create(uid: string): Promise<BaseSupabaseResponse<UserConsent>> {
         const res = await this.table
-            .upsert(uid)
+            .upsert({
+                nudge_user_id: uid
+            } as InsertUserConsent)
             .select();
 
         return singleSupabaseResponseMapper(res);
