@@ -86,9 +86,10 @@ export default function ProductCard({product, onPurchase}: Props) {
             <SimulationModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                profit={product.profit * 100 ?? 0}
-                price={product.saldo_awal ?? 0}
-                risk={parseFloat(product.weight_risk ?? "0") * 100}
+                profit={product.profit * 100}
+                price={product.saldo_awal}
+                risk={product.weight_risk * 100}
+                riskLevel={product.risklevel}
                 product={product}
                 onPurchase={onPurchase}
             />

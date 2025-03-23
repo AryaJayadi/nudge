@@ -17,11 +17,12 @@ interface SimulationModalProps {
     profit: number;
     price: number;
     risk: number;
+    riskLevel: string;
     product: Product;
     onPurchase(product: Product, win: boolean): void;
 }
 
-export function SimulationModal({isOpen, onClose, profit, price, risk, product, onPurchase}: SimulationModalProps) {
+export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel, product, onPurchase}: SimulationModalProps) {
     const [isSimulating, setIsSimulating] = useState(false)
     const [currentNumber, setCurrentNumber] = useState<number | null>(null)
     const [result, setResult] = useState<"win" | "lose" | null>()
@@ -124,7 +125,7 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, product, 
                         </div>
                         <div className="space-y-1">
                             <p className="text-sm font-medium text-gray-500">Risk</p>
-                            <p className="text-xl font-bold text-red-600">{risk}%</p>
+                            <p className="text-xl font-bold text-red-600">{riskLevel}</p>
                         </div>
                     </div>
 
