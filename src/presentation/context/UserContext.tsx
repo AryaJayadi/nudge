@@ -1,5 +1,5 @@
 import {createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState} from "react";
-import {AuthResponse, PostgrestError} from "@supabase/supabase-js";
+import {PostgrestError} from "@supabase/supabase-js";
 import UserSupabaseDataSource from "@/data/datasource/supabase/UserSupabaseDataSource.ts";
 import {UserRepositoryDataSource} from "@/data/repository/UserRepositoryDataSource.ts";
 import {UserSignIn} from "@/domain/usecase/user/UserSignIn.ts";
