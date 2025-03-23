@@ -22,6 +22,7 @@ import {data} from "autoprefixer";
 import {UserSurveyRead} from "@/domain/usecase/user_survey/UserSurveyRead.ts";
 import {UserConsentUpdate} from "@/domain/usecase/user_consent/UserConsentUpdate.ts";
 import {UserSurveyUpdate} from "@/domain/usecase/user_survey/UserSurveyUpdate.ts";
+import {UserUpdate} from "@/domain/usecase/user/UserUpdate.ts";
 
 interface UserContextType {
     user: User | null;
@@ -30,6 +31,7 @@ interface UserContextType {
     setBalance: (value: (((prevState: number) => number) | number)) => void;
     login: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
     register: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
+    updateUser: (data: UpdateUser) => Promise<BaseSupabaseResponse<User>>;
     logout: () => void;
     incBalance: (amount: number) => number;
     onConsent: () => void;
@@ -45,6 +47,7 @@ const UserContext = createContext<UserContextType>({
     },
     login: async () => Promise.reject(new Error("No UserProvider found")),
     register: async () => Promise.reject(new Error("No UserProvider found")),
+    updateUser: async () => Promise.reject(new Error("No UserProvider found")),
     logout: () => {
     },
     incBalance: (amount: number) => amount,
@@ -87,6 +90,11 @@ export function UserProvider({children}: { children: ReactNode }) {
     const userSignUp = useCallback(async (data: InsertUser) => {
         return await userSignUpUseCase.invoke(data);
     }, [userSignUpUseCase]);
+
+    const userUpdateUseCase = useMemo(() => new UserUpdate(userRepository), [userRepository]);
+    const userUpdate = useCallback(async (uid: string, data: UpdateUser) => {
+        return await userUpdateUseCase.invoke(uid, data);
+    }, [userUpdateUseCase]);
 
     const userConsentUpdateUseCase = useMemo(() => new UserConsentUpdate(userConsentRepository), [userConsentRepository]);
     const userConsentUpdate = useCallback(async (uid: string, data: UpdateUserConsent) => {
@@ -189,6 +197,29 @@ export function UserProvider({children}: { children: ReactNode }) {
         return res;
     }
 
+    async function updateUser(data: UpdateUser) {
+        if(!user || !user.id) return {
+            success: false,
+            data: null,
+            error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
+        } as BaseSupabaseResponse<User>;
+
+        const res = await userUpdate(user.id, data);
+
+        if (res.error) {
+            console.log(res.error);
+            return res;
+        } else if (res.data == null) {
+            console.log(res);
+            return res;
+        }
+
+        setValue(res.data);
+        setUser(res.data);
+
+        return res;
+    }
+
     function logout() {
         setValue(null);
         setUser(null);
@@ -221,6 +252,7 @@ export function UserProvider({children}: { children: ReactNode }) {
             setBalance,
             login,
             register,
+            updateUser,
             logout,
             incBalance,
             onConsent,
