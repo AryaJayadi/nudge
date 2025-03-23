@@ -94,4 +94,13 @@ export default class UserSupabaseDataSource implements UserDataSource {
             return null;
         })
     }
+
+    async update(uid: string, data: UpdateUser): Promise<BaseSupabaseResponse<User>> {
+        const res = this.table
+            .update(data)
+            .eq("id", uid)
+            .select();
+
+        return singleSupabaseResponseMapper(res);
+    }
 }

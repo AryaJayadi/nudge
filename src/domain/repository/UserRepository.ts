@@ -6,6 +6,8 @@ export interface UserRepository {
 
     signIn(data: InsertUser): Promise<BaseSupabaseResponse<User>>;
 
+    update(uid: string, data: UpdateUser): Promise<BaseSupabaseResponse<User>>;
+
     checkConsent(userId: string): Promise<BaseSupabaseResponse<boolean>>;
 
     checkSurvey(userId: string): Promise<BaseSupabaseResponse<boolean>>;

@@ -38,4 +38,8 @@ export class UserRepositoryDataSource implements UserRepository {
     insertPublicUser(data: InsertPublicUser): Promise<BaseSupabaseResponse<PublicUser>> {
         return this.datasource.insertPublicUser(data);
     }
+
+    update(uid: string, data: UpdateUser): Promise<BaseSupabaseResponse<User>> {
+        return this.datasource.update(uid, data);
+    }
 }

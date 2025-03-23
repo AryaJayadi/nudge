@@ -5,6 +5,7 @@ type DB = Database["public"]["Tables"];
 declare global {
     type User = Tables<'nudge_user'>;
     type InsertUser = DB["nudge_user"]["Insert"];
+    type UpdateUser = DB["nudge_user"]["Update"];
 
     type UserConsent = Tables<'nudge_user_consent'>;
     type InsertUserConsent = DB["nudge_user_consent"]["Insert"];
