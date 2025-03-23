@@ -12,19 +12,16 @@ import {InvestasiPage} from "@/presentation/product/InvestasiPage.tsx";
 import {AsuransiPage} from "@/presentation/product/AsuransiPage.tsx";
 import {RegisterPage} from "@/presentation/auth/RegisterPage.tsx";
 import {useLocalStorage} from "usehooks-ts";
-import {AuthResponse, Session} from "@supabase/supabase-js";
 import {QuestionnairePage} from "@/presentation/questionnaire/QuestionnairePage.tsx";
-import {isAuthenticated} from "@/lib/utils.ts";
 import {UserProvider} from "@/presentation/context/UserContext.tsx";
 import {ConsentPage} from "@/presentation/consent/ConsentPage.tsx";
 
 interface ProtectedRouteProps {
-    isAuthenticated: (session: Session | null | undefined) => boolean;
     redirectPath: string;
 }
 
 const ProtectedRoute: (p: ProtectedRouteProps) => (JSX.Element) = (p: ProtectedRouteProps) => {
-    const [value, , ] = useLocalStorage<AuthResponse | null>('auth', null)
+    const [value, , ] = useLocalStorage<User | null>('auth', null)
     const location = useLocation()
 
     if (!value) {
@@ -53,7 +50,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "",
-                element: <ProtectedRoute isAuthenticated={isAuthenticated} redirectPath={"/auth/login"}/>,
+                element: <ProtectedRoute redirectPath={"/auth/login"}/>,
                 children: [
                     {
                         path: "consent",
