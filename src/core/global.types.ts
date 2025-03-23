@@ -28,8 +28,9 @@ declare global {
     type InsertUserTransaction = DB["nudge_user_transaction"]["Insert"];
 
     type UserTransactionWithDetails = UserTransaction & {
-        product: Product;
-        category: Category;
+        nudge_product: Product & {
+            nudge_category: Category
+        }
     }
 
     type UserResponses = Tables<'user_responses'>;
