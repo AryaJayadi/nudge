@@ -10,7 +10,7 @@ export class CardRepositoryDataSource implements CardRepository {
         this.datasource = _datasource;
     }
 
-    read(): Promise<BaseSupabaseResponse<Card[]>> {
-        return this.datasource.read();
+    readByCategory(categoryId: number): Promise<BaseSupabaseResponse<Card[]>> {
+        return this.datasource.readByCategory(categoryId);
     }
 }

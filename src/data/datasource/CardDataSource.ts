@@ -2,5 +2,5 @@ import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse
 
 export interface CardDataSource {
 
-    read(): Promise<BaseSupabaseResponse<Card[]>>
+    readByCategory(categoryId: number): Promise<BaseSupabaseResponse<Card[]>>;
 }

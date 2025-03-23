@@ -2,7 +2,7 @@ import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse
 import {CardRepository} from "@/domain/repository/CardRepository.ts";
 
 interface CardReadUseCase {
-    invoke(): Promise<BaseSupabaseResponse<Card[]>>;
+    invoke(categoryId: number): Promise<BaseSupabaseResponse<Card[]>>;
 }
 
 export class CardRead implements CardReadUseCase {
@@ -13,7 +13,7 @@ export class CardRead implements CardReadUseCase {
         this.repository = _repository;
     }
 
-    invoke(): Promise<BaseSupabaseResponse<Card[]>> {
-        return this.repository.read();
+    invoke(categoryId: number): Promise<BaseSupabaseResponse<Card[]>> {
+        return this.repository.readByCategory(categoryId);
     }
 }
