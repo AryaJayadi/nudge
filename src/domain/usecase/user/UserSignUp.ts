@@ -20,13 +20,12 @@ export class UserSignUp implements UserSignUpUseCase {
     }
 
     invoke(data: InsertUser): Promise<BaseSupabaseResponse<User>> {
-        this.repository.signUp(data).then((res) => {
+        return this.repository.signUp(data).then((res) => {
             if(res.data) {
                 this.userConsentRepository.create(res.data.id);
                 this.userSurveyRepository.create(res.data.id);
             }
             return res;
-        })
-        return this.repository.signUp(data);
+        });
     }
 }
