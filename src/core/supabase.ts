@@ -871,7 +871,7 @@ export type Database = {
           loss: number
           lossaversion: string
           nudge_category_id: number
-          nudge_info: string | null
+          nudge_info: string
           personalization: string
           premi_setoran_makspinjam: string
           product_id: string
@@ -901,7 +901,7 @@ export type Database = {
           loss: number
           lossaversion: string
           nudge_category_id: number
-          nudge_info?: string | null
+          nudge_info: string
           personalization: string
           premi_setoran_makspinjam: string
           product_id: string
@@ -931,7 +931,7 @@ export type Database = {
           loss?: number
           lossaversion?: string
           nudge_category_id?: number
-          nudge_info?: string | null
+          nudge_info?: string
           personalization?: string
           premi_setoran_makspinjam?: string
           product_id?: string
@@ -966,7 +966,7 @@ export type Database = {
           phone: string | null
         }
         Insert: {
-          balance?: number
+          balance: number
           created_at?: string
           email?: string | null
           id?: string
@@ -1017,19 +1017,19 @@ export type Database = {
           created_at: string
           done: boolean
           id: number
-          nudge_user_id: string | null
+          nudge_user_id: string
         }
         Insert: {
           created_at?: string
           done?: boolean
           id?: number
-          nudge_user_id?: string | null
+          nudge_user_id: string
         }
         Update: {
           created_at?: string
           done?: boolean
           id?: number
-          nudge_user_id?: string | null
+          nudge_user_id?: string
         }
         Relationships: [
           {
@@ -1045,24 +1045,24 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          nudge_product_id: number | null
-          nudge_user_id: string | null
+          nudge_product_id: number
+          nudge_user_id: string
           price: number
           win: boolean
         }
         Insert: {
           created_at?: string
           id?: number
-          nudge_product_id?: number | null
-          nudge_user_id?: string | null
+          nudge_product_id: number
+          nudge_user_id: string
           price?: number
           win?: boolean
         }
         Update: {
           created_at?: string
           id?: number
-          nudge_product_id?: number | null
-          nudge_user_id?: string | null
+          nudge_product_id?: number
+          nudge_user_id?: string
           price?: number
           win?: boolean
         }
@@ -4093,42 +4093,6 @@ export type Database = {
           waktu_nyaman_penawaran?: string | null
           waktu_promosi?: string | null
           year_month?: string | null
-        }
-        Relationships: []
-      }
-      temp_interaction_log: {
-        Row: {
-          next_recommended: string[] | null
-          policy_after: number | null
-          policy_before: number | null
-          product_bought: string[] | null
-          product_offered: string[] | null
-          reward_after: number | null
-          reward_before: number | null
-          state_id: string | null
-          timestamp: string | null
-        }
-        Insert: {
-          next_recommended?: string[] | null
-          policy_after?: number | null
-          policy_before?: number | null
-          product_bought?: string[] | null
-          product_offered?: string[] | null
-          reward_after?: number | null
-          reward_before?: number | null
-          state_id?: string | null
-          timestamp?: string | null
-        }
-        Update: {
-          next_recommended?: string[] | null
-          policy_after?: number | null
-          policy_before?: number | null
-          product_bought?: string[] | null
-          product_offered?: string[] | null
-          reward_after?: number | null
-          reward_before?: number | null
-          state_id?: string | null
-          timestamp?: string | null
         }
         Relationships: []
       }
