@@ -203,14 +203,14 @@ export function UserProvider({children}: { children: ReactNode }) {
         if (user === null || user.id == null) return;
         userConsentUpdate(user.id, {
             done: true
-        })
+        }).then(() => hasConsentRefetch());
     }
 
     function onFinishSurvey() {
         if (user === null || user.id == null) return;
         userSurveyUpdate(user.id, {
             done: true
-        })
+        }).then(() => hasSurveyRefetch());
     }
 
     return (
