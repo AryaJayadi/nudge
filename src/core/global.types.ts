@@ -1,8 +1,8 @@
 import {Database, Tables} from "@/core/supabase.ts";
 
-declare global {
-    type DB = Database["public"]["Tables"]
+type DB = Database["public"]["Tables"];
 
+declare global {
     type User = Tables<'nudge_user'>;
     type InsertUser = DB["nudge_user"]["Insert"];
 
