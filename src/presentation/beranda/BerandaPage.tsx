@@ -3,7 +3,7 @@ import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
 import useViewModel from "./BerandaPageViewModel.ts"
 import {TransactionHistoryCard} from "@/components/transaction-history-card.tsx";
 import {useUser} from "@/presentation/context/UserContext.tsx";
-import {formatCurrency} from "@/lib/utils.ts";
+import {calcPrize, formatCurrency} from "@/lib/utils.ts";
 
 export const BerandaPage = () => {
     const {
@@ -20,7 +20,17 @@ export const BerandaPage = () => {
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold mb-1 text-yellow-900">{formatCurrency(user?.balance ?? 0)}</div>
-                    <div className="text-sm text-yellow-700">+2,5% dari bulan lalu</div>
+                    <div className="text-sm text-yellow-700">Saldo kamu akan berpengaruh terhadap hadiah yang didapat</div>
+                </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-r from-green-100 to-green-200 border-green-300">
+                <CardHeader>
+                    <CardTitle className="text-base text-green-800">Total Hadiah</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold mb-1 text-green-900">{formatCurrency(calcPrize(user?.balance ?? 0))}</div>
+                    <div className="text-sm text-green-700">Total hadiah yang didapatkan berdasarkan saldo kamu</div>
                 </CardContent>
             </Card>
 

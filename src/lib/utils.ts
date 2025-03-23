@@ -16,6 +16,12 @@ export function formatCurrency(amount: number) {
     }).format(amount)
 }
 
+export function calcPrize(amount: number) {
+    const BASE = 1000000000;
+    const REWARD = 50000;
+    return amount / BASE * REWARD;
+}
+
 export function isAuthenticated(session: Session | null | undefined): boolean {
     if (session === null || session === undefined || session.expires_at === undefined) return false;
 
