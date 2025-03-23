@@ -4,6 +4,10 @@ declare global {
     type User = Tables<'nudge_user'>;
     type InsertUser = Database["public"]["Tables"]["nudge_user"]["Insert"];
 
+    type UserConsent = Tables<'nudge_user_consent'>;
+    type InsertUserConsent = Database["public"]["Tables"]["nudge_user_consent"]["Insert"];
+    type UpdateUserConsent = Database["public"]["Tables"]["nudge_user_consent"]["Update"];
+
     type UserConsentForm = Tables<'user_consent_form'>;
     type InsertUserConsentForm = Database["public"]["Tables"]["user_consent_form"]["Insert"];
 
