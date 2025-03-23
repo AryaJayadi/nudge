@@ -13,7 +13,7 @@ export class UserTransactionRepositoryDataSource implements UserTransactionRepos
         return this.repository.create(data);
     }
 
-    readByUser(uid: string): Promise<BaseSupabaseResponse<UserTransaction[]>> {
+    readByUser(uid: string): Promise<BaseSupabaseResponse<UserTransactionWithDetails[]>> {
         return this.repository.readByUser(uid);
     }
 }

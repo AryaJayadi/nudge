@@ -2,7 +2,7 @@ import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse
 import {UserTransactionRepository} from "@/domain/repository/UserTransactionRepository.ts";
 
 interface UserTransactionReadByUserUseCase {
-    invoke(uid: string): Promise<BaseSupabaseResponse<UserTransaction[]>>;
+    invoke(uid: string): Promise<BaseSupabaseResponse<UserTransactionWithDetails[]>>;
 }
 
 export class UserTransactionReadByUser implements UserTransactionReadByUserUseCase {
@@ -13,7 +13,7 @@ export class UserTransactionReadByUser implements UserTransactionReadByUserUseCa
         this.repository = _repository;
     }
 
-    invoke(uid: string): Promise<BaseSupabaseResponse<UserTransaction[]>> {
+    invoke(uid: string): Promise<BaseSupabaseResponse<UserTransactionWithDetails[]>> {
         return this.repository.readByUser(uid);
     }
 }

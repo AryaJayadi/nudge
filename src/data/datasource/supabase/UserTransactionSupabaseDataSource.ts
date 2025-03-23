@@ -15,10 +15,11 @@ export class UserTransactionSupabaseDataSource implements UserTransactionDataSou
         return singleSupabaseResponseMapper(res);
     }
 
-    async readByUser(uid: string): Promise<BaseSupabaseResponse<UserTransaction[]>> {
+    async readByUser(uid: string): Promise<BaseSupabaseResponse<UserTransactionWithDetails[]>> {
         const res = await this.table
-            .select()
-            .eq("nudge_user_id", uid);
+            .select("*, nudge_product(*, nudge_category(*))")
+            .eq("nudge_user_id", uid)
+            .order("created_at", {ascending: false});
 
         return mapSupabaseResponse(res, (data) => data || [])
     }
