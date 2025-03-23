@@ -1,4 +1,4 @@
-import {useRef, useState} from "react"
+import {useEffect, useRef, useState} from "react"
 import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import {Progress} from "@/components/ui/progress"
@@ -35,7 +35,7 @@ export default function Questionnaire() {
     const startIndex = currentPage * QUESTIONS_PER_PAGE
     const endIndex = startIndex + QUESTIONS_PER_PAGE
     const currQuestions = questions.slice(startIndex, endIndex);
-    const canProgress = responses.length === QUESTIONS_PER_PAGE * (currentPage + 1);
+    const canProgress = (responses.length >= QUESTIONS_PER_PAGE * (currentPage + 1)) || (responses.length === questions.length);
 
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
