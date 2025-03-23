@@ -12,16 +12,16 @@ import {CheckCircle2, XCircle, AlertCircle} from "lucide-react"
 import {Record} from "@/domain/model/Record.ts";
 
 interface SimulationModalProps {
-    isOpen: boolean
-    onClose: () => void
-    profit: number
-    price: number
-    risk: number
-    record: Record;
-    onPurchase(record: Record, win: boolean): void;
+    isOpen: boolean;
+    onClose: () => void;
+    profit: number;
+    price: number;
+    risk: number;
+    product: Product;
+    onPurchase(product: Product, win: boolean): void;
 }
 
-export function SimulationModal({isOpen, onClose, profit, price, risk, record, onPurchase}: SimulationModalProps) {
+export function SimulationModal({isOpen, onClose, profit, price, risk, product, onPurchase}: SimulationModalProps) {
     const [isSimulating, setIsSimulating] = useState(false)
     const [currentNumber, setCurrentNumber] = useState<number | null>(null)
     const [result, setResult] = useState<"win" | "lose" | null>()
@@ -100,9 +100,9 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, record, o
 
     useEffect(() => {
         if (result === "win") {
-            onPurchase(record, true)
+            onPurchase(product, true)
         } else if (result === "lose") {
-            onPurchase(record, false)
+            onPurchase(product, false)
         }
     }, [result]);
 
