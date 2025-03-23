@@ -1,32 +1,39 @@
 import {useToast} from "@/components/ui/use-toast.ts";
 import {useRef} from "react";
 import {AuthResponse} from "@supabase/supabase-js";
+import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 
-export default function RegisterPageViewModel(register: (email: string, password: string) => Promise<AuthResponse>) {
+export default function RegisterPageViewModel(register: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>) {
     const {toast} = useToast()
 
     const emailRef = useRef<HTMLInputElement | null>(null);
+    const phoneRef = useRef<HTMLInputElement | null>(null);
     const passRef = useRef<HTMLInputElement | null>(null);
 
     async function handleSubmit() {
-        if (!emailRef.current || !passRef.current) {
+        if (!emailRef.current || !passRef.current || !phoneRef.current) {
             toast({
-                title: "Login failed!",
+                title: "Register failed!",
                 description: `Failed to bind refs!`,
             });
             return;
         }
-        if (emailRef.current['value'] == "" || passRef.current['value'] == "") {
+        if (emailRef.current['value'] == "" || passRef.current['value'] == "" || phoneRef.current['value'] == "") {
             toast({
-                title: "Login failed!",
+                title: "Register failed!",
                 description: `Please make sure to fill all fields!`,
             });
             return;
         }
         const email: string = emailRef.current['value'];
+        const phone: string = phoneRef.current['value'];
         const pass: string = passRef.current['value'];
 
-        const res = await register(email, pass);
+        const res = await register({
+            email: email,
+            phone: phone,
+            password: pass
+        });
 
         if(res.error) {
             toast({
@@ -48,11 +55,13 @@ export default function RegisterPageViewModel(register: (email: string, password
         });
 
         emailRef.current['value'] = "";
+        phoneRef.current['value'] = "";
         passRef.current['value'] = "";
     }
 
     return {
         emailRef,
+        phoneRef,
         passRef,
         handleSubmit
     }

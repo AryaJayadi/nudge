@@ -12,6 +12,7 @@ export const RegisterPage = () => {
     } = useUser();
     const {
         emailRef,
+        phoneRef,
         passRef,
         handleSubmit
     } = useViewModel(register);
@@ -32,13 +33,17 @@ export const RegisterPage = () => {
                             <Input id="email" placeholder="Email" ref={emailRef} type="text"/>
                         </div>
                         <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="phone">Phone</Label>
+                            <Input id="phone" placeholder="Phone" ref={phoneRef} type="text"/>
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="password">Password</Label>
                             <Input id="password" placeholder="Password" ref={passRef} type="password"/>
                         </div>
                     </div>
                 </form>
                 <span className="text-sm">Already have an account? <Link to="/auth/login"
-                                                                       className="text-blue-600 underline cursor-pointer">Login now</Link></span>
+                                                                         className="text-blue-600 underline cursor-pointer">Login now</Link></span>
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button onClick={handleSubmit}>Register</Button>
