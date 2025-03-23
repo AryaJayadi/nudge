@@ -20,6 +20,8 @@ import {UserSurveyRepositoryDataSource} from "@/data/repository/UserSurveyReposi
 import {UserConsentRead} from "@/domain/usecase/user_consent/UserConsentRead.ts";
 import {data} from "autoprefixer";
 import {UserSurveyRead} from "@/domain/usecase/user_survey/UserSurveyRead.ts";
+import {UserConsentUpdate} from "@/domain/usecase/user_consent/UserConsentUpdate.ts";
+import {UserSurveyUpdate} from "@/domain/usecase/user_survey/UserSurveyUpdate.ts";
 
 interface UserContextType {
     user: User | null;
@@ -91,6 +93,16 @@ export function UserProvider({children}: { children: ReactNode }) {
         return await publicUserInsertUseCase.invoke(data);
     }, [publicUserInsertUseCase]);
 
+    const userConsentUpdateUseCase = useMemo(() => new UserConsentUpdate(userConsentRepository), [userConsentRepository]);
+    const userConsentUpdate = useCallback(async (uid: string, data: UpdateUserConsent) => {
+        return await userConsentUpdateUseCase.invoke(uid, data);
+    }, [userConsentUpdateUseCase]);
+
+    const userSurveyUpdateUseCase = useMemo(() => new UserSurveyUpdate(userSurveyRepository), [userSurveyRepository]);
+    const userSurveyUpdate = useCallback(async (uid: string, data: UpdateUserSurvey) => {
+        return await userSurveyUpdateUseCase.invoke(uid, data);
+    }, [userSurveyUpdateUseCase]);
+
     const userConsentReadUseCase = useMemo(() => new UserConsentRead(userConsentRepository), [userConsentRepository]);
     const userConsentRead = useCallback(async () => {
         if (user === null) {
@@ -98,7 +110,7 @@ export function UserProvider({children}: { children: ReactNode }) {
                 success: false,
                 data: null,
                 error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
-            } as BaseSupabaseResponse<boolean>;
+            } as BaseSupabaseResponse<UserConsent>;
         }
         return await userConsentReadUseCase.invoke(user.id);
     }, [userConsentReadUseCase, user]);
@@ -110,7 +122,7 @@ export function UserProvider({children}: { children: ReactNode }) {
                 success: false,
                 data: null,
                 error: {message: "User is not logged in", details: "", hint: "", code: ""} as PostgrestError
-            } as BaseSupabaseResponse<boolean>;
+            } as BaseSupabaseResponse<UserSurvey>;
         }
         return await userSurveyReadUseCase.invoke(user.id);
     }, [userSurveyReadUseCase, user]);
