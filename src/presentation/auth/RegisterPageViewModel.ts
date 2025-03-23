@@ -41,7 +41,7 @@ export default function RegisterPageViewModel(register: (data: InsertUser) => Pr
                 description: `${res.error.message}`,
             });
             return;
-        } else if(res.data.user == null) {
+        } else if(res.data == null) {
             toast({
                 title: "Register failed!",
                 description: `Failed to register user`,
@@ -51,7 +51,7 @@ export default function RegisterPageViewModel(register: (data: InsertUser) => Pr
 
         toast({
             title: "Register success!",
-            description: `Please login, ${res.data.user?.email}!`,
+            description: `Please login, ${res.data.email}!`,
         });
 
         emailRef.current['value'] = "";
