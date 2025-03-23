@@ -64,14 +64,14 @@ export function UserProvider({children}: { children: ReactNode }) {
     const userDataSource = useMemo(() => new UserSupabaseDataSource(), []);
     const userRepository = useMemo(() => new UserRepositoryDataSource(userDataSource), [userDataSource]);
 
-    const userSignInUseCase = useMemo(() => new UserSignIn(userDataSource), [userRepository]);
-    const userSignIn = useCallback(async (email: string, password: string) => {
-        return await userSignInUseCase.invoke(email, password);
+    const userSignInUseCase = useMemo(() => new UserSignIn(userRepository), [userRepository]);
+    const userSignIn = useCallback(async (data: InsertUser) => {
+        return await userSignInUseCase.invoke(data);
     }, [userSignInUseCase]);
 
     const userSignUpUseCase = useMemo(() => new UserSignUp(userRepository), [userRepository]);
-    const userSignUp = useCallback(async (email: string, password: string) => {
-        return await userSignUpUseCase.invoke(email, password);
+    const userSignUp = useCallback(async (data: InsertUser) => {
+        return await userSignUpUseCase.invoke(data);
     }, [userSignUpUseCase]);
 
     const publicUserInsertUseCase = useMemo(() => new PublicUserInsert(userRepository), [userRepository]);

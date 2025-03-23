@@ -1,6 +1,5 @@
 import UserDataSource from "@/data/datasource/UserDataSource.ts";
 import supabase from "@/core/DatabaseSupabase.tsx";
-import {AuthResponse} from "@supabase/supabase-js";
 import {BaseSupabaseResponse, mapSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 import {InsertUserConsentForm} from "@/domain/model/request/InsertUserConsentForm.ts";
 import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";

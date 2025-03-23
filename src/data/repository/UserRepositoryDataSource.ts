@@ -1,13 +1,13 @@
 import {UserRepository} from "@/domain/repository/UserRepository.ts";
-import {AuthResponse} from "@supabase/supabase-js";
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 import {InsertUserConsentForm} from "@/domain/model/request/InsertUserConsentForm.ts";
 import {InsertUserFinishSurvey} from "@/domain/model/request/InsertUserFinishSurvey.ts";
+import UserDataSource from "@/data/datasource/UserDataSource.ts";
 
 export class UserRepositoryDataSource implements UserRepository {
-    datasource: UserRepository;
+    datasource: UserDataSource;
 
-    constructor(_datasource: UserRepository) {
+    constructor(_datasource: UserDataSource) {
         this.datasource = _datasource;
     }
 
