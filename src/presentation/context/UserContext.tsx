@@ -126,23 +126,6 @@ export function UserProvider({children}: { children: ReactNode }) {
     } = useSupabaseQuery(checkSurvey);
 
     useEffect(() => {
-        // if (user === null) {
-        //     if (isAuthenticated(value?.data.session)) {
-        //         if (value?.data.user) {
-        //             setUser(value.data.user);
-        //         } else if (!WHITELIST_PATH.includes(location.pathname)) {
-        //             navigate(LOGIN_PATH, {state: {from: location}});
-        //         }
-        //     } else if (!WHITELIST_PATH.includes(location.pathname)) {
-        //         navigate(LOGIN_PATH, {state: {from: location}});
-        //     }
-        // } else if (user) {
-        //     if (hasConsentData === false) {
-        //         navigate(CONSENT_PATH, {state: {from: location}});
-        //     } else if (hasSurveyData === false) {
-        //         navigate(QUESTIONNAIRE_PATH, {state: {from: location}});
-        //     }
-        // }
         if (user === null) {
             if (value) {
                 setUser(value)
