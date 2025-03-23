@@ -1012,6 +1012,7 @@ export type Database = {
           id: number
           nudge_product_id: number | null
           nudge_user_id: string | null
+          price: number
           win: boolean
         }
         Insert: {
@@ -1019,6 +1020,7 @@ export type Database = {
           id?: number
           nudge_product_id?: number | null
           nudge_user_id?: string | null
+          price?: number
           win?: boolean
         }
         Update: {
@@ -1026,6 +1028,7 @@ export type Database = {
           id?: number
           nudge_product_id?: number | null
           nudge_user_id?: string | null
+          price?: number
           win?: boolean
         }
         Relationships: [
