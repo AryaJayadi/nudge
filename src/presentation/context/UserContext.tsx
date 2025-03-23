@@ -146,14 +146,18 @@ export function UserProvider({children}: { children: ReactNode }) {
             } else if (!WHITELIST_PATH.includes(location.pathname)) {
                 navigate(LOGIN_PATH, {state: {from: location}});
             }
-        } else if (user) {
-            if (hasConsentData === false) {
-                navigate(CONSENT_PATH, {state: {from: location}});
-            } else if (hasSurveyData === false) {
-                navigate(QUESTIONNAIRE_PATH, {state: {from: location}});
-            }
         }
     }, [user, value, navigate, location]);
+
+    useEffect(() => {
+        if (user === null || !hasConsentData || !hasSurveyData) return
+
+        if (!hasConsentData.done && location.pathname !== CONSENT_PATH) {
+            navigate(CONSENT_PATH, {state: {from: location}});
+        } else if (!hasSurveyData.done && location.pathname !== QUESTIONNAIRE_PATH) {
+            navigate(QUESTIONNAIRE_PATH, {state: {from: location}});
+        }
+    }, [user, hasConsentData, hasSurveyData]);
 
     async function login(data: InsertUser) {
         const res = await userSignIn(data);
