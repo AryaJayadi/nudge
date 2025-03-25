@@ -37,10 +37,18 @@ export default function Questionnaire() {
     const currQuestions = questions.slice(startIndex, endIndex);
     const canProgress = (responses.length >= QUESTIONS_PER_PAGE * (currentPage + 1)) || (responses.length === questions.length);
 
+    const scrollToTop = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollTop = 0;
+            console.log(containerRef);
+        }
+    }
+
     const handleNext = () => {
         if (currentPage < totalPages - 1) {
             setCurrentPage((prev) => prev + 1)
             window.scrollTo(0, 0)
+            scrollToTop();
         } else {
             setIsComplete(true)
         }
