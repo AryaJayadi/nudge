@@ -13,8 +13,8 @@ import {AlertCircle, CheckCircle2, XCircle} from "lucide-react"
 interface SimulationModalProps {
     isOpen: boolean;
     onClose: () => void;
-    profit: number;
-    price: number;
+    profit: string;
+    price: string;
     risk: number;
     riskLevel: string;
     product: Product;
@@ -130,7 +130,7 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
 
                     <div className="space-y-1">
                         <p className="text-sm font-medium text-gray-500">Price</p>
-                        <p className="text-xl font-bold text-blue-800">{formatCurrency(price)}</p>
+                        <p className="text-xl font-bold text-blue-800">{price}</p>
                     </div>
 
                     <div className="flex flex-col items-center justify-center py-6">
