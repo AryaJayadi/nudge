@@ -8,16 +8,16 @@ interface Props {
 
 export default function NudgeRecommendation({card} : Props) {
     return (
-        <Card className="bg-gradient-to-r from-red-500 to-red-600 text-white">
+        <Card className="bg-gradient-to-r from-blue-800 to-blue-900 text-white">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Rekomendasi untuk Anda</CardTitle>
+                <CardTitle className="text-sm font-bold">Rekomendasi untuk Anda</CardTitle>
                 <AlertCircle className="h-4 w-4" />
             </CardHeader>
-            <CardContent>
+            <CardContent className="font-medium">
                 <p className="text-sm mb-3">
                     {card.content}
                 </p>
-                <Button size="sm" className="w-full bg-white hover:bg-red-100 text-red-600">
+                <Button size="sm" className="w-full bg-white hover:bg-blue-100 text-blue-800">
                     {card.label}
                 </Button>
             </CardContent>

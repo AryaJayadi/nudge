@@ -24,6 +24,21 @@ export const ProductPage = ({categoryId}: Props) => {
         )
     }
 
+    function getBuyText(categoryId: number) {
+        switch (categoryId) {
+            case 1:
+                return "Buka Sekarang";
+            case 2:
+                return "Ajukan Sekarang";
+            case 3:
+                return "Investasi Sekarang";
+            case 4:
+                return "Pilih Rencanamu";
+            default:
+                return "";
+        }
+    }
+
     if (productsLoading) {
         Array.from({length: length}).map((_, i) => (
             <SkeletonCard key={i}/>
@@ -33,15 +48,15 @@ export const ProductPage = ({categoryId}: Props) => {
     return (
         <>
             {
-                cards &&
-                cards.map((o, index) => (
-                    <NudgeRecommendation key={index} card={o}/>
+                products &&
+                products.map((o, index) => (
+                    <ProductCard key={index} product={o} onPurchase={onPurchase} buyText={getBuyText(categoryId)}/>
                 ))
             }
             {
-                products &&
-                products.map((o, index) => (
-                    <ProductCard key={index} product={o} onPurchase={onPurchase}/>
+                cards &&
+                cards.map((o, index) => (
+                    <NudgeRecommendation key={index} card={o}/>
                 ))
             }
         </>

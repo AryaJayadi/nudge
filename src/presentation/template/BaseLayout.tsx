@@ -11,7 +11,7 @@ export const BaseLayout = () => {
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
             <Navbar />
-            <main className="flex-1 py-6 px-4 overflow-y-auto">
+            <main className="flex-1 py-6 px-4 overflow-y-auto bg-blue-100">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-xl font-bold mb-4">{title}</h2>
                     <div className="space-y-4 max-w-md mx-auto">
