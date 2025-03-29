@@ -5,6 +5,7 @@ import {TransactionHistoryCard} from "@/components/transaction-history-card.tsx"
 import {useUser} from "@/presentation/context/UserContext.tsx";
 import {calcPrize, formatCurrency} from "@/lib/utils.ts";
 import {Button} from "@/components/ui/button.tsx";
+import CardCarousel from "@/components/carousel.tsx";
 
 export const BerandaPage = () => {
     const {
@@ -34,20 +35,12 @@ export const BerandaPage = () => {
                 </CardContent>
             </Card>
 
-            {/*<Card className="bg-gradient-to-r from-green-100 to-green-200 border-green-300">*/}
-            {/*    <CardHeader>*/}
-            {/*        <CardTitle className="text-base text-green-800">Total Hadiah</CardTitle>*/}
-            {/*    </CardHeader>*/}
-            {/*    <CardContent>*/}
-            {/*        <div className="text-2xl font-bold mb-1 text-green-900">{formatCurrency(calcPrize(user?.balance ?? 0))}</div>*/}
-            {/*        <div className="text-sm text-green-700">Total hadiah yang didapatkan berdasarkan saldo kamu</div>*/}
-            {/*    </CardContent>*/}
-            {/*</Card>*/}
-
             <NudgeRecommendation card={{
                 content: "Tingkatkan tabungan Anda dengan Deposito Berjangka. Dapatkan bunga hingga 5,5% per tahun!",
                 label: "Buka Deposito"
             } as Card}/>
+
+            <CardCarousel />
 
             <TransactionHistoryCard transactions={transactions}/>
 

@@ -21,7 +21,7 @@ export default function ProductCard({product, onPurchase, buyText}: Props) {
 
     return (
         <>
-            <Card className="mb-4 bg-blue-50">
+            <Card className="mb-4 bg-white">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <div className="flex items-center space-x-2">
                         <CardTitle className={`text-lg font-medium`}>{product.product_title}</CardTitle>
