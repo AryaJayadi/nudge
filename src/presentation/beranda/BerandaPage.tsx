@@ -14,6 +14,7 @@ export const BerandaPage = () => {
     const {
         transactions
     } = useViewModel();
+
     return (
         <>
             <Card className="bg-gradient-to-r from-cyan-400 to-teal-400 border-teal-300">

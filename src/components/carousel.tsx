@@ -3,7 +3,11 @@ import {Button} from "@/components/ui/button"
 import {Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 import {useState, useEffect} from "react"
 
-export default function CardCarousel() {
+interface Props {
+    product: Product;
+}
+
+export default function CardCarousel({product}: Props) {
     const items = [
         {
             title: "Card 1",
