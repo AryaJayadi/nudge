@@ -16,7 +16,8 @@ export class ProductSupabaseDataSource implements ProductDataSource {
     async readByCategory(categoryId: number): Promise<BaseSupabaseResponse<Product[]>> {
         const res = await this.table
             .select("*")
-            .eq("nudge_category_id", categoryId);
+            .eq("nudge_category_id", categoryId)
+            .order("nudge_info", {ascending: false});
 
         return mapSupabaseResponse(res, (data) => data || []);
     }
