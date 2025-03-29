@@ -20,7 +20,7 @@ export const ProductPage = ({categoryId}: Props) => {
 
     const length = 4;
 
-    if (productsError) {
+    if (productsError || !products || !cards) {
         return (
             <div>Error</div>
         )
@@ -49,8 +49,8 @@ export const ProductPage = ({categoryId}: Props) => {
 
     return (
         <>
-            <CardCarousel products={products ?? []} onPurchase={onPurchase}/>
-            <PromoCarousel cards={cards ?? []} />
+            <CardCarousel products={products} onPurchase={onPurchase}/>
+            <PromoCarousel cards={cards} />
             {
                 products &&
                 products.map((o, index) => (
