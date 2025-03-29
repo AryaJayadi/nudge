@@ -8,9 +8,10 @@ import {Input} from "@/components/ui/input.tsx";
 
 interface Props {
     questions: Question[];
+    start: number;
 }
 
-export default function QuestionPage({questions}: Props) {
+export default function QuestionPage({questions, start}: Props) {
     const {
         responses,
         lResponses,
@@ -23,7 +24,7 @@ export default function QuestionPage({questions}: Props) {
             {questions.map((question, index) => (
                 <div key={question.id} className="space-y-4">
                     <h3 className="font-medium text-lg">
-                        {index + 1}. {question.question_text}
+                        {index + start + 1}. {question.question_text}
                     </h3>
                     {
                         question.question_type === QuestionType.SINGLE ? (

@@ -31,6 +31,7 @@ export default function Questionnaire() {
     const QUESTIONS_PER_PAGE = 10
     const totalPages = Math.ceil(questions.length / QUESTIONS_PER_PAGE)
     const progress = ((currentPage + 1) / totalPages) * 100
+    const currIndex = QUESTIONS_PER_PAGE * currentPage;
 
     const startIndex = currentPage * QUESTIONS_PER_PAGE
     const endIndex = startIndex + QUESTIONS_PER_PAGE
@@ -110,7 +111,7 @@ export default function Questionnaire() {
             <CardContent className="relative flex">
                 <div ref={containerRef} className="flex-1 h-[400px] overflow-auto pr-4 scrollbar-hide">
                     <div ref={contentRef}>
-                        <QuestionPage questions={currQuestions}/>
+                        <QuestionPage questions={currQuestions} start={currIndex} />
                     </div>
                 </div>
                 <CustomScrollbar containerRef={containerRef} contentRef={contentRef} height={400} />
