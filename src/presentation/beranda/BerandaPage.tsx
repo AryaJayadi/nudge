@@ -41,8 +41,6 @@ export const BerandaPage = () => {
                 label: "Buka Deposito"
             } as Card}/>
 
-            <CardCarousel />
-
             <TransactionHistoryCard transactions={transactions}/>
 
             <Card className="bg-blue-50 border-blue-200">
