@@ -3,6 +3,7 @@ import SkeletonCard from "@/components/skeleton-card.tsx";
 import ProductCard from "@/components/product-card.tsx";
 import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
 import CardCarousel from "@/components/carousel-card.tsx";
+import PromoCarousel from "@/components/carousel-promo.tsx";
 
 interface Props {
     categoryId: number;
@@ -49,7 +50,7 @@ export const ProductPage = ({categoryId}: Props) => {
     return (
         <>
             <CardCarousel products={products ?? []} onPurchase={onPurchase}/>
-
+            <PromoCarousel cards={cards ?? []} />
             {
                 products &&
                 products.map((o, index) => (
