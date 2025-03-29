@@ -1,5 +1,3 @@
-import {Card, CardContent} from "@/components/ui/card"
-import {Button} from "@/components/ui/button"
 import {Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 import {useState, useEffect} from "react"
 import {SimulationModal} from "@/components/simulation-modal.tsx";
@@ -86,7 +84,7 @@ export default function CardCarousel({products, onPurchase}: Props) {
             </Carousel>
 
             {/* Index indicators */}
-            <div className="flex justify-center gap-2 mt-4">
+            <div className="flex justify-center gap-2">
                 {products.map((_, index) => (
                     <button
                         key={index}
