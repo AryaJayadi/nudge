@@ -2,7 +2,7 @@ import useViewModel from "@/presentation/product/ProductPageViewModel.ts";
 import SkeletonCard from "@/components/skeleton-card.tsx";
 import ProductCard from "@/components/product-card.tsx";
 import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
-import CardCarousel from "@/components/carousel.tsx";
+import CardCarousel from "@/components/carousel-card.tsx";
 
 interface Props {
     categoryId: number;

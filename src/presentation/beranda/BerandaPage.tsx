@@ -5,7 +5,7 @@ import {TransactionHistoryCard} from "@/components/transaction-history-card.tsx"
 import {useUser} from "@/presentation/context/UserContext.tsx";
 import {calcPrize, formatCurrency} from "@/lib/utils.ts";
 import {Button} from "@/components/ui/button.tsx";
-import CardCarousel from "@/components/carousel.tsx";
+import CardCarousel from "@/components/carousel-card.tsx";
 
 export const BerandaPage = () => {
     const {
