@@ -63,7 +63,7 @@ export const TransactionHistoryCard = ({transactions}: Props) => {
                                 <div
                                     className={`text-sm font-medium ${transaction.win ? "text-green-600" : "text-red-600"}`}
                                 >
-                                    {`${transaction.win ? "+" : "-"} ${formatCurrency(transaction.price)}`}
+                                    {`${formatCurrency(transaction.price)}`}
                                 </div>
                             </div>
                         );
