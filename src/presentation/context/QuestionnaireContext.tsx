@@ -7,6 +7,7 @@ import {InsertUserResponseSupabase} from "@/domain/model/request/InsertUserRespo
 import {useUser} from "@/presentation/context/UserContext.tsx";
 import {QuestionType} from "@/domain/model/enum/QuestionType.ts";
 import QuestionInsertResponses from "@/domain/usecase/QuestionInsertResponses.ts";
+import {useLocalStorage} from "usehooks-ts";
 
 type ResponseLainnya = {
     question_id: string;
@@ -42,6 +43,7 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
     const [questions, setQuestions] = useState<Question[]>([])
     const [responses, setResponses] = useState<InsertUserResponseSupabase[]>([])
     const [lResponses, setLResponses] = useState<ResponseLainnya[]>([])
+    const [value, setValue, ] = useLocalStorage<InsertUserResponseSupabase[]>(user?.id + '#questionnaire', [])
 
     const questionDataSource = useMemo(() => new QuestionSupabaseDataSource(), []);
     const questionRepository = useMemo(() => new QuestionRepositoryDataSource(questionDataSource), [questionDataSource]);
@@ -57,6 +59,10 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
     }, [questionInsertUserResponsesUseCase]);
 
     useEffect(() => {
+        if(value.length > responses.length) setResponses(value);
+    }, []);
+
+    useEffect(() => {
         if (loading) {
             getAllQuestions().then(res => {
                 setQuestions(res);
@@ -64,6 +70,10 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
             });
         }
     }, [loading]);
+
+    useEffect(() => {
+        setValue(responses);
+    }, [responses]);
 
     function handleAnswerChange(question: Question, answer: string) {
         setResponses(prev => {
