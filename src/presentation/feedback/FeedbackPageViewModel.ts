@@ -7,7 +7,7 @@ import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
 import {useUser} from "@/presentation/context/UserContext.tsx";
 
 export default function FeedbackPageViewModel() {
-    const [ratings, setRatings] = useState<Record<string, string>>({});
+    const [responses, setResponses] = useState<InsertFeedbackResponse[]>([]);
     const navigate = useNavigate();
     const {user} = useUser();
 
@@ -48,19 +48,19 @@ export default function FeedbackPageViewModel() {
 
     const handleSubmit = () => {
         // Here you would typically send the feedback data to your backend
-        console.log("Feedback submitted:", ratings)
+        console.log("Feedback submitted:", responses)
 
         // Redirect to a thank you page or back to the home page
         navigate("/app/thankyou")
     }
 
-    const isComplete = Object.keys(ratings).length === questions.length
+    const isComplete = Object.keys(responses).length === questionsData?.length
 
     return {
         questionsData,
         questionsLoading,
         questionsError,
-        ratings,
+        responses,
         handleRatingChange,
         handleSubmit,
         isComplete

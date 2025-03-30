@@ -10,7 +10,7 @@ export default function FeedbackPage() {
         questionsData,
         questionsError,
         questionsLoading,
-        ratings,
+        responses,
         handleRatingChange,
         handleSubmit,
         isComplete
@@ -42,7 +42,7 @@ export default function FeedbackPage() {
                                     <p className="text-sm text-muted-foreground">{q.detail}</p>
                                 </div>
                                 <RadioGroup
-                                    value={ratings[q.id]}
+                                    value={responses.find(o => o.nudge_feedback_question_id === q.id)?.score}
                                     onValueChange={(value) => handleRatingChange(q.id, value)}
                                     className="flex space-x-2"
                                 >
