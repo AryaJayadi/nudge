@@ -8,7 +8,6 @@ import {useUser} from "@/presentation/context/UserContext.tsx";
 
 export default function FeedbackPageViewModel() {
     const [ratings, setRatings] = useState<Record<string, string>>({});
-    const [responses, setResponses] = useState<InsertFeedbackResponse[]>([]);
     const navigate = useNavigate();
     const {user} = useUser();
 
@@ -26,11 +25,6 @@ export default function FeedbackPageViewModel() {
     } = useSupabaseQuery(feedbackQuestionRead)
 
     const handleRatingChange = (id: number, score: number) => {
-        setRatings((prev) => ({
-            ...prev,
-            [questionId]: value,
-        }))
-
         setResponses((prev) => {
             let updatedResponse = prev.map(o => ({...o}));
             let currIndex = updatedResponse.findIndex(o => o.id === id)
