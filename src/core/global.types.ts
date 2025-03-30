@@ -32,9 +32,11 @@ declare global {
         nudge_product: Product & {
             nudge_category: Category
         }
-    }
+    };
 
-    type Card = Tables<'nudge_card'>
+    type Card = Tables<'nudge_card'>;
+
+    type FeedbackQuestion = Tables<'nudge_feedback_question'>;
 
     type UserResponses = Tables<'user_responses'>;
     type InsertUserResponse = DB["user_responses"]["Insert"];
