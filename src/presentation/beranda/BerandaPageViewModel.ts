@@ -5,12 +5,17 @@ import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse
 import {UserTransactionSupabaseDataSource} from "@/data/datasource/supabase/UserTransactionSupabaseDataSource.ts";
 import {UserTransactionRepositoryDataSource} from "@/data/repository/UserTransactionRepositoryDataSource.ts";
 import {UserTransactionReadByUser} from "@/domain/usecase/user_transaction/UserTransactionReadByUser.ts";
+import {useNavigate} from "react-router";
 
 export default function BerandaPageViewModel() {
     const {
         user
     } = useUser();
-    const [transactions, setTransactions] = useState<UserTransactionWithDetails[]>([])
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [transactions, setTransactions] = useState<UserTransactionWithDetails[]>([]);
+    const navigate = useNavigate();
+
+    const FEEDBACK = "/app/feedback";
 
     const userTransactionDataSource = useMemo(() => new UserTransactionSupabaseDataSource(), []);
     const userTransactionRepository = useMemo(() => new UserTransactionRepositoryDataSource(userTransactionDataSource), [userTransactionDataSource]);
@@ -36,7 +41,14 @@ export default function BerandaPageViewModel() {
         }
     }, [user]);
 
+    function handleFinish() {
+        navigate(FEEDBACK, {replace: true});
+    }
+
     return {
-        transactions
+        transactions,
+        showModal,
+        setShowModal,
+        handleFinish
     }
 }

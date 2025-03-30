@@ -6,13 +6,17 @@ import {useUser} from "@/presentation/context/UserContext.tsx";
 import {calcPrize, formatCurrency} from "@/lib/utils.ts";
 import {Button} from "@/components/ui/button.tsx";
 import CardCarousel from "@/components/carousel-card.tsx";
+import FeedbackModal from "@/components/feedback-modal.tsx";
 
 export const BerandaPage = () => {
     const {
         user
     } = useUser();
     const {
-        transactions
+        transactions,
+        showModal,
+        setShowModal,
+        handleFinish
     } = useViewModel();
 
     return (
@@ -30,7 +34,7 @@ export const BerandaPage = () => {
                         </span>
                         yang bisa Anda kembangkan melalui Nudge Simulation App. Mainkan sekarang!
                     </div>
-                    <Button size="sm" className="w-full bg-white hover:bg-blue-100 text-blue-800 mt-4">
+                    <Button size="sm" className="w-full bg-white hover:bg-blue-100 text-blue-800 mt-4" onClick={() => setShowModal(true)}>
                         {"Selesaikan Simulasi"}
                     </Button>
                 </CardContent>
@@ -59,6 +63,8 @@ export const BerandaPage = () => {
                     </p>
                 </CardContent>
             </Card>
+
+            <FeedbackModal isOpen={showModal} onClose={() => setShowModal(false)} onFinish={handleFinish} />
         </>
     )
 }
