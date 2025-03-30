@@ -18,9 +18,9 @@ interface NumberSpinnerProps {
 
 export function NumberSpinner({
                                   value,
-                                  defaultValue = 0,
-                                  min = Number.MIN_SAFE_INTEGER,
-                                  max = Number.MAX_SAFE_INTEGER,
+                                  defaultValue,
+                                  min,
+                                  max,
                                   step = 1,
                                   disabled = false,
                                   onChange,

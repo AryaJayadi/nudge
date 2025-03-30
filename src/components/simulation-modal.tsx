@@ -9,6 +9,8 @@ import {
 import {Button} from "@/components/ui/button"
 import {useEffect, useRef, useState} from "react"
 import {AlertCircle, CheckCircle2, XCircle} from "lucide-react"
+import {Label} from "@/components/ui/label.tsx";
+import {NumberSpinner} from "@/components/number-spinner.tsx";
 
 interface SimulationModalProps {
     isOpen: boolean;
@@ -26,6 +28,7 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
     const [currentNumber, setCurrentNumber] = useState<number | null>(null)
     const [result, setResult] = useState<"win" | "lose" | null>()
     const [finalNumber, setFinalNumber] = useState<number | null>(null)
+    const [amount, setAmount] = useState<number>(product.saldo_awal)
     const simulationTimerRef = useRef<NodeJS.Timeout | null>(null)
 
     const formatCurrency = (amount: number) => {
@@ -128,9 +131,15 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
                         </div>
                     </div>
 
-                    <div className="space-y-1">
-                        <p className="text-sm font-medium text-gray-500">Price</p>
-                        <p className="text-xl font-bold text-blue-800">{price}</p>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                            <p className="text-sm font-medium text-gray-500">Price</p>
+                            <p className="text-xl font-bold text-blue-800">{price}</p>
+                        </div>
+                        <div className="space-y-1">
+                            <Label htmlFor="constrained-spinner" className="text-sm font-medium text-gray-500">Amount</Label>
+                            <NumberSpinner value={amount} onChange={setAmount} min={product.saldo_awal} max={product.saldo_awal * 10} step={product.saldo_awal} defaultValue={product.saldo_awal} className="max-w-[180px]" />
+                        </div>
                     </div>
 
                     <div className="flex flex-col items-center justify-center py-6">
