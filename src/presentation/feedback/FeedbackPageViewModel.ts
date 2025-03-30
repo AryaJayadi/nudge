@@ -4,10 +4,13 @@ import {FeedbackQuestionSupabaseDataSource} from "@/data/datasource/supabase/Fee
 import {FeedbackQuestionDataSourceRepository} from "@/data/repository/FeedbackQuestionDataSourceRepository.ts";
 import {FeedbackQuestionRead} from "@/domain/usecase/feedback_question/FeedbackQuestionRead.ts";
 import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
+import {useUser} from "@/presentation/context/UserContext.tsx";
 
 export default function FeedbackPageViewModel() {
     const [ratings, setRatings] = useState<Record<string, string>>({});
+    const [responses, setResponses] = useState<InsertFeedbackResponse[]>([]);
     const navigate = useNavigate();
+    const {user} = useUser();
 
     const feedbackQuestionDataSource = useMemo(() => new FeedbackQuestionSupabaseDataSource(), []);
     const feedbackQuestionRepository = useMemo(() => new FeedbackQuestionDataSourceRepository(feedbackQuestionDataSource), [feedbackQuestionDataSource]);
@@ -22,11 +25,31 @@ export default function FeedbackPageViewModel() {
         loading: questionsLoading
     } = useSupabaseQuery(feedbackQuestionRead)
 
-    const handleRatingChange = (questionId: string, value: string) => {
+    const handleRatingChange = (id: number, score: number) => {
         setRatings((prev) => ({
             ...prev,
             [questionId]: value,
         }))
+
+        setResponses((prev) => {
+            let updatedResponse = prev.map(o => ({...o}));
+            let currIndex = updatedResponse.findIndex(o => o.id === id)
+
+            if (currIndex !== -1) {
+                let curr = updatedResponse[currIndex];
+                curr.score = score;
+            } else {
+                updatedResponse = [
+                    ...updatedResponse, {
+                        nudge_user_id: user?.id,
+                        nudge_feedback_question_id: id,
+                        score: score
+                    } as InsertFeedbackResponse
+                ];
+            }
+
+            return updatedResponse;
+        })
     }
 
     const handleSubmit = () => {
