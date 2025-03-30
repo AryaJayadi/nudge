@@ -3,15 +3,26 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} f
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group"
 import {Label} from "@/components/ui/label"
 import useViewModel from "./FeedbackPageViewModel.ts";
+import SkeletonCard from "@/components/skeleton-card.tsx";
 
 export default function FeedbackPage() {
     const {
-        questions,
+        questionsData,
+        questionsError,
+        questionsLoading,
         ratings,
         handleRatingChange,
         handleSubmit,
         isComplete
     } = useViewModel();
+
+    if(questionsError || !questionsData) {
+        return <div>error</div>
+    }
+
+    if(questionsLoading) {
+        return <SkeletonCard />
+    }
 
     return (
         <div className="container mx-auto max-w-3xl py-8">
@@ -24,11 +35,11 @@ export default function FeedbackPage() {
                 </CardHeader>
                 <CardContent className="space-y-8">
                     <>
-                        {questions.map((q) => (
+                        {questionsData.map((q) => (
                             <div key={q.id} className="space-y-3">
                                 <div>
                                     <h3 className="font-medium">{q.question}</h3>
-                                    <p className="text-sm text-muted-foreground">{q.description}</p>
+                                    <p className="text-sm text-muted-foreground">{q.detail}</p>
                                 </div>
                                 <RadioGroup
                                     value={ratings[q.id]}
