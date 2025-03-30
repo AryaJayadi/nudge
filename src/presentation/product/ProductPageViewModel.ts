@@ -53,10 +53,10 @@ export default function ProductPageViewModel(categoryId: number) {
         return await userTransactionCreateUseCase.invoke(data);
     }, [userTransactionCreateUseCase])
 
-    function onPurchase(product: Product, win: boolean) {
+    function onPurchase(product: Product, amount: number, win: boolean) {
         if(user === null) return;
         const multiplier = win ? product.profit : product.loss;
-        const res = product.saldo_awal * multiplier * (win ? 1 : -1);
+        const res = product.saldo_awal * amount * multiplier * (win ? 1 : -1);
         userTransactionCreate({
             nudge_user_id: user.id,
             nudge_product_id: product.id,

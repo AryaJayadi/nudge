@@ -20,7 +20,7 @@ interface SimulationModalProps {
     risk: number;
     riskLevel: string;
     product: Product;
-    onPurchase(product: Product, win: boolean): void;
+    onPurchase(product: Product, amount: number, win: boolean): void;
 }
 
 export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel, product, onPurchase}: SimulationModalProps) {
@@ -30,6 +30,10 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
     const [finalNumber, setFinalNumber] = useState<number | null>(null)
     const [amount, setAmount] = useState<number>(product.saldo_awal)
     const simulationTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+    const MIN_AMOUNT = product.saldo_awal;
+    const MAX_AMOUNT = 10  * product.saldo_awal;
+    const STEP = product.saldo_awal;
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat("id-ID", {
@@ -103,9 +107,9 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
 
     useEffect(() => {
         if (result === "win") {
-            onPurchase(product, true)
+            onPurchase(product, amount / product.saldo_awal, true)
         } else if (result === "lose") {
-            onPurchase(product, false)
+            onPurchase(product, amount / product.saldo_awal, false)
         }
     }, [result]);
 
@@ -138,7 +142,7 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
                         </div>
                         <div className="space-y-1">
                             <Label htmlFor="constrained-spinner" className="text-sm font-medium text-gray-500">Amount</Label>
-                            <NumberSpinner value={amount} onChange={setAmount} min={product.saldo_awal} max={product.saldo_awal * 10} step={product.saldo_awal} defaultValue={product.saldo_awal} className="max-w-[180px]" />
+                            <NumberSpinner value={amount} onChange={setAmount} min={MIN_AMOUNT} max={MAX_AMOUNT} step={STEP} defaultValue={MIN_AMOUNT} />
                         </div>
                     </div>
 
