@@ -15,7 +15,7 @@ export default function BerandaPageViewModel() {
     const [transactions, setTransactions] = useState<UserTransactionWithDetails[]>([]);
     const navigate = useNavigate();
 
-    const FEEDBACK = "/app/feedback";
+    const FEEDBACK = "/feedback";
 
     const userTransactionDataSource = useMemo(() => new UserTransactionSupabaseDataSource(), []);
     const userTransactionRepository = useMemo(() => new UserTransactionRepositoryDataSource(userTransactionDataSource), [userTransactionDataSource]);

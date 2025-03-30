@@ -15,6 +15,7 @@ import {useLocalStorage} from "usehooks-ts";
 import {QuestionnairePage} from "@/presentation/questionnaire/QuestionnairePage.tsx";
 import {UserProvider} from "@/presentation/context/UserContext.tsx";
 import {ConsentPage} from "@/presentation/consent/ConsentPage.tsx";
+import FeedbackPage from "@/presentation/feedback/FeedbackPage.tsx";
 
 interface ProtectedRouteProps {
     redirectPath: string;
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
                     {
                         path: "questionnaire",
                         element: <QuestionnairePage />
+                    },
+                    {
+                        path: "feedback",
+                        element: <FeedbackPage/>
                     },
                     {
                         path: "app",
