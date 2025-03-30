@@ -2,7 +2,7 @@ import {FeedbackQuestionRepository} from "@/domain/repository/FeedbackQuestionRe
 import {BaseSupabaseResponse} from "@/domain/model/response/BaseSupabaseResponse.ts";
 import {FeedbackQuestionDataSource} from "@/data/datasource/FeedbackQuestionDataSource.ts";
 
-export class FeedbackQuestionRepositoryDataSource implements FeedbackQuestionRepository {
+export class FeedbackQuestionDataSourceRepository implements FeedbackQuestionRepository {
 
     private datasource: FeedbackQuestionDataSource;
 

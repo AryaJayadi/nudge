@@ -1,37 +1,26 @@
-import {useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {useNavigate} from "react-router";
+import {FeedbackQuestionSupabaseDataSource} from "@/data/datasource/supabase/FeedbackQuestionSupabaseDataSource.ts";
+import {FeedbackQuestionDataSourceRepository} from "@/data/repository/FeedbackQuestionDataSourceRepository.ts";
+import {FeedbackQuestionRead} from "@/domain/usecase/feedback_question/FeedbackQuestionRead.ts";
+import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
 
 export default function FeedbackPageViewModel() {
-    const questions = [
-        {
-            id: "q1",
-            question: "Seberapa menarik perhatian rekomendasi produk yang Anda lihat?",
-            description: "(Untuk mengukur apakah nudge terlihat dan noticeable)",
-        },
-        {
-            id: "q2",
-            question: "Seberapa sesuai rekomendasi tersebut dengan situasi atau kebutuhan Anda saat itu?",
-            description: "(Untuk mengukur personalisasi)",
-        },
-        {
-            id: "q3",
-            question: "Seberapa besar pengaruh rekomendasi tersebut terhadap keputusan Anda?",
-            description: "(Apakah nudge berhasil menggerakkan user)",
-        },
-        {
-            id: "q4",
-            question: "Apakah Anda merasa rekomendasi tersebut membantu Anda memilih dengan lebih percaya diri?",
-            description: "(Evaluasi perceived utility dari nudge)",
-        },
-        {
-            id: "q5",
-            question: "Seberapa puas Anda dengan pengalaman menerima rekomendasi ini?",
-            description: "(Untuk mengukur overall satisfaction terhadap mekanisme nudge)",
-        },
-    ];
-
     const [ratings, setRatings] = useState<Record<string, string>>({});
     const navigate = useNavigate();
+
+    const feedbackQuestionDataSource = useMemo(() => new FeedbackQuestionSupabaseDataSource(), []);
+    const feedbackQuestionRepository = useMemo(() => new FeedbackQuestionDataSourceRepository(feedbackQuestionDataSource), [feedbackQuestionDataSource]);
+
+    const feedbackQuestionReadUseCase = useMemo(() => new FeedbackQuestionRead(feedbackQuestionRepository), [feedbackQuestionRepository]);
+    const feedbackQuestionRead = useCallback(async () => {
+        return await feedbackQuestionReadUseCase.invoke();
+    }, [feedbackQuestionReadUseCase]);
+    const {
+        data: questionsData,
+        error: questionsError,
+        loading: questionsLoading
+    } = useSupabaseQuery(feedbackQuestionRead)
 
     const handleRatingChange = (questionId: string, value: string) => {
         setRatings((prev) => ({
@@ -51,7 +40,9 @@ export default function FeedbackPageViewModel() {
     const isComplete = Object.keys(ratings).length === questions.length
 
     return {
-        questions,
+        questionsData,
+        questionsLoading,
+        questionsError,
         ratings,
         handleRatingChange,
         handleSubmit,
