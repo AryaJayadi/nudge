@@ -38,6 +38,9 @@ declare global {
 
     type FeedbackQuestion = Tables<'nudge_feedback_question'>;
 
+    type FeedbackResponse = Tables<'nudge_feedback_response'>;
+    type InsertFeedbackResponse = DB["nudge_feedback_response"]["Insert"];
+
     type UserResponses = Tables<'user_responses'>;
     type InsertUserResponse = DB["user_responses"]["Insert"];
 
