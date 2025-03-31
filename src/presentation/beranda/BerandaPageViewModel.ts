@@ -15,6 +15,7 @@ import {CardCarouselRead} from "@/domain/usecase/card_carousel/CardCarouselRead.
 import {CardInteractionSupabaseDataSource} from "@/data/datasource/supabase/CardInteractionSupabaseDataSource.ts";
 import {CardInteractionRepositoryDataSource} from "@/data/repository/CardInteractionRepositoryDataSource.ts";
 import {CardInteractionCreate} from "@/domain/usecase/card_interaction/CardInteractionCreate.ts";
+import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
 
 export default function BerandaPageViewModel() {
     const {
@@ -27,6 +28,10 @@ export default function BerandaPageViewModel() {
     const navigate = useNavigate();
 
     const FEEDBACK = "/feedback";
+    const TABUNGAN = "/app/tabungan"
+    const KREDIT = "/app/kredit"
+    const INVESTASI = "/app/investasi"
+    const ASURANSI = "/app/asuransi"
 
     const userTransactionDataSource = useMemo(() => new UserTransactionSupabaseDataSource(), []);
     const userTransactionRepository = useMemo(() => new UserTransactionRepositoryDataSource(userTransactionDataSource), [userTransactionDataSource]);
@@ -103,6 +108,16 @@ export default function BerandaPageViewModel() {
             nudge_user_id: user.id,
             nudge_card_carousel_id: card.id
         } as InsertCardInteraction)
+
+        if(card.nudge_category_id === RecordCategory.SAVING) {
+            navigate(TABUNGAN, {replace: true});
+        } else if (card.nudge_category_id === RecordCategory.LOAN) {
+            navigate(KREDIT, {replace: true});
+        } else if (card.nudge_category_id === RecordCategory.INVESTMENT) {
+            navigate(INVESTASI, {replace: true});
+        } else if (card.nudge_category_id === RecordCategory.INSURANCE) {
+            navigate(ASURANSI, {replace: true});
+        }
     }
 
     return {
