@@ -6,7 +6,7 @@ import ProductCard from "@/components/product-card.tsx";
 
 interface Props {
     products: Product[];
-    onPurchase: (product: Product, win: boolean) => void;
+    onPurchase: (product: Product, amount: number, win: boolean) => void;
 }
 
 export default function CardCarousel({products, onPurchase}: Props) {
