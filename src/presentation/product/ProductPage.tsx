@@ -2,8 +2,6 @@ import useViewModel from "@/presentation/product/ProductPageViewModel.ts";
 import SkeletonCard from "@/components/skeleton-card.tsx";
 import ProductCard from "@/components/product-card.tsx";
 import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
-import CardCarousel from "@/components/carousel-card.tsx";
-import PromoCarousel from "@/components/carousel-promo.tsx";
 
 interface Props {
     categoryId: number;
@@ -31,9 +29,9 @@ export const ProductPage = ({categoryId}: Props) => {
             case 1:
                 return "Buka Sekarang";
             case 2:
-                return "Ajukan Sekarang";
-            case 3:
                 return "Investasi Sekarang";
+            case 3:
+                return "Ajukan Sekarang";
             case 4:
                 return "Pilih Rencanamu";
             default:
@@ -49,7 +47,6 @@ export const ProductPage = ({categoryId}: Props) => {
 
     return (
         <>
-            <CardCarousel products={products} onPurchase={onPurchase}/>
             {
                 products &&
                 products.map((o, index) => (

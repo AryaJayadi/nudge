@@ -34,7 +34,22 @@ export default function CardCarousel({products, onPurchase}: Props) {
             api.off("select", handleSelect)
             api.off("reInit", handleSelect)
         }
-    }, [api])
+    }, [api]);
+
+    function getBuyText(categoryId: number) {
+        switch (categoryId) {
+            case 1:
+                return "Buka Sekarang";
+            case 2:
+                return "Investasi Sekarang";
+            case 3:
+                return "Ajukan Sekarang";
+            case 4:
+                return "Pilih Rencanamu";
+            default:
+                return "";
+        }
+    }
 
     if(!product) return (
         <SkeletonCard />
@@ -42,6 +57,7 @@ export default function CardCarousel({products, onPurchase}: Props) {
 
     return (
         <div className="w-full max-w-md mx-auto">
+            <div className="font-semibold px-1">Rekomendasi Untuk Anda</div>
             <Carousel
                 opts={{
                     align: "center",
@@ -57,14 +73,14 @@ export default function CardCarousel({products, onPurchase}: Props) {
                                 <div className="p-1">
                                     {/*<ProductCard product={product} onPurchase={onPurchase} buyText={"Beli Produk"} />*/}
 
-                                    <Card className="border-2 h-full min-h-56 max-h-56">
+                                    <Card className="border-2 h-full min-h-56 max-h-56 bg-white">
                                         <CardContent className="flex flex-col items-start justify-between p-6 h-full">
                                             <div>
-                                                <h3 className="text-xl font-semibold mb-2">{product.product_title}</h3>
+                                                <h3 className="text-lg font-semibold mb-2">{product.product_title}</h3>
                                                 <p className="text-muted-foreground mb-3">{product.content}</p>
                                             </div>
                                             <div className="w-full pt-4">
-                                                <Button className="w-full" onClick={() => setIsModalOpen(true)}>Buy Now</Button>
+                                                <Button className="w-full bg-blue-600" onClick={() => setIsModalOpen(true)}>{getBuyText(product.nudge_category_id)}</Button>
                                             </div>
                                         </CardContent>
                                     </Card>
