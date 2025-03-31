@@ -16,44 +16,36 @@ export class RecommendationJoheDataSource implements RecommendationDataSource {
                 throw Error(`[requestClient] Error parsing response JSON data - ${JSON.stringify(error)}`)
             }
 
-            if(resp) {
+            if (resp) {
                 return resp
             }
         }],
     });
 
     async purchase(uid: string, data: string[]): Promise<string[]> {
-        try {
-            const response = await this.axiosInstance({
-                method: "POST",
-                url: `/${uid}`,
-                params: {
-                    state_id: uid
-                },
-                data: data
-            } as AxiosRequestConfig);
+        const response = await this.axiosInstance({
+            method: "POST",
+            url: `/${uid}`,
+            params: {
+                state_id: uid
+            },
+            data: data
+        } as AxiosRequestConfig);
 
-            console.log(response);
-            return response.data;
-        } catch (e) {
-            console.log(e);
-        }
+        console.log(response);
+        return response.data;
     }
 
     async read(uid: string): Promise<string[]> {
-        try {
-            const response = await this.axiosInstance({
-                method: "GET",
-                url: `/${uid}`,
-                params: {
-                    state_id: uid
-                }
-            } as AxiosRequestConfig);
+        const response = await this.axiosInstance({
+            method: "GET",
+            url: `/${uid}`,
+            params: {
+                state_id: uid
+            }
+        } as AxiosRequestConfig);
 
-            console.log(response);
-            return response.data;
-        } catch (e) {
-            console.log(e);
-        }
+        console.log(response);
+        return response.data;
     }
 }

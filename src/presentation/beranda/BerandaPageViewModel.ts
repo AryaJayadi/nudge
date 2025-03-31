@@ -67,6 +67,7 @@ export default function BerandaPageViewModel() {
 
     return {
         transactions,
+        recommendations,
         showModal,
         setShowModal,
         handleFinish
