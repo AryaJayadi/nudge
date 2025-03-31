@@ -13,6 +13,9 @@ import {CardRead} from "@/domain/usecase/card/CardRead.ts";
 import {CardInteractionSupabaseDataSource} from "@/data/datasource/supabase/CardInteractionSupabaseDataSource.ts";
 import {CardInteractionRepositoryDataSource} from "@/data/repository/CardInteractionRepositoryDataSource.ts";
 import {CardInteractionCreate} from "@/domain/usecase/card_interaction/CardInteractionCreate.ts";
+import {RecommendationPurchase} from "@/domain/usecase/recommendation/RecommendationPurchase.ts";
+import {RecommendationJoheDataSource} from "@/data/datasource/johe/RecommendationJoheDataSource.ts";
+import {RecommendationRepositoryDataSource} from "@/data/repository/RecommendationRepositoryDataSource.ts";
 
 export default function ProductPageViewModel(categoryId: number) {
     const {
@@ -31,6 +34,9 @@ export default function ProductPageViewModel(categoryId: number) {
 
     const cardInteractionDataSource = useMemo(() => new CardInteractionSupabaseDataSource(), []);
     const cardInteractionRepository = useMemo(() => new CardInteractionRepositoryDataSource(cardInteractionDataSource),[cardInteractionDataSource]);
+
+    const recommendationDataSource = useMemo(() => new RecommendationJoheDataSource(), []);
+    const recommendationRepository = useMemo(() => new RecommendationRepositoryDataSource(recommendationDataSource), [recommendationDataSource]);
 
     const productReadByCategoryUseCase = useMemo(() => new ProductReadyByCategory(productRepository), [productRepository]);
     const productRead = useCallback(async () => {
@@ -64,6 +70,11 @@ export default function ProductPageViewModel(categoryId: number) {
         return await cardInteractionCreateUseCase.invoke(data);
     }, [cardInteractionCreateUseCase]);
 
+    const recommendationPurchaseUseCase = useMemo(() => new RecommendationPurchase(recommendationRepository), [recommendationRepository]);
+    const recommendationPurchase = useCallback(async (uid: string, data: string[]) => {
+        return await recommendationPurchaseUseCase.invoke(uid, data);
+    }, [recommendationPurchaseUseCase]);
+
     function onPurchase(product: Product, amount: number, win: boolean) {
         if(user === null) return;
         const multiplier = win ? product.profit : product.loss;
@@ -74,6 +85,7 @@ export default function ProductPageViewModel(categoryId: number) {
             win: win,
             price: res
         } as InsertUserTransaction)
+        recommendationPurchase(user.id, [product.product_title]);
         incBalance(res);
     }
 
