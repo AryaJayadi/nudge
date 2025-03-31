@@ -4,7 +4,6 @@ import { AlertCircle } from "lucide-react"
 
 interface Props {
     card: Card;
-    onCardClick: (card: Card) => void;
 }
 
 export default function NudgeRecommendation({card, onCardClick} : Props) {
@@ -18,7 +17,7 @@ export default function NudgeRecommendation({card, onCardClick} : Props) {
                 <p className="text-sm mb-3">
                     {card.content}
                 </p>
-                <Button size="sm" className="w-full bg-white hover:bg-blue-100 text-blue-800" onClick={() => onCardClick(card)}>
+                <Button size="sm" className="w-full bg-white hover:bg-blue-100 text-blue-800">
                     {card.label}
                 </Button>
             </CardContent>
