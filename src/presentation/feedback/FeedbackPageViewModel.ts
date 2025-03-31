@@ -18,6 +18,8 @@ export default function FeedbackPageViewModel() {
     const navigate = useNavigate();
     const {user} = useUser();
 
+    const THANKYOU = "/thankyou";
+
     const feedbackQuestionDataSource = useMemo(() => new FeedbackQuestionSupabaseDataSource(), []);
     const feedbackQuestionRepository = useMemo(() => new FeedbackQuestionDataSourceRepository(feedbackQuestionDataSource), [feedbackQuestionDataSource]);
 
@@ -84,7 +86,7 @@ export default function FeedbackPageViewModel() {
                 return
             }
 
-            navigate("/app/thankyou")
+            navigate(THANKYOU, {replace: true});
         })
     }
 
