@@ -35,14 +35,14 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
     const MAX_AMOUNT = 10  * product.saldo_awal;
     const STEP = product.saldo_awal;
 
-    const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(amount)
-    }
+    // const formatCurrency = (amount: number) => {
+    //     return new Intl.NumberFormat("id-ID", {
+    //         style: "currency",
+    //         currency: "IDR",
+    //         minimumFractionDigits: 0,
+    //         maximumFractionDigits: 0,
+    //     }).format(amount)
+    // }
 
     const startSimulation = () => {
         setIsSimulating(true)

@@ -1,5 +1,4 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
-import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
 import useViewModel from "./BerandaPageViewModel.ts"
 import {TransactionHistoryCard} from "@/components/transaction-history-card.tsx";
 import {useUser} from "@/presentation/context/UserContext.tsx";
