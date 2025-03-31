@@ -3,6 +3,8 @@ import {useState, useEffect} from "react"
 import {SimulationModal} from "@/components/simulation-modal.tsx";
 import SkeletonCard from "@/components/skeleton-card.tsx";
 import ProductCard from "@/components/product-card.tsx";
+import {Card, CardContent} from "@/components/ui/card.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
 interface Props {
     products: Product[];
@@ -53,29 +55,19 @@ export default function CardCarousel({products, onPurchase}: Props) {
                         {products.map((_, index) => (
                             <CarouselItem key={index} className="basis-full">
                                 <div className="p-1">
-                                    <ProductCard product={product} onPurchase={onPurchase} buyText={"Beli Produk"} />
+                                    {/*<ProductCard product={product} onPurchase={onPurchase} buyText={"Beli Produk"} />*/}
 
-                                    {/*<Card className="border-2 h-full">*/}
-                                    {/*    <CardContent className="flex flex-col items-start justify-between p-6 h-full">*/}
-                                    {/*        <div>*/}
-                                    {/*            <h3 className="text-xl font-semibold mb-2">{item.product_title}</h3>*/}
-                                    {/*            <p className="text-muted-foreground mb-3">{item.content}</p>*/}
-                                    {/*            <div className="grid grid-cols-2 gap-2 mt-2">*/}
-                                    {/*                <div className="bg-muted/30 p-2 rounded-md">*/}
-                                    {/*                    <p className="text-xs text-muted-foreground">Interest</p>*/}
-                                    {/*                    <p className="font-medium">{item.bunga_potensireturn}</p>*/}
-                                    {/*                </div>*/}
-                                    {/*                <div className="bg-muted/30 p-2 rounded-md">*/}
-                                    {/*                    <p className="text-xs text-muted-foreground">Min. Price</p>*/}
-                                    {/*                    <p className="font-medium">{item.premi_setoran_makspinjam}</p>*/}
-                                    {/*                </div>*/}
-                                    {/*            </div>*/}
-                                    {/*        </div>*/}
-                                    {/*        <div className="w-full pt-4">*/}
-                                    {/*            <Button className="w-full">Buy Now</Button>*/}
-                                    {/*        </div>*/}
-                                    {/*    </CardContent>*/}
-                                    {/*</Card>*/}
+                                    <Card className="border-2 h-full min-h-56 max-h-56">
+                                        <CardContent className="flex flex-col items-start justify-between p-6 h-full">
+                                            <div>
+                                                <h3 className="text-xl font-semibold mb-2">{product.product_title}</h3>
+                                                <p className="text-muted-foreground mb-3">{product.content}</p>
+                                            </div>
+                                            <div className="w-full pt-4">
+                                                <Button className="w-full">Buy Now</Button>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
                                 </div>
                             </CarouselItem>
                         ))}
