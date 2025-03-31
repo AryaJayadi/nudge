@@ -7,10 +7,8 @@ import {useSupabaseQuery} from "@/lib/hook/UseSupabaseQuery.ts";
 import {useUser} from "@/presentation/context/UserContext.tsx";
 import {FeedbackResponseSupabaseDataSource} from "@/data/datasource/supabase/FeedbackResponseSupabaseDataSource.ts";
 import {FeedbackResponseDataSourceRepository} from "@/data/repository/FeedbackResponseDataSourceRepository.ts";
-import {FeedbackResponseCreate} from "@/domain/usecase/feedback_response/FeedbackResponseCreate.ts";
 import {FinishSimulationSupabaseDataSource} from "@/data/datasource/supabase/FinishSimulationSupabaseDataSource.ts";
 import {FinishSimulationRepositoryDataSource} from "@/data/repository/FinishSimulationRepositoryDataSource.ts";
-import {FinishSimulationCreate} from "@/domain/usecase/finish_simulation/FinishSimulationCreate.ts";
 import {FinishSimulation} from "@/domain/usecase/finish_simulation/FinishSimulation.ts";
 
 export default function FeedbackPageViewModel() {

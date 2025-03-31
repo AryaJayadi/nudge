@@ -5,7 +5,6 @@ import {TransactionHistoryCard} from "@/components/transaction-history-card.tsx"
 import {useUser} from "@/presentation/context/UserContext.tsx";
 import {calcPrize, formatCurrency} from "@/lib/utils.ts";
 import {Button} from "@/components/ui/button.tsx";
-import CardCarousel from "@/components/carousel-card.tsx";
 import FeedbackModal from "@/components/feedback-modal.tsx";
 
 export const BerandaPage = () => {
@@ -39,11 +38,6 @@ export const BerandaPage = () => {
                     </Button>
                 </CardContent>
             </Card>
-
-            <NudgeRecommendation card={{
-                content: "Tingkatkan tabungan Anda dengan Deposito Berjangka. Dapatkan bunga hingga 5,5% per tahun!",
-                label: "Buka Deposito"
-            } as Card}/>
 
             <TransactionHistoryCard transactions={transactions}/>
 
