@@ -1245,29 +1245,91 @@ export type Database = {
           },
         ]
       }
+      nudge_card_carousel: {
+        Row: {
+          content: string
+          defaultoptions: string
+          framingeffect: number
+          gamification: string
+          id: number
+          incentives: number
+          label: string
+          lossaversion: string
+          nudge_category_id: number
+          personalization: string
+          product_category: string
+          saliency: number
+          socialproof: string
+          timing_justintimenudging: number
+          weight: number
+        }
+        Insert: {
+          content: string
+          defaultoptions: string
+          framingeffect: number
+          gamification: string
+          id?: number
+          incentives: number
+          label: string
+          lossaversion: string
+          nudge_category_id: number
+          personalization: string
+          product_category: string
+          saliency: number
+          socialproof: string
+          timing_justintimenudging: number
+          weight: number
+        }
+        Update: {
+          content?: string
+          defaultoptions?: string
+          framingeffect?: number
+          gamification?: string
+          id?: number
+          incentives?: number
+          label?: string
+          lossaversion?: string
+          nudge_category_id?: number
+          personalization?: string
+          product_category?: string
+          saliency?: number
+          socialproof?: string
+          timing_justintimenudging?: number
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nudge_carousel_nudge_category_id_fkey"
+            columns: ["nudge_category_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_category"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       nudge_card_interaction: {
         Row: {
           created_at: string
           id: number
-          nudge_card_id: number
+          nudge_carousel_id: number
           nudge_user_id: string
         }
         Insert: {
           created_at?: string
           id?: number
-          nudge_card_id: number
+          nudge_carousel_id: number
           nudge_user_id: string
         }
         Update: {
           created_at?: string
           id?: number
-          nudge_card_id?: number
+          nudge_carousel_id?: number
           nudge_user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "nudge_card_interaction_nudge_card_id_fkey"
-            columns: ["nudge_card_id"]
+            columns: ["nudge_carousel_id"]
             isOneToOne: false
             referencedRelation: "nudge_card"
             referencedColumns: ["id"]
@@ -1277,68 +1339,6 @@ export type Database = {
             columns: ["nudge_user_id"]
             isOneToOne: false
             referencedRelation: "nudge_user"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      nudge_carousel: {
-        Row: {
-          content: string | null
-          defaultoptions: string | null
-          framingeffect: number | null
-          gamification: string | null
-          id: number
-          incentives: number | null
-          label: string | null
-          lossaversion: string | null
-          nudge_category_id: number
-          personalization: string | null
-          product_category: string | null
-          saliency: number | null
-          socialproof: string | null
-          timing_justintimenudging: number | null
-          weight: number | null
-        }
-        Insert: {
-          content?: string | null
-          defaultoptions?: string | null
-          framingeffect?: number | null
-          gamification?: string | null
-          id?: number
-          incentives?: number | null
-          label?: string | null
-          lossaversion?: string | null
-          nudge_category_id: number
-          personalization?: string | null
-          product_category?: string | null
-          saliency?: number | null
-          socialproof?: string | null
-          timing_justintimenudging?: number | null
-          weight?: number | null
-        }
-        Update: {
-          content?: string | null
-          defaultoptions?: string | null
-          framingeffect?: number | null
-          gamification?: string | null
-          id?: number
-          incentives?: number | null
-          label?: string | null
-          lossaversion?: string | null
-          nudge_category_id?: number
-          personalization?: string | null
-          product_category?: string | null
-          saliency?: number | null
-          socialproof?: string | null
-          timing_justintimenudging?: number | null
-          weight?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "nudge_carousel_nudge_category_id_fkey"
-            columns: ["nudge_category_id"]
-            isOneToOne: false
-            referencedRelation: "nudge_category"
             referencedColumns: ["id"]
           },
         ]
