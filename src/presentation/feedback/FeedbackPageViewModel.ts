@@ -11,6 +11,7 @@ import {FeedbackResponseCreate} from "@/domain/usecase/feedback_response/Feedbac
 import {FinishSimulationSupabaseDataSource} from "@/data/datasource/supabase/FinishSimulationSupabaseDataSource.ts";
 import {FinishSimulationRepositoryDataSource} from "@/data/repository/FinishSimulationRepositoryDataSource.ts";
 import {FinishSimulationCreate} from "@/domain/usecase/finish_simulation/FinishSimulationCreate.ts";
+import {FinishSimulation} from "@/domain/usecase/finish_simulation/FinishSimulation.ts";
 
 export default function FeedbackPageViewModel() {
     const [responses, setResponses] = useState<InsertFeedbackResponse[]>([]);
@@ -44,7 +45,12 @@ export default function FeedbackPageViewModel() {
     const finishSimulationCreateUseCase = useMemo(() => new FinishSimulationCreate(finishSimulationRepository), [finishSimulationRepository]);
     const finishSimulationCreate = useCallback(async (data: InsertFinishSimulation) => {
         return await finishSimulationCreateUseCase.invoke(data);
-    }, [finishSimulationCreateUseCase])
+    }, [finishSimulationCreateUseCase]);
+
+    const finishSimulationUseCase = useMemo(() => new FinishSimulation(finishSimulationRepository, feedbackResponseRepository), [finishSimulationRepository, feedbackResponseRepository])
+    const finishSimulation = useCallback(async (uid: string, data: InsertFeedbackResponse[]) => {
+        return await finishSimulationUseCase.invoke(uid, data);
+    }, [finishSimulationUseCase]);
 
     const handleRatingChange = (id: number, score: number) => {
         setResponses((prev) => {
@@ -69,12 +75,12 @@ export default function FeedbackPageViewModel() {
     }
 
     const handleSubmit = () => {
-        // Here you would typically send the feedback data to your backend
+        if(!user || !user.id) return
+
         console.log("Feedback submitted:", responses)
 
-        feedbackResponseCreate(responses);
+        finishSimulation(user.id, responses);
 
-        // Redirect to a thank you page or back to the home page
         navigate("/app/thankyou")
     }
 
