@@ -1547,7 +1547,7 @@ export type Database = {
           email: string | null
           id: string
           password: string
-          phone_number: string | null
+          phone: string | null
         }
         Insert: {
           balance?: number
@@ -1555,7 +1555,7 @@ export type Database = {
           email?: string | null
           id?: string
           password: string
-          phone_number?: string | null
+          phone?: string | null
         }
         Update: {
           balance?: number
@@ -1563,7 +1563,7 @@ export type Database = {
           email?: string | null
           id?: string
           password?: string
-          phone_number?: string | null
+          phone?: string | null
         }
         Relationships: []
       }
