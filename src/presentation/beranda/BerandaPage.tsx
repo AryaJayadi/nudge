@@ -5,7 +5,6 @@ import {useUser} from "@/presentation/context/UserContext.tsx";
 import {calcPrize, formatCurrency} from "@/lib/utils.ts";
 import {Button} from "@/components/ui/button.tsx";
 import FeedbackModal from "@/components/feedback-modal.tsx";
-import PromoCarousel from "@/components/carousel-promo.tsx";
 import CarouselBeranda from "@/components/carousel-beranda.tsx";
 
 export const BerandaPage = () => {

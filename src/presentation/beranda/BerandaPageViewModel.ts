@@ -17,7 +17,6 @@ import {CardInteractionRepositoryDataSource} from "@/data/repository/CardInterac
 import {CardInteractionCreate} from "@/domain/usecase/card_interaction/CardInteractionCreate.ts";
 import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
 import {useToast} from "@/components/ui/use-toast.ts";
-import {formatCurrency} from "@/lib/utils.ts";
 
 export default function BerandaPageViewModel() {
     const {

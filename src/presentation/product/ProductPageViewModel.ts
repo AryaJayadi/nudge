@@ -82,7 +82,7 @@ export default function ProductPageViewModel(categoryId: number) {
 
         cardInteractionCreate({
             nudge_user_id: user.id,
-            nudge_card_id: card.id
+            nudge_card_carousel_id: card.id
         } as InsertCardInteraction)
     }
 

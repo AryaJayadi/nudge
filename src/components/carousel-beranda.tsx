@@ -1,8 +1,7 @@
 import {Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
-import {useState, useEffect} from "react"
+import {useEffect, useState} from "react"
 import SkeletonCard from "@/components/skeleton-card.tsx";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
-import {AlertCircle} from "lucide-react";
+import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
 import {Button} from "@/components/ui/button.tsx";
 
 interface Props {
