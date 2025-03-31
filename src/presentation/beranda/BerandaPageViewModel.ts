@@ -17,6 +17,7 @@ import {CardInteractionRepositoryDataSource} from "@/data/repository/CardInterac
 import {CardInteractionCreate} from "@/domain/usecase/card_interaction/CardInteractionCreate.ts";
 import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
 import {useToast} from "@/components/ui/use-toast.ts";
+import {UserTransactionCreate} from "@/domain/usecase/user_transaction/UserTransactionCreate.ts";
 
 export default function BerandaPageViewModel() {
     const {
@@ -79,6 +80,11 @@ export default function BerandaPageViewModel() {
         return await cardInteractionCreateUseCase.invoke(data);
     }, [cardInteractionCreateUseCase]);
 
+    const userTransactionCreateUseCase = useMemo(() => new UserTransactionCreate(userTransactionRepository), [userTransactionRepository]);
+    const userTransactionCreate = useCallback(async (data: InsertUserTransaction) => {
+        return await userTransactionCreateUseCase.invoke(data);
+    }, [userTransactionCreateUseCase]);
+
     useEffect(() => {
         if (user) {
             userTransactionReadByUser()
@@ -130,6 +136,19 @@ export default function BerandaPageViewModel() {
         }
     }
 
+    function onPurchase(product: Product, amount: number, win: boolean) {
+        if(user === null) return;
+        const multiplier = win ? product.profit : product.loss;
+        const res = product.saldo_awal * amount * multiplier * (win ? 1 : -1);
+        userTransactionCreate({
+            nudge_user_id: user.id,
+            nudge_product_id: product.id,
+            win: win,
+            price: res
+        } as InsertUserTransaction)
+        incBalance(res);
+    }
+
     return {
         transactions,
         recommendations,
@@ -137,6 +156,7 @@ export default function BerandaPageViewModel() {
         showModal,
         setShowModal,
         handleFinish,
-        handleCardClick
+        handleCardClick,
+        onPurchase
     }
 }

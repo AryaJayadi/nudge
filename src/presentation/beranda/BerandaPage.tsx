@@ -6,6 +6,7 @@ import {calcPrize, formatCurrency} from "@/lib/utils.ts";
 import {Button} from "@/components/ui/button.tsx";
 import FeedbackModal from "@/components/feedback-modal.tsx";
 import CarouselBeranda from "@/components/carousel-beranda.tsx";
+import CardCarousel from "@/components/carousel-card.tsx";
 
 export const BerandaPage = () => {
     const {
@@ -14,10 +15,12 @@ export const BerandaPage = () => {
     const {
         transactions,
         cards,
+        recommendations,
         showModal,
         setShowModal,
         handleFinish,
-        handleCardClick
+        handleCardClick,
+        onPurchase
     } = useViewModel();
 
     return (
@@ -40,6 +43,8 @@ export const BerandaPage = () => {
                     </Button>
                 </CardContent>
             </Card>
+
+            <CardCarousel products={recommendations} onPurchase={onPurchase} />
 
             <TransactionHistoryCard transactions={transactions}/>
 
