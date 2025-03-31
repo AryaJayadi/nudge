@@ -1374,6 +1374,35 @@ export type Database = {
           },
         ]
       }
+      nudge_finish_simulation: {
+        Row: {
+          created_at: string
+          finish: boolean
+          id: number
+          nudge_user_id: string
+        }
+        Insert: {
+          created_at?: string
+          finish?: boolean
+          id?: number
+          nudge_user_id: string
+        }
+        Update: {
+          created_at?: string
+          finish?: boolean
+          id?: number
+          nudge_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nudge_finish_simulation_nudge_user_id_fkey"
+            columns: ["nudge_user_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       nudge_product: {
         Row: {
           bunga_potensireturn: string
