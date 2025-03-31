@@ -4,7 +4,7 @@ import supabase from "@/core/DatabaseSupabase.tsx";
 
 export class CardCarouselSupabaseDataSource implements CardCarouselDataSource {
 
-    private readonly table = supabase.from("nudge_carousel");
+    private readonly table = supabase.from("nudge_card_carousel");
 
     async read(): Promise<BaseSupabaseResponse<CardCarousel[]>> {
         const res = await this.table
