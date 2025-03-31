@@ -1311,27 +1311,27 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          nudge_carousel_id: number
+          nudge_card_carousel_id: number
           nudge_user_id: string
         }
         Insert: {
           created_at?: string
           id?: number
-          nudge_carousel_id: number
+          nudge_card_carousel_id: number
           nudge_user_id: string
         }
         Update: {
           created_at?: string
           id?: number
-          nudge_carousel_id?: number
+          nudge_card_carousel_id?: number
           nudge_user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "nudge_card_interaction_nudge_card_id_fkey"
-            columns: ["nudge_carousel_id"]
+            foreignKeyName: "nudge_card_interaction_nudge_card_carousel_id_fkey"
+            columns: ["nudge_card_carousel_id"]
             isOneToOne: false
-            referencedRelation: "nudge_card"
+            referencedRelation: "nudge_card_carousel"
             referencedColumns: ["id"]
           },
           {
