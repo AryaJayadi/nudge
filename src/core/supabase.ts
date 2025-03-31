@@ -1287,10 +1287,11 @@ export type Database = {
           defaultoptions: string | null
           framingeffect: number | null
           gamification: string | null
+          id: number
           incentives: number | null
           label: string | null
           lossaversion: string | null
-          nudge_category_id: number | null
+          nudge_category_id: number
           personalization: string | null
           product_category: string | null
           saliency: number | null
@@ -1303,10 +1304,11 @@ export type Database = {
           defaultoptions?: string | null
           framingeffect?: number | null
           gamification?: string | null
+          id?: number
           incentives?: number | null
           label?: string | null
           lossaversion?: string | null
-          nudge_category_id?: number | null
+          nudge_category_id: number
           personalization?: string | null
           product_category?: string | null
           saliency?: number | null
@@ -1319,10 +1321,11 @@ export type Database = {
           defaultoptions?: string | null
           framingeffect?: number | null
           gamification?: string | null
+          id?: number
           incentives?: number | null
           label?: string | null
           lossaversion?: string | null
-          nudge_category_id?: number | null
+          nudge_category_id?: number
           personalization?: string | null
           product_category?: string | null
           saliency?: number | null
@@ -1330,7 +1333,15 @@ export type Database = {
           timing_justintimenudging?: number | null
           weight?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "nudge_carousel_nudge_category_id_fkey"
+            columns: ["nudge_category_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_category"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       nudge_category: {
         Row: {
