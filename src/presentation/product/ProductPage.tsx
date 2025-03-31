@@ -15,7 +15,8 @@ export const ProductPage = ({categoryId}: Props) => {
         productsError,
         productsLoading,
         cards,
-        onPurchase
+        onPurchase,
+        handleCardClick
     } = useViewModel(categoryId);
 
     const length = 4;
@@ -50,7 +51,7 @@ export const ProductPage = ({categoryId}: Props) => {
     return (
         <>
             <CardCarousel products={products} onPurchase={onPurchase}/>
-            <PromoCarousel cards={cards} />
+            <PromoCarousel cards={cards} onCardClick={handleCardClick}/>
             {
                 products &&
                 products.map((o, index) => (
@@ -60,7 +61,7 @@ export const ProductPage = ({categoryId}: Props) => {
             {
                 cards &&
                 cards.map((o, index) => (
-                    <NudgeRecommendation key={index} card={o}/>
+                    <NudgeRecommendation key={index} card={o} onCardClick={handleCardClick}/>
                 ))
             }
         </>

@@ -4,9 +4,10 @@ import { AlertCircle } from "lucide-react"
 
 interface Props {
     card: Card;
+    onCardClick: (card: Card) => void;
 }
 
-export default function NudgeRecommendation({card} : Props) {
+export default function NudgeRecommendation({card, onCardClick} : Props) {
     return (
         <Card className="bg-gradient-to-r from-blue-800 to-blue-900 text-white">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -17,7 +18,7 @@ export default function NudgeRecommendation({card} : Props) {
                 <p className="text-sm mb-3">
                     {card.content}
                 </p>
-                <Button size="sm" className="w-full bg-white hover:bg-blue-100 text-blue-800">
+                <Button size="sm" className="w-full bg-white hover:bg-blue-100 text-blue-800" onClick={() => onCardClick(card)}>
                     {card.label}
                 </Button>
             </CardContent>

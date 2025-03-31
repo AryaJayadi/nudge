@@ -5,9 +5,10 @@ import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
 
 interface Props {
     cards: Card[];
+    onCardClick: (card: Card) => void;
 }
 
-export default function PromoCarousel({cards}: Props) {
+export default function PromoCarousel({cards, onCardClick}: Props) {
     const [api, setApi] = useState<any>()
     const [current, setCurrent] = useState(0)
 
@@ -49,7 +50,7 @@ export default function PromoCarousel({cards}: Props) {
                     <>
                         {cards.map((item, index) => (
                             <CarouselItem key={index} className="basis-full">
-                                <NudgeRecommendation key={index} card={item}/>
+                                <NudgeRecommendation key={index} card={item} onCardClick={onCardClick} />
                             </CarouselItem>
                         ))}
                     </>

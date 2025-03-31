@@ -77,6 +77,15 @@ export default function ProductPageViewModel(categoryId: number) {
         incBalance(res);
     }
 
+    function handleCardClick(card: Card) {
+        if(!user) return;
+
+        cardInteractionCreate({
+            nudge_user_id: user.id,
+            nudge_card_id: card.id
+        } as InsertCardInteraction)
+    }
+
     return {
         products,
         productsError,
@@ -86,6 +95,7 @@ export default function ProductPageViewModel(categoryId: number) {
         cardsError,
         cardsLoading,
         cardsRefetch,
-        onPurchase
+        onPurchase,
+        handleCardClick
     }
 }
