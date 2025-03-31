@@ -16,6 +16,8 @@ import {CardInteractionSupabaseDataSource} from "@/data/datasource/supabase/Card
 import {CardInteractionRepositoryDataSource} from "@/data/repository/CardInteractionRepositoryDataSource.ts";
 import {CardInteractionCreate} from "@/domain/usecase/card_interaction/CardInteractionCreate.ts";
 import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
+import {useToast} from "@/components/ui/use-toast.ts";
+import {formatCurrency} from "@/lib/utils.ts";
 
 export default function BerandaPageViewModel() {
     const {
@@ -27,6 +29,7 @@ export default function BerandaPageViewModel() {
     const [recommendations, setRecommendations] = useState<string[]>([]);
     const [cards, setCards] = useState<CardCarousel[]>([]);
     const navigate = useNavigate();
+    const {toast} = useToast();
 
     const FEEDBACK = "/feedback";
     const TABUNGAN = "/app/tabungan"
@@ -107,6 +110,10 @@ export default function BerandaPageViewModel() {
 
         const res = user.balance * card.weight;
         incBalance(res);
+
+        toast({
+            title: "Promo berhasil ditambahkan! 🎉",
+        });
 
         cardInteractionCreate({
             nudge_user_id: user.id,
