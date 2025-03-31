@@ -39,16 +39,6 @@ export default function FeedbackPageViewModel() {
         loading: questionsLoading
     } = useSupabaseQuery(feedbackQuestionRead);
 
-    const feedbackResponseCreateUseCase = useMemo(() => new FeedbackResponseCreate(feedbackResponseRepository), [feedbackResponseRepository]);
-    const feedbackResponseCreate = useCallback(async (data: InsertFeedbackResponse[]) => {
-        return await feedbackResponseCreateUseCase.invoke(data);
-    }, [feedbackResponseCreateUseCase]);
-
-    const finishSimulationCreateUseCase = useMemo(() => new FinishSimulationCreate(finishSimulationRepository), [finishSimulationRepository]);
-    const finishSimulationCreate = useCallback(async (data: InsertFinishSimulation) => {
-        return await finishSimulationCreateUseCase.invoke(data);
-    }, [finishSimulationCreateUseCase]);
-
     const finishSimulationUseCase = useMemo(() => new FinishSimulation(finishSimulationRepository, feedbackResponseRepository), [finishSimulationRepository, feedbackResponseRepository])
     const finishSimulation = useCallback(async (uid: string, data: InsertFeedbackResponse[]) => {
         return await finishSimulationUseCase.invoke(uid, data);

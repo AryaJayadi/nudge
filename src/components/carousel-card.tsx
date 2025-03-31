@@ -50,7 +50,7 @@ export default function CardCarousel({products, onPurchase}: Props) {
             >
                 <CarouselContent>
                     <>
-                        {products.map((item, index) => (
+                        {products.map((_, index) => (
                             <CarouselItem key={index} className="basis-full">
                                 <div className="p-1">
                                     <ProductCard product={product} onPurchase={onPurchase} buyText={"Beli Produk"} />
