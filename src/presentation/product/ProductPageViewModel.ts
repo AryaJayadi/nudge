@@ -10,6 +10,9 @@ import {UserTransactionCreate} from "@/domain/usecase/user_transaction/UserTrans
 import {CardSupabaseDataSource} from "@/data/datasource/supabase/CardSupabaseDataSource.ts";
 import {CardRepositoryDataSource} from "@/data/repository/CardRepositoryDataSource.ts";
 import {CardRead} from "@/domain/usecase/card/CardRead.ts";
+import {CardInteractionSupabaseDataSource} from "@/data/datasource/supabase/CardInteractionSupabaseDataSource.ts";
+import {CardInteractionRepositoryDataSource} from "@/data/repository/CardInteractionRepositoryDataSource.ts";
+import {CardInteractionCreate} from "@/domain/usecase/card_interaction/CardInteractionCreate.ts";
 
 export default function ProductPageViewModel(categoryId: number) {
     const {
@@ -26,6 +29,9 @@ export default function ProductPageViewModel(categoryId: number) {
     const cardDataSource = useMemo(() => new CardSupabaseDataSource(), []);
     const cardRepository = useMemo(() => new CardRepositoryDataSource(cardDataSource),[cardDataSource]);
 
+    const cardInteractionDataSource = useMemo(() => new CardInteractionSupabaseDataSource(), []);
+    const cardInteractionRepository = useMemo(() => new CardInteractionRepositoryDataSource(cardInteractionDataSource),[cardInteractionDataSource]);
+
     const productReadByCategoryUseCase = useMemo(() => new ProductReadyByCategory(productRepository), [productRepository]);
     const productRead = useCallback(async () => {
         return await productReadByCategoryUseCase.invoke(categoryId);
@@ -35,23 +41,28 @@ export default function ProductPageViewModel(categoryId: number) {
         error: productsError,
         loading: productsLoading,
         refetch: productsRefetch,
-    } = useSupabaseQuery(productRead)
+    } = useSupabaseQuery(productRead);
 
     const cardReadUseCase = useMemo(() => new CardRead(cardRepository), [cardRepository]);
     const cardRead = useCallback(async () => {
         return await cardReadUseCase.invoke(categoryId);
-    }, [cardReadUseCase, categoryId])
+    }, [cardReadUseCase, categoryId]);
     const {
         data: cards,
         error: cardsError,
         loading: cardsLoading,
         refetch: cardsRefetch,
-    } = useSupabaseQuery(cardRead)
+    } = useSupabaseQuery(cardRead);
 
     const userTransactionCreateUseCase = useMemo(() => new UserTransactionCreate(userTransactionRepository), [userTransactionRepository]);
     const userTransactionCreate = useCallback(async (data: InsertUserTransaction) => {
         return await userTransactionCreateUseCase.invoke(data);
-    }, [userTransactionCreateUseCase])
+    }, [userTransactionCreateUseCase]);
+
+    const cardInteractionCreateUseCase = useMemo(() => new CardInteractionCreate(cardInteractionRepository),[cardInteractionRepository]);
+    const cardInteractionCreate = useCallback(async (data: InsertCardInteraction) => {
+        return await cardInteractionCreateUseCase.invoke(data);
+    }, [cardInteractionCreateUseCase]);
 
     function onPurchase(product: Product, amount: number, win: boolean) {
         if(user === null) return;
