@@ -13,4 +13,8 @@ export class FinishSimulationRepositoryDataSource implements FinishSimulationRep
     create(data: InsertFinishSimulation): Promise<BaseSupabaseResponse<FinishSimulation>> {
         return this.datasource.create(data);
     }
+
+    read(uid: string): Promise<BaseSupabaseResponse<FinishSimulation>> {
+        return this.datasource.read(uid);
+    }
 }
