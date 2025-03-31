@@ -30,7 +30,7 @@ export default function FeedbackPage() {
                 <CardHeader>
                     <CardTitle className="text-2xl">Feedback Form</CardTitle>
                     <CardDescription>
-                        Please rate each question on a scale from 1 to 5, where 1 is the lowest and 5 is the highest.
+                        Silakan beri nilai untuk setiap pertanyaan dalam skala 1 hingga 5, di mana 1 adalah yang terendah dan 5 adalah yang tertinggi.
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-8">
@@ -58,7 +58,7 @@ export default function FeedbackPage() {
                                                     {value}
                                                 </Label>
                                                 <span
-                                                    className="text-xs">{value === 1 ? "Lowest" : value === 5 ? "Highest" : ""}</span>
+                                                    className="text-xs">{value === 1 ? "Terendah" : value === 5 ? "Tertinggi" : ""}</span>
                                             </div>
                                         ))}
                                     </>

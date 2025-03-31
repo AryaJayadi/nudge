@@ -20,12 +20,12 @@ export default function FeedbackModal({ isOpen, onClose, onFinish }: FeedbackMod
         <AlertDialog open={isOpen} onOpenChange={onClose}>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Finish Application</AlertDialogTitle>
-                    <AlertDialogDescription>Have you finished playing the application?</AlertDialogDescription>
+                    <AlertDialogTitle>Selesaikan Simulasi</AlertDialogTitle>
+                    <AlertDialogDescription>Apakah Anda yakin ingin menyelesaikan simulasi? Setelah ini anda tidak bisa menambah hadiah.</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={onFinish}>Yes, I'm finished</AlertDialogAction>
+                    <AlertDialogCancel>Tidak, saya ingin melanjutkan simulasi</AlertDialogCancel>
+                    <AlertDialogAction className="bg-blue-600" onClick={onFinish}>Yakin, saya selesai</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
