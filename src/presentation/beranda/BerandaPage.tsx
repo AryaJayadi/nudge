@@ -5,6 +5,8 @@ import {useUser} from "@/presentation/context/UserContext.tsx";
 import {calcPrize, formatCurrency} from "@/lib/utils.ts";
 import {Button} from "@/components/ui/button.tsx";
 import FeedbackModal from "@/components/feedback-modal.tsx";
+import PromoCarousel from "@/components/carousel-promo.tsx";
+import CarouselBeranda from "@/components/carousel-beranda.tsx";
 
 export const BerandaPage = () => {
     const {
@@ -12,9 +14,11 @@ export const BerandaPage = () => {
     } = useUser();
     const {
         transactions,
+        cards,
         showModal,
         setShowModal,
-        handleFinish
+        handleFinish,
+        handleCardClick
     } = useViewModel();
 
     return (
@@ -39,6 +43,8 @@ export const BerandaPage = () => {
             </Card>
 
             <TransactionHistoryCard transactions={transactions}/>
+
+            <CarouselBeranda cards={cards} onCardClick={handleCardClick} />
 
             <Card className="bg-blue-50 border-blue-200">
                 <CardContent className="pt-4">
