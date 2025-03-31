@@ -6,6 +6,9 @@ import {UserTransactionSupabaseDataSource} from "@/data/datasource/supabase/User
 import {UserTransactionRepositoryDataSource} from "@/data/repository/UserTransactionRepositoryDataSource.ts";
 import {UserTransactionReadByUser} from "@/domain/usecase/user_transaction/UserTransactionReadByUser.ts";
 import {useNavigate} from "react-router";
+import {RecommendationJoheDataSource} from "@/data/datasource/johe/RecommendationJoheDataSource.ts";
+import {RecommendationRepositoryDataSource} from "@/data/repository/RecommendationRepositoryDataSource.ts";
+import {RecommendationRead} from "@/domain/usecase/recommendation/RecommendationRead.ts";
 
 export default function BerandaPageViewModel() {
     const {
@@ -13,12 +16,16 @@ export default function BerandaPageViewModel() {
     } = useUser();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [transactions, setTransactions] = useState<UserTransactionWithDetails[]>([]);
+    const [recommendations, setRecommendations] = useState<string[]>([]);
     const navigate = useNavigate();
 
     const FEEDBACK = "/feedback";
 
     const userTransactionDataSource = useMemo(() => new UserTransactionSupabaseDataSource(), []);
     const userTransactionRepository = useMemo(() => new UserTransactionRepositoryDataSource(userTransactionDataSource), [userTransactionDataSource]);
+
+    const recommendationDataSource = useMemo(() => new RecommendationJoheDataSource(), []);
+    const recommendationRepository = useMemo(() => new RecommendationRepositoryDataSource(recommendationDataSource), [recommendationDataSource]);
 
     const userTransactionReadByUserUseCase = useMemo(() => new UserTransactionReadByUser(userTransactionRepository), [userTransactionRepository]);
     const userTransactionReadByUser = useCallback(async () => {
@@ -30,7 +37,16 @@ export default function BerandaPageViewModel() {
             } as BaseSupabaseResponse<UserTransactionWithDetails[]>;
         }
         return await userTransactionReadByUserUseCase.invoke(user.id);
-    }, [userTransactionReadByUserUseCase, user])
+    }, [userTransactionReadByUserUseCase, user]);
+
+    const recommendationReadUseCase = useMemo(() => new RecommendationRead(recommendationRepository), [recommendationRepository]);
+    const recommendationRead = useCallback(async () => {
+        if (user === null) {
+            let res: string[] = [];
+            return res;
+        }
+        return recommendationReadUseCase.invoke(user.id);
+    }, [recommendationReadUseCase, user]);
 
     useEffect(() => {
         if (user) {
@@ -38,6 +54,10 @@ export default function BerandaPageViewModel() {
                 .then((res) => {
                     if(res.data !== null) setTransactions(res.data)
                 });
+            recommendationRead()
+                .then((res) => {
+                    setRecommendations(res);
+                })
         }
     }, [user]);
 
