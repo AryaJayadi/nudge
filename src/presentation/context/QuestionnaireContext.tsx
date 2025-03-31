@@ -43,7 +43,7 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
     const [questions, setQuestions] = useState<Question[]>([])
     const [responses, setResponses] = useState<InsertUserResponseSupabase[]>([])
     const [lResponses, setLResponses] = useState<ResponseLainnya[]>([])
-    const [value, setValue, ] = useLocalStorage<InsertUserResponseSupabase[]>(user?.id + '#questionnaire', [])
+    const [value, setValue, ] = useLocalStorage<InsertUserResponseSupabase[]>('questionnaire', []);
 
     const questionDataSource = useMemo(() => new QuestionSupabaseDataSource(), []);
     const questionRepository = useMemo(() => new QuestionRepositoryDataSource(questionDataSource), [questionDataSource]);
@@ -74,6 +74,10 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
     useEffect(() => {
         setValue(responses);
     }, [responses]);
+
+    useEffect(() => {
+        console.log(value);
+    }, [value]);
 
     function handleAnswerChange(question: Question, answer: string) {
         setResponses(prev => {
