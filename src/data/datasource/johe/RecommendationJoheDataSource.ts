@@ -1,5 +1,5 @@
 import {RecommendationDataSource} from "@/data/datasource/RecommendationDataSource.ts";
-import * as axios from "axios";
+import axios from "axios";
 import {AxiosRequestConfig} from "axios";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL + "/product-recommendation";
@@ -26,7 +26,7 @@ export class RecommendationJoheDataSource implements RecommendationDataSource {
         try {
             const response = await this.axiosInstance({
                 method: "POST",
-                url: BASE_URL,
+                url: `/${uid}`,
                 params: {
                     state_id: uid
                 },
@@ -44,7 +44,7 @@ export class RecommendationJoheDataSource implements RecommendationDataSource {
         try {
             const response = await this.axiosInstance({
                 method: "GET",
-                url: BASE_URL,
+                url: `/${uid}`,
                 params: {
                     state_id: uid
                 }
