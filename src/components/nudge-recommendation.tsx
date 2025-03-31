@@ -6,7 +6,7 @@ interface Props {
     card: Card;
 }
 
-export default function NudgeRecommendation({card, onCardClick} : Props) {
+export default function NudgeRecommendation({card} : Props) {
     return (
         <Card className="bg-gradient-to-r from-blue-800 to-blue-900 text-white">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

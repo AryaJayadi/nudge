@@ -19,7 +19,6 @@ import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
 import {useToast} from "@/components/ui/use-toast.ts";
 import {UserTransactionCreate} from "@/domain/usecase/user_transaction/UserTransactionCreate.ts";
 import {RecommendationPurchase} from "@/domain/usecase/recommendation/RecommendationPurchase.ts";
-import {data} from "autoprefixer";
 
 export default function BerandaPageViewModel() {
     const {

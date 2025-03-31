@@ -1,7 +1,6 @@
 import useViewModel from "@/presentation/product/ProductPageViewModel.ts";
 import SkeletonCard from "@/components/skeleton-card.tsx";
 import ProductCard from "@/components/product-card.tsx";
-import NudgeRecommendation from "@/components/nudge-recommendation.tsx";
 
 interface Props {
     categoryId: number;
@@ -53,12 +52,12 @@ export const ProductPage = ({categoryId}: Props) => {
                     <ProductCard key={index} product={o} onPurchase={onPurchase} buyText={getBuyText(categoryId)}/>
                 ))
             }
-            {
-                cards &&
-                cards.map((o, index) => (
-                    <NudgeRecommendation key={index} card={o}/>
-                ))
-            }
+            {/*{*/}
+            {/*    cards &&*/}
+            {/*    cards.map((o, index) => (*/}
+            {/*        <NudgeRecommendation key={index} card={o}/>*/}
+            {/*    ))*/}
+            {/*}*/}
         </>
     )
 }

@@ -1,8 +1,7 @@
 import {Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
-import {useState, useEffect} from "react"
+import {useEffect, useState} from "react"
 import {SimulationModal} from "@/components/simulation-modal.tsx";
 import SkeletonCard from "@/components/skeleton-card.tsx";
-import ProductCard from "@/components/product-card.tsx";
 import {Card, CardContent} from "@/components/ui/card.tsx";
 import {Button} from "@/components/ui/button.tsx";
 

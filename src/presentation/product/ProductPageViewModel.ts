@@ -10,9 +10,6 @@ import {UserTransactionCreate} from "@/domain/usecase/user_transaction/UserTrans
 import {CardSupabaseDataSource} from "@/data/datasource/supabase/CardSupabaseDataSource.ts";
 import {CardRepositoryDataSource} from "@/data/repository/CardRepositoryDataSource.ts";
 import {CardRead} from "@/domain/usecase/card/CardRead.ts";
-import {CardInteractionSupabaseDataSource} from "@/data/datasource/supabase/CardInteractionSupabaseDataSource.ts";
-import {CardInteractionRepositoryDataSource} from "@/data/repository/CardInteractionRepositoryDataSource.ts";
-import {CardInteractionCreate} from "@/domain/usecase/card_interaction/CardInteractionCreate.ts";
 import {RecommendationPurchase} from "@/domain/usecase/recommendation/RecommendationPurchase.ts";
 import {RecommendationJoheDataSource} from "@/data/datasource/johe/RecommendationJoheDataSource.ts";
 import {RecommendationRepositoryDataSource} from "@/data/repository/RecommendationRepositoryDataSource.ts";
@@ -32,8 +29,8 @@ export default function ProductPageViewModel(categoryId: number) {
     const cardDataSource = useMemo(() => new CardSupabaseDataSource(), []);
     const cardRepository = useMemo(() => new CardRepositoryDataSource(cardDataSource),[cardDataSource]);
 
-    const cardInteractionDataSource = useMemo(() => new CardInteractionSupabaseDataSource(), []);
-    const cardInteractionRepository = useMemo(() => new CardInteractionRepositoryDataSource(cardInteractionDataSource),[cardInteractionDataSource]);
+    // const cardInteractionDataSource = useMemo(() => new CardInteractionSupabaseDataSource(), []);
+    // const cardInteractionRepository = useMemo(() => new CardInteractionRepositoryDataSource(cardInteractionDataSource),[cardInteractionDataSource]);
 
     const recommendationDataSource = useMemo(() => new RecommendationJoheDataSource(), []);
     const recommendationRepository = useMemo(() => new RecommendationRepositoryDataSource(recommendationDataSource), [recommendationDataSource]);
@@ -65,10 +62,10 @@ export default function ProductPageViewModel(categoryId: number) {
         return await userTransactionCreateUseCase.invoke(data);
     }, [userTransactionCreateUseCase]);
 
-    const cardInteractionCreateUseCase = useMemo(() => new CardInteractionCreate(cardInteractionRepository),[cardInteractionRepository]);
-    const cardInteractionCreate = useCallback(async (data: InsertCardInteraction) => {
-        return await cardInteractionCreateUseCase.invoke(data);
-    }, [cardInteractionCreateUseCase]);
+    // const cardInteractionCreateUseCase = useMemo(() => new CardInteractionCreate(cardInteractionRepository),[cardInteractionRepository]);
+    // const cardInteractionCreate = useCallback(async (data: InsertCardInteraction) => {
+    //     return await cardInteractionCreateUseCase.invoke(data);
+    // }, [cardInteractionCreateUseCase]);
 
     const recommendationPurchaseUseCase = useMemo(() => new RecommendationPurchase(recommendationRepository), [recommendationRepository]);
     const recommendationPurchase = useCallback(async (uid: string, data: string[]) => {
