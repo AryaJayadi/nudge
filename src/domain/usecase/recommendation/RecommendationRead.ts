@@ -1,7 +1,7 @@
 import {RecommendationRepository} from "@/domain/repository/RecommendationRepository.ts";
 
 interface RecommendationReadUseCase {
-    invoke(uid: string): Promise<string[]>;
+    invoke(uid: string): Promise<Product[]>;
 }
 
 export class RecommendationRead implements RecommendationReadUseCase {
@@ -12,7 +12,7 @@ export class RecommendationRead implements RecommendationReadUseCase {
         this.repository = _repository;
     }
 
-    invoke(uid: string): Promise<string[]> {
+    invoke(uid: string): Promise<Product[]> {
         return this.repository.read(uid);
     }
 }

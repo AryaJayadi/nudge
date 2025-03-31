@@ -25,7 +25,7 @@ export default function BerandaPageViewModel() {
     } = useUser();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [transactions, setTransactions] = useState<UserTransactionWithDetails[]>([]);
-    const [recommendations, setRecommendations] = useState<string[]>([]);
+    const [recommendations, setRecommendations] = useState<Product[]>([]);
     const [cards, setCards] = useState<CardCarousel[]>([]);
     const navigate = useNavigate();
     const {toast} = useToast();
@@ -63,7 +63,7 @@ export default function BerandaPageViewModel() {
     const recommendationReadUseCase = useMemo(() => new RecommendationRead(recommendationRepository), [recommendationRepository]);
     const recommendationRead = useCallback(async () => {
         if (user === null) {
-            let res: string[] = [];
+            let res: Product[] = [];
             return res;
         }
         return recommendationReadUseCase.invoke(user.id);
