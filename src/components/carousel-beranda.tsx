@@ -40,6 +40,7 @@ export default function CarouselBeranda({cards, onCardClick}: Props) {
 
     return (
         <div className="w-full max-w-md mx-auto">
+            <div className="font-semibold">Promo</div>
             <Carousel
                 opts={{
                     align: "center",
@@ -54,10 +55,10 @@ export default function CarouselBeranda({cards, onCardClick}: Props) {
                             <CarouselItem key={index} className="basis-full">
                                 <Card className="bg-gradient-to-r from-blue-800 to-blue-900 text-white">
                                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                        <CardTitle className="text-sm font-bold">Rekomendasi untuk Anda</CardTitle>
-                                        <AlertCircle className="h-4 w-4" />
+                                        {/*<CardTitle className="text-sm font-bold">Rekomendasi untuk Anda</CardTitle>*/}
+                                        {/*<AlertCircle className="h-4 w-4" />*/}
                                     </CardHeader>
-                                    <CardContent className="font-medium">
+                                    <CardContent className="font-medium min-h-40 max-h-40">
                                         <p className="text-sm mb-3">
                                             {item.content}
                                         </p>
