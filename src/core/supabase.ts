@@ -1245,6 +1245,42 @@ export type Database = {
           },
         ]
       }
+      nudge_card_interaction: {
+        Row: {
+          created_at: string
+          id: number
+          nudge_card_id: number
+          nudge_user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          nudge_card_id: number
+          nudge_user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          nudge_card_id?: number
+          nudge_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nudge_card_interaction_nudge_card_id_fkey"
+            columns: ["nudge_card_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_card"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nudge_card_interaction_nudge_user_id_fkey"
+            columns: ["nudge_user_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       nudge_carousel: {
         Row: {
           content: string | null
