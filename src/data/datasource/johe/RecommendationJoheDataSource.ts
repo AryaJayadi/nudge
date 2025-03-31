@@ -1,12 +1,59 @@
 import {RecommendationDataSource} from "@/data/datasource/RecommendationDataSource.ts";
+import * as axios from "axios";
+import {AxiosRequestConfig} from "axios";
+
+const BASE_URL = import.meta.env.VITE_BACKEND_URL + "/product-recommendation";
 
 export class RecommendationJoheDataSource implements RecommendationDataSource {
+    private axiosInstance = axios.create({
+        baseURL: BASE_URL,
+        transformResponse: [function (response) {
+            let resp
 
-    purchase(uid: string, data: string[]): Promise<string[]> {
-        return Promise.resolve([]);
+            try {
+                resp = JSON.parse(response)
+            } catch (error) {
+                throw Error(`[requestClient] Error parsing response JSON data - ${JSON.stringify(error)}`)
+            }
+
+            if(resp) {
+                return resp
+            }
+        }],
+    });
+
+    async purchase(uid: string, data: string[]): Promise<string[]> {
+        try {
+            const response = await this.axiosInstance({
+                method: "POST",
+                url: BASE_URL,
+                params: {
+                    state_id: uid
+                },
+                data: data
+            } as AxiosRequestConfig);
+
+            console.log(response);
+            return response.data;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
-    read(uid: string): Promise<string[]> {
-        return Promise.resolve([]);
+    async read(uid: string): Promise<string[]> {
+        try {
+            const response = await this.axiosInstance({
+                method: "GET",
+                url: BASE_URL,
+                params: {
+                    state_id: uid
+                }
+            } as AxiosRequestConfig);
+
+            console.log(response);
+            return response.data;
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
