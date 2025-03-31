@@ -19,7 +19,8 @@ import {RecordCategory} from "@/domain/interface/RecordCategory.ts";
 
 export default function BerandaPageViewModel() {
     const {
-        user
+        user,
+        incBalance
     } = useUser();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [transactions, setTransactions] = useState<UserTransactionWithDetails[]>([]);
@@ -103,6 +104,9 @@ export default function BerandaPageViewModel() {
 
     function handleCardClick(card: CardCarousel) {
         if(!user) return;
+
+        const res = user.balance * card.weight;
+        incBalance(res);
 
         cardInteractionCreate({
             nudge_user_id: user.id,
