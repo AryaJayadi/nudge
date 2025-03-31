@@ -79,9 +79,13 @@ export default function FeedbackPageViewModel() {
 
         console.log("Feedback submitted:", responses)
 
-        finishSimulation(user.id, responses);
+        finishSimulation(user.id, responses).then((res) => {
+            if(res.error) {
+                return
+            }
 
-        navigate("/app/thankyou")
+            navigate("/app/thankyou")
+        })
     }
 
     const isComplete = Object.keys(responses).length === questionsData?.length
