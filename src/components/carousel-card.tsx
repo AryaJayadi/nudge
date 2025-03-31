@@ -64,7 +64,7 @@ export default function CardCarousel({products, onPurchase}: Props) {
                                                 <p className="text-muted-foreground mb-3">{product.content}</p>
                                             </div>
                                             <div className="w-full pt-4">
-                                                <Button className="w-full">Buy Now</Button>
+                                                <Button className="w-full" onClick={() => setIsModalOpen(true)}>Buy Now</Button>
                                             </div>
                                         </CardContent>
                                     </Card>
