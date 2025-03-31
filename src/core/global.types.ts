@@ -44,6 +44,10 @@ declare global {
     type FinishSimulation = Tables<'nudge_finish_simulation'>;
     type InsertFinishSimulation = DB["nudge_finish_simulation"]["Insert"];
 
+    type FinishAndResponses = FinishSimulation & {
+        responses: FeedbackResponse[]
+    }
+
     type UserResponses = Tables<'user_responses'>;
     type InsertUserResponse = DB["user_responses"]["Insert"];
 

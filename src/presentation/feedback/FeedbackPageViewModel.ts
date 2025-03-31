@@ -8,6 +8,9 @@ import {useUser} from "@/presentation/context/UserContext.tsx";
 import {FeedbackResponseSupabaseDataSource} from "@/data/datasource/supabase/FeedbackResponseSupabaseDataSource.ts";
 import {FeedbackResponseDataSourceRepository} from "@/data/repository/FeedbackResponseDataSourceRepository.ts";
 import {FeedbackResponseCreate} from "@/domain/usecase/feedback_response/FeedbackResponseCreate.ts";
+import {FinishSimulationSupabaseDataSource} from "@/data/datasource/supabase/FinishSimulationSupabaseDataSource.ts";
+import {FinishSimulationRepositoryDataSource} from "@/data/repository/FinishSimulationRepositoryDataSource.ts";
+import {FinishSimulationCreate} from "@/domain/usecase/finish_simulation/FinishSimulationCreate.ts";
 
 export default function FeedbackPageViewModel() {
     const [responses, setResponses] = useState<InsertFeedbackResponse[]>([]);
@@ -19,6 +22,9 @@ export default function FeedbackPageViewModel() {
 
     const feedbackResponseDataSource = useMemo(() => new FeedbackResponseSupabaseDataSource(), []);
     const feedbackResponseRepository = useMemo(() => new FeedbackResponseDataSourceRepository(feedbackResponseDataSource), [feedbackResponseDataSource]);
+
+    const finishSimulationDataSource = useMemo(() => new FinishSimulationSupabaseDataSource(), []);
+    const finishSimulationRepository = useMemo(() => new FinishSimulationRepositoryDataSource(finishSimulationDataSource), [finishSimulationDataSource]);
 
     const feedbackQuestionReadUseCase = useMemo(() => new FeedbackQuestionRead(feedbackQuestionRepository), [feedbackQuestionRepository]);
     const feedbackQuestionRead = useCallback(async () => {
@@ -34,6 +40,11 @@ export default function FeedbackPageViewModel() {
     const feedbackResponseCreate = useCallback(async (data: InsertFeedbackResponse[]) => {
         return await feedbackResponseCreateUseCase.invoke(data);
     }, [feedbackResponseCreateUseCase]);
+
+    const finishSimulationCreateUseCase = useMemo(() => new FinishSimulationCreate(finishSimulationRepository), [finishSimulationRepository]);
+    const finishSimulationCreate = useCallback(async (data: InsertFinishSimulation) => {
+        return await finishSimulationCreateUseCase.invoke(data);
+    }, [finishSimulationCreateUseCase])
 
     const handleRatingChange = (id: number, score: number) => {
         setResponses((prev) => {
