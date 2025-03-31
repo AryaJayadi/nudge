@@ -17,6 +17,8 @@ import {UserSurveyRead} from "@/domain/usecase/user_survey/UserSurveyRead.ts";
 import {UserConsentUpdate} from "@/domain/usecase/user_consent/UserConsentUpdate.ts";
 import {UserSurveyUpdate} from "@/domain/usecase/user_survey/UserSurveyUpdate.ts";
 import {UserUpdate} from "@/domain/usecase/user/UserUpdate.ts";
+import {FinishSimulationSupabaseDataSource} from "@/data/datasource/supabase/FinishSimulationSupabaseDataSource.ts";
+import {FinishSimulationRepositoryDataSource} from "@/data/repository/FinishSimulationRepositoryDataSource.ts";
 
 interface UserContextType {
     user: User | null;
@@ -69,12 +71,15 @@ export function UserProvider({children}: { children: ReactNode }) {
     const userDataSource = useMemo(() => new UserSupabaseDataSource(), []);
     const userRepository = useMemo(() => new UserRepositoryDataSource(userDataSource), [userDataSource]);
 
+    const finishSimulationDataSource = useMemo(() => new FinishSimulationSupabaseDataSource(), []);
+    const finishSimulationRepository = useMemo(() => new FinishSimulationRepositoryDataSource(finishSimulationDataSource), [finishSimulationDataSource]);
+
     const userSignInUseCase = useMemo(() => new UserSignIn(userRepository), [userRepository]);
     const userSignIn = useCallback(async (data: InsertUser) => {
         return await userSignInUseCase.invoke(data);
     }, [userSignInUseCase]);
 
-    const userSignUpUseCase = useMemo(() => new UserSignUp(userRepository, userConsentRepository, userSurveyRepository), [userRepository]);
+    const userSignUpUseCase = useMemo(() => new UserSignUp(userRepository, userConsentRepository, userSurveyRepository, finishSimulationRepository), [userRepository, userConsentRepository, userSurveyRepository, finishSimulationRepository]);
     const userSignUp = useCallback(async (data: InsertUser) => {
         return await userSignUpUseCase.invoke(data);
     }, [userSignUpUseCase]);
