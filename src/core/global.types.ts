@@ -51,6 +51,8 @@ declare global {
     type CardInteraction = Tables<'nudge_card_interaction'>;
     type InsertCardInteraction = DB["nudge_card_interaction"]["Insert"];
 
+    type CardCarousel = Tables<'nudge_carousel'>;
+
     type UserResponses = Tables<'user_responses'>;
     type InsertUserResponse = DB["user_responses"]["Insert"];
 
