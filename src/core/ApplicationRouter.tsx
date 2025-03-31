@@ -16,6 +16,7 @@ import {QuestionnairePage} from "@/presentation/questionnaire/QuestionnairePage.
 import {UserProvider} from "@/presentation/context/UserContext.tsx";
 import {ConsentPage} from "@/presentation/consent/ConsentPage.tsx";
 import FeedbackPage from "@/presentation/feedback/FeedbackPage.tsx";
+import ThankYouPage from "@/presentation/thankyou/ThankyouPage.tsx";
 
 interface ProtectedRouteProps {
     redirectPath: string;
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
                     {
                         path: "feedback",
                         element: <FeedbackPage/>
+                    },
+                    {
+                      path: "thankyou",
+                      element: <ThankYouPage/>
                     },
                     {
                         path: "app",
