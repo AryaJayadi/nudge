@@ -13,7 +13,7 @@ export class RecommendationRepositoryDataSource implements RecommendationReposit
         return this.datasource.purchase(uid, data);
     }
 
-    read(uid: string): Promise<string[]> {
+    read(uid: string): Promise<Product[]> {
         return this.datasource.read(uid);
     }
 }

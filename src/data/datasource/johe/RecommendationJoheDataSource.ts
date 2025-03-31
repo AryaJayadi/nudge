@@ -36,7 +36,7 @@ export class RecommendationJoheDataSource implements RecommendationDataSource {
         return response.data;
     }
 
-    async read(uid: string): Promise<string[]> {
+    async read(uid: string): Promise<Product[]> {
         const response = await this.axiosInstance({
             method: "GET",
             url: `/${uid}`,
@@ -46,6 +46,6 @@ export class RecommendationJoheDataSource implements RecommendationDataSource {
         } as AxiosRequestConfig);
 
         console.log(response);
-        return response.data;
+        return response.data as Product[];
     }
 }
