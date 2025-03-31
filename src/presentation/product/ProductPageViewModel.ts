@@ -29,9 +29,6 @@ export default function ProductPageViewModel(categoryId: number) {
     const cardDataSource = useMemo(() => new CardSupabaseDataSource(), []);
     const cardRepository = useMemo(() => new CardRepositoryDataSource(cardDataSource),[cardDataSource]);
 
-    // const cardInteractionDataSource = useMemo(() => new CardInteractionSupabaseDataSource(), []);
-    // const cardInteractionRepository = useMemo(() => new CardInteractionRepositoryDataSource(cardInteractionDataSource),[cardInteractionDataSource]);
-
     const recommendationDataSource = useMemo(() => new RecommendationJoheDataSource(), []);
     const recommendationRepository = useMemo(() => new RecommendationRepositoryDataSource(recommendationDataSource), [recommendationDataSource]);
 
@@ -61,11 +58,6 @@ export default function ProductPageViewModel(categoryId: number) {
     const userTransactionCreate = useCallback(async (data: InsertUserTransaction) => {
         return await userTransactionCreateUseCase.invoke(data);
     }, [userTransactionCreateUseCase]);
-
-    // const cardInteractionCreateUseCase = useMemo(() => new CardInteractionCreate(cardInteractionRepository),[cardInteractionRepository]);
-    // const cardInteractionCreate = useCallback(async (data: InsertCardInteraction) => {
-    //     return await cardInteractionCreateUseCase.invoke(data);
-    // }, [cardInteractionCreateUseCase]);
 
     const recommendationPurchaseUseCase = useMemo(() => new RecommendationPurchase(recommendationRepository), [recommendationRepository]);
     const recommendationPurchase = useCallback(async (uid: string, data: string[]) => {
