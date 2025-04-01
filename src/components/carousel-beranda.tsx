@@ -73,11 +73,11 @@ export default function CarouselBeranda({cards, onCardClick}: Props) {
             </Carousel>
 
             {/* Index indicators */}
-            <div className="flex justify-center gap-2">
+            <div className="flex justify-center gap-2 mt-2">
                 {cards.map((_, index) => (
                     <button
                         key={index}
-                        className={`h-2.5 w-2.5 rounded-full transition-colors ${current === index ? "bg-primary" : "bg-muted"}`}
+                        className={`h-2.5 w-2.5 rounded-full transition-colors ${current === index ? "bg-[#003049]" : "bg-[#fcbf49]"}`}
                         onClick={() => api?.scrollTo(index)}
                         aria-label={`Go to slide ${index + 1}`}
                     />
