@@ -13,6 +13,7 @@ import {Label} from "@/components/ui/label.tsx";
 import {NumberSpinner} from "@/components/number-spinner.tsx";
 import {useUser} from "@/presentation/context/UserContext.tsx";
 import {useToast} from "@/components/ui/use-toast.ts";
+import {formatCurrency} from "@/lib/utils.ts";
 
 interface SimulationModalProps {
     isOpen: boolean;
@@ -38,7 +39,7 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
     const {toast} = useToast();
 
     const MIN_AMOUNT = product.saldo_awal;
-    const MAX_AMOUNT = 10  * product.saldo_awal;
+    const MAX_AMOUNT = 999  * product.saldo_awal;
     const STEP = product.saldo_awal;
 
     // const formatCurrency = (amount: number) => {
@@ -70,7 +71,7 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
 
     const startSimulation = () => {
         if(!validateSimulation()) return;
-        
+
         setIsSimulating(true)
         setResult(null)
         setFinalNumber(null)
@@ -167,7 +168,7 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
                             <p className="text-xl font-bold text-blue-800">{price}</p>
                         </div>
                         <div className="space-y-1">
-                            <Label htmlFor="constrained-spinner" className="text-sm font-medium text-gray-500">Amount</Label>
+                            <Label htmlFor="constrained-spinner" className="text-sm font-medium text-gray-500">Amount: {formatCurrency(amount)}</Label>
                             <NumberSpinner value={amount} onChange={setAmount} min={MIN_AMOUNT} max={MAX_AMOUNT} step={STEP} defaultValue={MIN_AMOUNT} />
                         </div>
                     </div>
