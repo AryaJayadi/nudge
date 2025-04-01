@@ -27,7 +27,7 @@ export default class QuestionSupabaseDataSource implements QuestionDataSource {
 
     async insertResponses(data: InsertUserResponseSupabase[]): Promise<BaseSupabaseResponse<UserResponses[]>> {
         const res = await supabase
-            .from("user_responses")
+            .from("nudge_user_questionnaire_response")
             .upsert(data)
             .select();
 

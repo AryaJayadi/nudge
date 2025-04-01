@@ -1,5 +1,5 @@
 export interface InsertUserResponseSupabase {
-    user_id: string;
+    nudge_user_id: string;
     question_id: string;
     response: string[];
 }

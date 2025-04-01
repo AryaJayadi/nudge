@@ -101,7 +101,7 @@ export function QuestionnaireProvider({children}: { children: ReactNode }) {
                 updatedResponses = [
                     ...updatedResponses,
                     {
-                        user_id: user?.id,
+                        nudge_user_id: user?.id,
                         question_id: question.id,
                         response: [answer]
                     } as InsertUserResponseSupabase
