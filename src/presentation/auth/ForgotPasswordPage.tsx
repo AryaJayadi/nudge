@@ -1,7 +1,6 @@
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
-import {Link} from "react-router";
 import {Button} from "@/components/ui/button.tsx";
 import {useUser} from "@/presentation/context/UserContext.tsx";
 import useViewModel from "./ForgotPasswordPageViewModel.ts";

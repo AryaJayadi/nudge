@@ -124,7 +124,8 @@ export default function FeedbackPageViewModel() {
         })
     }
 
-    const isComplete = Object.keys(responses).length === questionsData?.length - 1
+    const len = questionsData?.length ?? 0;
+    const isComplete = Object.keys(responses).length === len - 1
 
     return {
         questionsData,
