@@ -8,6 +8,8 @@ export default interface UserDataSource {
 
     update(uid: string, data: UpdateUser): Promise<BaseSupabaseResponse<User>>;
 
+    updateByEmail(email: string, data: UpdateUser): Promise<BaseSupabaseResponse<User>>;
+
     checkConsent(userId: string): Promise<BaseSupabaseResponse<boolean>>;
 
     checkSurvey(userId: string): Promise<BaseSupabaseResponse<boolean>>;

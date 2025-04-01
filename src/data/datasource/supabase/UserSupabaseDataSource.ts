@@ -108,4 +108,13 @@ export default class UserSupabaseDataSource implements UserDataSource {
 
         return singleSupabaseResponseMapper(res);
     }
+
+    async updateByEmail(email: string, data: UpdateUser): Promise<BaseSupabaseResponse<User>> {
+        const res = await this.table
+            .update(data)
+            .eq("email", email)
+            .select();
+
+        return singleSupabaseResponseMapper(res);
+    }
 }

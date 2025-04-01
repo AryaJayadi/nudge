@@ -42,4 +42,8 @@ export class UserRepositoryDataSource implements UserRepository {
     update(uid: string, data: UpdateUser): Promise<BaseSupabaseResponse<User>> {
         return this.datasource.update(uid, data);
     }
+
+    updateByEmail(email: string, data: UpdateUser): Promise<BaseSupabaseResponse<User>> {
+        return this.datasource.updateByEmail(email, data);
+    }
 }
