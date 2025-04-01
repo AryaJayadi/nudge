@@ -26,7 +26,7 @@ export default function Navbar() {
             <div className="container flex h-16 items-center justify-between px-4 md:px-6">
                 <div className="flex items-center gap-2">
                     <Link to="/" className="flex items-center gap-2">
-                        <span className="text-lg font-semibold">Nudge Simulation Model</span>
+                        <span className="text-lg font-semibold">Nudge Simulation</span>
                     </Link>
                 </div>
                 <div className="flex items-center gap-4">
