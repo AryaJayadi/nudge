@@ -20,6 +20,7 @@ import {UserUpdate} from "@/domain/usecase/user/UserUpdate.ts";
 import {FinishSimulationSupabaseDataSource} from "@/data/datasource/supabase/FinishSimulationSupabaseDataSource.ts";
 import {FinishSimulationRepositoryDataSource} from "@/data/repository/FinishSimulationRepositoryDataSource.ts";
 import {FinishSimulationRead} from "@/domain/usecase/finish_simulation/FinishSimulationRead.ts";
+import {UserUpdateByEmail} from "@/domain/usecase/user/UserUpdateByEmail.ts";
 
 interface UserContextType {
     user: User | null;
@@ -27,7 +28,7 @@ interface UserContextType {
     setUser: (value: (((prevState: (User | null)) => (User | null)) | User | null)) => void;
     login: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
     register: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
-    updatePassword: (uid: string, data: UpdateUser) => Promise<BaseSupabaseResponse<User>>;
+    updatePassword: (email: string, data: UpdateUser) => Promise<BaseSupabaseResponse<User>>;
     updateUser: (data: UpdateUser) => Promise<BaseSupabaseResponse<User>>;
     logout: () => void;
     incBalance: (amount: number) => number;
@@ -94,6 +95,11 @@ export function UserProvider({children}: { children: ReactNode }) {
     const userUpdate = useCallback(async (uid: string, data: UpdateUser) => {
         return await userUpdateUseCase.invoke(uid, data);
     }, [userUpdateUseCase]);
+
+    const userUpdateByEmailUseCase = useMemo(() => new UserUpdateByEmail(userRepository), [userRepository]);
+    const userUpdateByEmail = useCallback(async (email: string, data: UpdateUser) => {
+        return await userUpdateByEmailUseCase.invoke(email, data);
+    }, [userUpdateByEmailUseCase])
 
     const userConsentUpdateUseCase = useMemo(() => new UserConsentUpdate(userConsentRepository), [userConsentRepository]);
     const userConsentUpdate = useCallback(async (uid: string, data: UpdateUserConsent) => {
@@ -208,8 +214,8 @@ export function UserProvider({children}: { children: ReactNode }) {
         return res;
     }
 
-    async function updatePassword(uid: string, data: UpdateUser) {
-        const res = await userUpdate(uid, data);
+    async function updatePassword(email: string, data: UpdateUser) {
+        const res = await userUpdateByEmail(email, data);
 
         if (res.error) {
             console.log(res.error);
