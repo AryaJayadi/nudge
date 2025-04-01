@@ -45,6 +45,8 @@ export const LoginPage = () => {
                 </form>
                 <span className="text-sm">Don't have an account? <Link to="/auth/register"
                                                                        className="text-blue-600 underline cursor-pointer">Register now</Link></span>
+                <span className="text-sm">Forgot your password? <Link to="/auth/forgot-password"
+                                                                       className="text-blue-600 underline cursor-pointer">Reset here</Link></span>
             </CardContent>
             <CardFooter className="flex justify-between">
                 <Button onClick={handleSubmit}>Login</Button>

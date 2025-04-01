@@ -63,10 +63,11 @@ export function UserProvider({children}: { children: ReactNode }) {
 
     const LOGIN_PATH = "/auth/login";
     const REGISTER_PATH = "/auth/register";
+    const FORGOT_PASSWORD_PATH = "/auth/forgot-password";
     const DEFAULT_PATH = "/app/beranda";
     const CONSENT_PATH = "/consent";
     const QUESTIONNAIRE_PATH = "/questionnaire";
-    const WHITELIST_PATH = [LOGIN_PATH, REGISTER_PATH]
+    const WHITELIST_PATH = [LOGIN_PATH, REGISTER_PATH, FORGOT_PASSWORD_PATH]
     const FROM = location.state?.from || DEFAULT_PATH;
 
     const userConsentDataSource = useMemo(() => new UserConsentSupabaseDataSource(), []);

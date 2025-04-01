@@ -19,7 +19,7 @@ export const ForgotPasswordPage = () => {
     return (
         <Card className="w-[350px]">
             <CardHeader>
-                <CardTitle>Login</CardTitle>
+                <CardTitle>Forgot Password</CardTitle>
             </CardHeader>
             <CardContent>
                 <form onSubmit={(e) => {
@@ -28,8 +28,8 @@ export const ForgotPasswordPage = () => {
                 }}>
                     <div className="grid w-full items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="email">Email or Phone</Label>
-                            <Input id="email" placeholder="Email or Phone" ref={emailRef} type="text"/>
+                            <Label htmlFor="email">Email</Label>
+                            <Input id="email" placeholder="Email" ref={emailRef} type="text"/>
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="password">Password</Label>
