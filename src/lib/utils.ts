@@ -19,7 +19,9 @@ export function formatCurrency(amount: number) {
 export function calcPrize(amount: number) {
     const BASE = 1000000000;
     const REWARD = 50000;
-    return amount / BASE * REWARD;
+    const MAX_REWARD = 100000;
+    const res = amount / BASE * REWARD;
+    return res > MAX_REWARD ? MAX_REWARD : res;
 }
 
 export function isAuthenticated(session: Session | null | undefined): boolean {
