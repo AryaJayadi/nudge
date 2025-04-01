@@ -47,9 +47,138 @@ export type Database = {
         Relationships: []
       }
       automation_userswithriskmab: {
-        Row: {}
-        Insert: {}
-        Update: {}
+        Row: {
+          bunga_potensireturn: string | null
+          category_id: number | null
+          condition: string | null
+          content: string | null
+          defaultoptions: string | null
+          email: string | null
+          encrypted_password: string | null
+          fitur: string | null
+          framingeffect: string | null
+          gamification: string | null
+          incentives: string | null
+          jenis_kelamin: string | null
+          jenis_pekerjaan: string | null
+          keuntungan: string | null
+          loss: string | null
+          lossaversion: string | null
+          memiliki_rumah: string | null
+          nasabah_bank: number | null
+          nudge_info: string | null
+          pendapatan_bulanan: string | null
+          personalization: string | null
+          phone_number: string | null
+          predicted_class: string | null
+          premi_setoran_makspinjam: string | null
+          product_id: string | null
+          product_name: string | null
+          product_title: string | null
+          profit: number | null
+          risiko: string | null
+          risk_profile: string | null
+          risklevel: string | null
+          saldo_awal: number | null
+          saliency: string | null
+          score: number | null
+          socialproof: string | null
+          status_pernikahan: string | null
+          timestamp: string | null
+          timing_justintimenudging: string | null
+          tingkat_pendidikan: string | null
+          tujuan_keuangan: string | null
+          user_id: string | null
+          weight_risk: string | null
+        }
+        Insert: {
+          bunga_potensireturn?: string | null
+          category_id?: number | null
+          condition?: string | null
+          content?: string | null
+          defaultoptions?: string | null
+          email?: string | null
+          encrypted_password?: string | null
+          fitur?: string | null
+          framingeffect?: string | null
+          gamification?: string | null
+          incentives?: string | null
+          jenis_kelamin?: string | null
+          jenis_pekerjaan?: string | null
+          keuntungan?: string | null
+          loss?: string | null
+          lossaversion?: string | null
+          memiliki_rumah?: string | null
+          nasabah_bank?: number | null
+          nudge_info?: string | null
+          pendapatan_bulanan?: string | null
+          personalization?: string | null
+          phone_number?: string | null
+          predicted_class?: string | null
+          premi_setoran_makspinjam?: string | null
+          product_id?: string | null
+          product_name?: string | null
+          product_title?: string | null
+          profit?: number | null
+          risiko?: string | null
+          risk_profile?: string | null
+          risklevel?: string | null
+          saldo_awal?: number | null
+          saliency?: string | null
+          score?: number | null
+          socialproof?: string | null
+          status_pernikahan?: string | null
+          timestamp?: string | null
+          timing_justintimenudging?: string | null
+          tingkat_pendidikan?: string | null
+          tujuan_keuangan?: string | null
+          user_id?: string | null
+          weight_risk?: string | null
+        }
+        Update: {
+          bunga_potensireturn?: string | null
+          category_id?: number | null
+          condition?: string | null
+          content?: string | null
+          defaultoptions?: string | null
+          email?: string | null
+          encrypted_password?: string | null
+          fitur?: string | null
+          framingeffect?: string | null
+          gamification?: string | null
+          incentives?: string | null
+          jenis_kelamin?: string | null
+          jenis_pekerjaan?: string | null
+          keuntungan?: string | null
+          loss?: string | null
+          lossaversion?: string | null
+          memiliki_rumah?: string | null
+          nasabah_bank?: number | null
+          nudge_info?: string | null
+          pendapatan_bulanan?: string | null
+          personalization?: string | null
+          phone_number?: string | null
+          predicted_class?: string | null
+          premi_setoran_makspinjam?: string | null
+          product_id?: string | null
+          product_name?: string | null
+          product_title?: string | null
+          profit?: number | null
+          risiko?: string | null
+          risk_profile?: string | null
+          risklevel?: string | null
+          saldo_awal?: number | null
+          saliency?: string | null
+          score?: number | null
+          socialproof?: string | null
+          status_pernikahan?: string | null
+          timestamp?: string | null
+          timing_justintimenudging?: string | null
+          tingkat_pendidikan?: string | null
+          tujuan_keuangan?: string | null
+          user_id?: string | null
+          weight_risk?: string | null
+        }
         Relationships: []
       }
       data_mart_user_activity: {
@@ -998,21 +1127,21 @@ export type Database = {
           id: number
           nudge_feedback_question_id: number
           nudge_user_id: string
-          score: number
+          response: string
         }
         Insert: {
           created_at?: string
           id?: number
           nudge_feedback_question_id: number
           nudge_user_id: string
-          score: number
+          response: string
         }
         Update: {
           created_at?: string
           id?: number
           nudge_feedback_question_id?: number
           nudge_user_id?: string
-          score?: number
+          response?: string
         }
         Relationships: [
           {
