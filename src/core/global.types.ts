@@ -53,6 +53,9 @@ declare global {
 
     type CardCarousel = Tables<'nudge_card_carousel'>;
 
+    type UserReward = Tables<'nudge_user_reward'>;
+    type InsertUserReward = DB["nudge_user_reward"]["Insert"];
+
     type UserResponses = Tables<'user_responses'>;
     type InsertUserResponse = DB["user_responses"]["Insert"];
 
