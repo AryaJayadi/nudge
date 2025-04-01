@@ -19,9 +19,11 @@ import {UserSurveyUpdate} from "@/domain/usecase/user_survey/UserSurveyUpdate.ts
 import {UserUpdate} from "@/domain/usecase/user/UserUpdate.ts";
 import {FinishSimulationSupabaseDataSource} from "@/data/datasource/supabase/FinishSimulationSupabaseDataSource.ts";
 import {FinishSimulationRepositoryDataSource} from "@/data/repository/FinishSimulationRepositoryDataSource.ts";
+import {FinishSimulationRead} from "@/domain/usecase/finish_simulation/FinishSimulationRead.ts";
 
 interface UserContextType {
     user: User | null;
+    isFinished: boolean;
     setUser: (value: (((prevState: (User | null)) => (User | null)) | User | null)) => void;
     login: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
     register: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
@@ -34,6 +36,7 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType>({
     user: null,
+    isFinished: false,
     setUser: () => {
     },
     login: async () => Promise.reject(new Error("No UserProvider found")),
@@ -51,6 +54,7 @@ const UserContext = createContext<UserContextType>({
 export function UserProvider({children}: { children: ReactNode }) {
     const [value, setValue,] = useLocalStorage<User | null>('auth', null)
     const [user, setUser] = useState<User | null>(null);
+    const [isFinished, setIsFinished] = useState<boolean>(false);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -98,6 +102,11 @@ export function UserProvider({children}: { children: ReactNode }) {
     const userSurveyUpdate = useCallback(async (uid: string, data: UpdateUserSurvey) => {
         return await userSurveyUpdateUseCase.invoke(uid, data);
     }, [userSurveyUpdateUseCase]);
+
+    const finishSimulationReadUseCase = useMemo(() => new FinishSimulationRead(finishSimulationRepository), [finishSimulationRepository]);
+    const finishSimulationRead = useCallback(async (uid: string) => {
+        return await finishSimulationReadUseCase.invoke(uid);
+    }, [finishSimulationReadUseCase]);
 
     const userConsentReadUseCase = useMemo(() => new UserConsentRead(userConsentRepository), [userConsentRepository]);
     const userConsentRead = useCallback(async () => {
@@ -153,6 +162,13 @@ export function UserProvider({children}: { children: ReactNode }) {
         } else if (!hasSurveyData.done && location.pathname !== QUESTIONNAIRE_PATH) {
             navigate(QUESTIONNAIRE_PATH, {state: {from: location}});
         }
+
+        finishSimulationRead(user.id).then(res => {
+            if(res.error || !res.data) return;
+
+            setIsFinished(res.data.finish)
+        });
+
     }, [user, hasConsentData, hasSurveyData]);
 
     async function login(data: InsertUser) {
@@ -244,6 +260,7 @@ export function UserProvider({children}: { children: ReactNode }) {
     return (
         <UserContext.Provider value={{
             user,
+            isFinished,
             setUser,
             login,
             register,

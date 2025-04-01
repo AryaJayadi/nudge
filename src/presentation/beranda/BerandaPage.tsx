@@ -10,7 +10,8 @@ import CardCarousel from "@/components/carousel-card.tsx";
 
 export const BerandaPage = () => {
     const {
-        user
+        user,
+        isFinished
     } = useUser();
     const {
         transactions,
@@ -38,7 +39,7 @@ export const BerandaPage = () => {
                         </span>
                         yang bisa Anda kembangkan melalui Nudge Simulation App. Mainkan sekarang!
                     </div>
-                    <Button size="sm" className="w-full bg-white hover:bg-blue-100 text-blue-800 mt-4" onClick={() => setShowModal(true)}>
+                    <Button disabled={isFinished} size="sm" className="w-full bg-white hover:bg-blue-100 text-blue-800 mt-4" onClick={() => setShowModal(true)}>
                         {"Selesaikan Simulasi"}
                     </Button>
                 </CardContent>
