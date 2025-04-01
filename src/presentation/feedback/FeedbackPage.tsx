@@ -71,7 +71,7 @@ export default function FeedbackPage() {
                                 :
                                 <div className="flex flex-col space-y-1.5">
                                     <Label htmlFor="lainnya">{q.question}</Label>
-                                    <Input id="lainnya" placeholder={q.question} ref={lainnyaRef} type="text"/>
+                                    <Input id="lainnya" placeholder={q.question} ref={lainnyaRef} type="text" defaultValue={"-"}/>
                                 </div>
                         })}
                         <div className="flex flex-col space-y-1.5">
