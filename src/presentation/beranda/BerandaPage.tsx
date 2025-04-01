@@ -52,17 +52,14 @@ export const BerandaPage = () => {
 
             <Card className="bg-blue-50 border-blue-200">
                 <CardContent className="pt-4">
-                    <p className="text-sm text-blue-800">
+                    <p className="text-sm text-blue-800 text-justify">
                         <strong>Disclaimer:</strong>
-                        <li>
+                        <br/>
                             Saldo yang ditampilkan dalam aplikasi ini bersifat simulasi dan
                             tidak mencerminkan saldo aktual pengguna. Data ini digunakan semata-mata untuk keperluan
                             penelitian dan pengujian model rekomendasi nudge.
-                        </li>
-                        <li>
                             Dalam simulasi ini, Anda akan mendapatkan hadiah awal sebesar Rp50.000 dan diberi kesempatan
                             untuk mengembangkan total hadiah tersebut dengan memainkan aplikasi Nudge Simulation Model.
-                        </li>
                     </p>
                 </CardContent>
             </Card>
