@@ -17,7 +17,7 @@ export const ProductPage = ({categoryId}: Props) => {
 
     const length = 4;
 
-    if (productsError || !products || !cards) {
+    if (productsError) {
         return (
             <div>Error</div>
         )
@@ -38,7 +38,7 @@ export const ProductPage = ({categoryId}: Props) => {
         }
     }
 
-    if (productsLoading) {
+    if (productsLoading || !products || !cards) {
         Array.from({length: length}).map((_, i) => (
             <SkeletonCard key={i}/>
         ))

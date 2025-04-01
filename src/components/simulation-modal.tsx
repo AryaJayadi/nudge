@@ -39,7 +39,7 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
     const {toast} = useToast();
 
     const MIN_AMOUNT = product.saldo_awal;
-    const MAX_AMOUNT = 999  * product.saldo_awal;
+    const MAX_AMOUNT = 20  * product.saldo_awal;
     const STEP = product.saldo_awal;
 
     // const formatCurrency = (amount: number) => {
