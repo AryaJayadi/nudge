@@ -27,6 +27,7 @@ interface UserContextType {
     setUser: (value: (((prevState: (User | null)) => (User | null)) | User | null)) => void;
     login: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
     register: (data: InsertUser) => Promise<BaseSupabaseResponse<User>>;
+    updatePassword: (uid: string, data: UpdateUser) => Promise<BaseSupabaseResponse<User>>;
     updateUser: (data: UpdateUser) => Promise<BaseSupabaseResponse<User>>;
     logout: () => void;
     incBalance: (amount: number) => number;
@@ -41,6 +42,7 @@ const UserContext = createContext<UserContextType>({
     },
     login: async () => Promise.reject(new Error("No UserProvider found")),
     register: async () => Promise.reject(new Error("No UserProvider found")),
+    updatePassword: async  () => Promise.reject(new Error("No UserProvider found")),
     updateUser: async () => Promise.reject(new Error("No UserProvider found")),
     logout: () => {
     },
@@ -206,6 +208,22 @@ export function UserProvider({children}: { children: ReactNode }) {
         return res;
     }
 
+    async function updatePassword(uid: string, data: UpdateUser) {
+        const res = await userUpdate(uid, data);
+
+        if (res.error) {
+            console.log(res.error);
+            return res;
+        } else if (res.data == null) {
+            console.log(res);
+            return res;
+        }
+
+        navigate(LOGIN_PATH, {replace: true});
+
+        return res;
+    }
+
     async function updateUser(data: UpdateUser) {
         if(!user || !user.id) return {
             success: false,
@@ -264,6 +282,7 @@ export function UserProvider({children}: { children: ReactNode }) {
             setUser,
             login,
             register,
+            updatePassword,
             updateUser,
             logout,
             incBalance,
