@@ -22,4 +22,13 @@ export class FinishSimulationSupabaseDataSource implements FinishSimulationDataS
 
         return singleSupabaseResponseMapper(res);
     }
+
+    async update(uid: string, data: UpdateFinishSimulation): Promise<BaseSupabaseResponse<FinishSimulation>> {
+        const res = await this.table
+            .update(data)
+            .eq("nudge_user_id", uid)
+            .select();
+
+        return singleSupabaseResponseMapper(res);
+    }
 }
