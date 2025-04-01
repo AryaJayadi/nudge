@@ -17,6 +17,7 @@ import {UserProvider} from "@/presentation/context/UserContext.tsx";
 import {ConsentPage} from "@/presentation/consent/ConsentPage.tsx";
 import FeedbackPage from "@/presentation/feedback/FeedbackPage.tsx";
 import ThankYouPage from "@/presentation/thankyou/ThankyouPage.tsx";
+import {ForgotPasswordPage} from "@/presentation/auth/ForgotPasswordPage.tsx";
 
 interface ProtectedRouteProps {
     redirectPath: string;
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
                     {
                         path: "register",
                         element: <RegisterPage/>
+                    },
+                    {
+                        path: "forgot-password",
+                        element: <ForgotPasswordPage />
                     }
                 ]
             }
