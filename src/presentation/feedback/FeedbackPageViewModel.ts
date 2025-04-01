@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useRef, useState} from "react";
+import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {useNavigate} from "react-router";
 import {FeedbackQuestionSupabaseDataSource} from "@/data/datasource/supabase/FeedbackQuestionSupabaseDataSource.ts";
 import {FeedbackQuestionDataSourceRepository} from "@/data/repository/FeedbackQuestionDataSourceRepository.ts";
@@ -18,6 +18,7 @@ import {calcPrize} from "@/lib/utils.ts";
 
 export default function FeedbackPageViewModel() {
     const [responses, setResponses] = useState<InsertFeedbackResponse[]>([]);
+    const lainnyaRef = useRef<HTMLInputElement | null>(null);
     const phoneRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
     const {toast} = useToast();
@@ -57,20 +58,24 @@ export default function FeedbackPageViewModel() {
         return await userRewardCreateUseCase.invoke(data);
     }, [userRewardCreateUseCase]);
 
+    useEffect(() => {
+        console.log(responses);
+    }, [responses]);
+
     const handleRatingChange = (id: number, score: number) => {
         setResponses((prev) => {
             let updatedResponse = prev.map(o => ({...o}));
-            let currIndex = updatedResponse.findIndex(o => o.id === id)
+            const currIndex = updatedResponse.findIndex(o => o.nudge_feedback_question_id === id)
 
             if (currIndex !== -1) {
-                let curr = updatedResponse[currIndex];
-                curr.score = score;
+                const curr = updatedResponse[currIndex];
+                curr.response = score.toString();
             } else {
                 updatedResponse = [
                     ...updatedResponse, {
                         nudge_user_id: user?.id,
                         nudge_feedback_question_id: id,
-                        score: score
+                        response: score.toString()
                     } as InsertFeedbackResponse
                 ];
             }
@@ -81,7 +86,7 @@ export default function FeedbackPageViewModel() {
 
     const handleSubmit = () => {
         if(!user || !user.id) return
-        if(!phoneRef.current || phoneRef.current['value'] == "") {
+        if(!phoneRef.current || !lainnyaRef.current || phoneRef.current['value'] == "" || lainnyaRef.current['value'] == "") {
             toast({
                 title: "Feedback failed!",
                 description: `Please fill phone number for reward!`,
@@ -90,10 +95,19 @@ export default function FeedbackPageViewModel() {
         }
 
         const phone: string = phoneRef.current['value'];
+        const lainnya: string = lainnyaRef.current['value'];
+
+        const data = [
+            ...responses, {
+                nudge_user_id: user.id,
+                nudge_feedback_question_id: 6,
+                response: lainnya
+            } as InsertFeedbackResponse
+        ];
 
         console.log("Feedback submitted:", responses)
 
-        finishSimulation(user.id, responses).then((res) => {
+        finishSimulation(user.id, data).then((res) => {
             if(res.error) {
                 return
             }
@@ -110,7 +124,7 @@ export default function FeedbackPageViewModel() {
         })
     }
 
-    const isComplete = Object.keys(responses).length === questionsData?.length
+    const isComplete = Object.keys(responses).length === questionsData?.length - 1
 
     return {
         questionsData,
@@ -118,6 +132,7 @@ export default function FeedbackPageViewModel() {
         questionsError,
         responses,
         phoneRef,
+        lainnyaRef,
         handleRatingChange,
         handleSubmit,
         isComplete

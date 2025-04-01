@@ -13,6 +13,7 @@ export default function FeedbackPage() {
         questionsLoading,
         responses,
         phoneRef,
+        lainnyaRef,
         handleRatingChange,
         handleSubmit,
         isComplete
@@ -37,36 +38,42 @@ export default function FeedbackPage() {
                 </CardHeader>
                 <CardContent className="space-y-8">
                     <>
-                        {questionsData.map((q) => (
-                            <div key={q.id} className="space-y-3">
-                                <div>
-                                    <h3 className="font-medium">{q.question}</h3>
-                                    <p className="text-sm text-muted-foreground">{q.detail}</p>
+                        {questionsData.map((q, index) => {
+                            return index <= 4 ?
+                                <div key={index} className="space-y-3">
+                                    <div>
+                                        <h3 className="font-medium">{q.question}</h3>
+                                        {/*<p className="text-sm text-muted-foreground">{q.detail}</p>*/}
+                                    </div>
+                                    <RadioGroup
+                                        value={responses.find(o => o.nudge_feedback_question_id === q.id)?.response}
+                                        onValueChange={(value) => handleRatingChange(q.id, parseInt(value))}
+                                        className="flex space-x-2"
+                                    >
+                                        <>
+                                            {[1, 2, 3, 4, 5].map((value) => (
+                                                <div key={value} className="flex flex-col items-center space-y-1">
+                                                    <RadioGroupItem value={value.toString()} id={`${q.id}-${value}`}
+                                                                    className="peer sr-only"/>
+                                                    <Label
+                                                        htmlFor={`${q.id}-${value}`}
+                                                        className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground"
+                                                    >
+                                                        {value}
+                                                    </Label>
+                                                    <span
+                                                        className="text-xs">{value === 1 ? "Terendah" : value === 5 ? "Tertinggi" : ""}</span>
+                                                </div>
+                                            ))}
+                                        </>
+                                    </RadioGroup>
                                 </div>
-                                <RadioGroup
-                                    value={responses.find(o => o.nudge_feedback_question_id === q.id)?.score.toString()}
-                                    onValueChange={(value) => handleRatingChange(q.id, parseInt(value))}
-                                    className="flex space-x-2"
-                                >
-                                    <>
-                                        {[1, 2, 3, 4, 5].map((value) => (
-                                            <div key={value} className="flex flex-col items-center space-y-1">
-                                                <RadioGroupItem value={value.toString()} id={`${q.id}-${value}`}
-                                                                className="peer sr-only"/>
-                                                <Label
-                                                    htmlFor={`${q.id}-${value}`}
-                                                    className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground"
-                                                >
-                                                    {value}
-                                                </Label>
-                                                <span
-                                                    className="text-xs">{value === 1 ? "Terendah" : value === 5 ? "Tertinggi" : ""}</span>
-                                            </div>
-                                        ))}
-                                    </>
-                                </RadioGroup>
-                            </div>
-                        ))}
+                                :
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label htmlFor="lainnya">{q.question}</Label>
+                                    <Input id="lainnya" placeholder={q.question} ref={lainnyaRef} type="text"/>
+                                </div>
+                        })}
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="phone">Phone</Label>
                             <Input id="phone" placeholder="Phone" ref={phoneRef} type="text"/>
