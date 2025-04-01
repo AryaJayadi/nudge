@@ -37,11 +37,9 @@ export const ForgotPasswordPage = () => {
                         </div>
                     </div>
                 </form>
-                <span className="text-sm">Don't have an account? <Link to="/auth/register"
-                                                                       className="text-blue-600 underline cursor-pointer">Register now</Link></span>
             </CardContent>
             <CardFooter className="flex justify-between">
-                <Button onClick={handleSubmit}>Login</Button>
+                <Button onClick={handleSubmit}>Submit</Button>
             </CardFooter>
         </Card>
     )
