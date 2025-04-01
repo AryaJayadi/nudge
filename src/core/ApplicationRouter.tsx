@@ -18,6 +18,7 @@ import {ConsentPage} from "@/presentation/consent/ConsentPage.tsx";
 import FeedbackPage from "@/presentation/feedback/FeedbackPage.tsx";
 import ThankYouPage from "@/presentation/thankyou/ThankyouPage.tsx";
 import {ForgotPasswordPage} from "@/presentation/auth/ForgotPasswordPage.tsx";
+import {TransactionHistoryPage} from "@/presentation/transaction_history/TransactionHistoryPage.tsx";
 
 interface ProtectedRouteProps {
     redirectPath: string;
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
                             {
                                 path: "asuransi",
                                 element: <AsuransiPage/>
+                            },
+                            {
+                                path: "transaction-history",
+                                element: <TransactionHistoryPage />
                             }
                         ]
                     },

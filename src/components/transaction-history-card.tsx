@@ -35,7 +35,7 @@ export const TransactionHistoryCard = ({transactions}: Props) => {
         <Card className="w-full max-w-md">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-xl font-bold">Transaksi Terakhir</CardTitle>
-                <Link to="">
+                <Link to="/app/transaction-history">
                     <Button variant="ghost" className="h-8 px-2 text-sm text-primary">
                         Lihat Semua
                         <ArrowRight className="ml-1 h-4 w-4" />
