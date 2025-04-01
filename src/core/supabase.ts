@@ -35,411 +35,21 @@ export type Database = {
   public: {
     Tables: {
       automation_interactions: {
-        Row: {
-          product_id: string | null
-          product_title: string | null
-          purchased: number | null
-          user_id: string | null
-          year_month: string | null
-        }
-        Insert: {
-          product_id?: string | null
-          product_title?: string | null
-          purchased?: number | null
-          user_id?: string | null
-          year_month?: string | null
-        }
-        Update: {
-          product_id?: string | null
-          product_title?: string | null
-          purchased?: number | null
-          user_id?: string | null
-          year_month?: string | null
-        }
+        Row: {}
+        Insert: {}
+        Update: {}
         Relationships: []
       }
       automation_users: {
-        Row: {
-          alasan_menabung: number | null
-          batas_waktu_keputusan: number | null
-          faktor_memilih_produk: number | null
-          fitur_bunga_imbal_hasil: number | null
-          fitur_dukungan_pelanggan: number | null
-          fitur_keamanan_transaksi: number | null
-          fitur_reward_cashback: number | null
-          frekuensi_pembelian_besar: number | null
-          frekuensi_pemeriksaan_saldo: number | null
-          frekuensi_perjalanan: number | null
-          informasi_kemudahan_akses: number | null
-          informasi_potensi_keuangan: number | null
-          informasi_risiko_rendah: number | null
-          informasi_testimoni: number | null
-          investasi_berisiko: number | null
-          is_akhirpekan: number | null
-          is_harikerja: number | null
-          is_laki_laki: number | null
-          is_perempuan: number | null
-          is_tidakdividen: number | null
-          is_tidakotomatis: number | null
-          is_tidaksaraninvest: number | null
-          is_tidaktujuan: number | null
-          is_yadividen: number | null
-          is_yaotomatis: number | null
-          is_yasaraninvest: number | null
-          is_yatujuan: number | null
-          jenis_investasi: number | null
-          jenis_pekerjaan: number | null
-          jenis_transaksi: number | null
-          jumlah_tanggungan: number | null
-          kenyamanan_informasi: number | null
-          kenyamanan_telepon: number | null
-          keputusan_dari_informasi: number | null
-          ketertarikan_produk_baru: number | null
-          memiliki_rumah: number | null
-          menerima_aplikasi_bank: number | null
-          menerima_email: number | null
-          menerima_media_sosial: number | null
-          menerima_sms: number | null
-          menerima_telepon: number | null
-          mengikuti_promo: number | null
-          meningkatkan_tabungan: number | null
-          motivasi_tujuan_finansial: number | null
-          nasabah_bank: number | null
-          pemeriksaan_pesan: number | null
-          penawaran_khusus: number | null
-          pendapatan_bulanan: number | null
-          penggunaan_aplikasi: number | null
-          pentingnya_suku_bunga: number | null
-          pesan_keuntungan_risiko: number | null
-          preferensi_layanan: number | null
-          preferensi_produk_detail: number | null
-          preferensi_waktu_informasi: number | null
-          prioritas_keuangan: number | null
-          produk_asuransi: number | null
-          produk_deposito: number | null
-          produk_investasi: number | null
-          produk_kartu_kredit: number | null
-          produk_keuangan_digunakan: number | null
-          produk_lainnya: number | null
-          produk_pinjaman: number | null
-          produk_tabungan: number | null
-          promosi_aplikasi_bank: number | null
-          promosi_email: number | null
-          promosi_media_sosial: number | null
-          promosi_sesuai_kebutuhan: number | null
-          promosi_sms: number | null
-          promosi_website_bank: number | null
-          rentang_usia: number | null
-          rutinitas_menabung: number | null
-          saluran_komunikasi: number | null
-          status_pernikahan: number | null
-          tingkat_pendidikan: number | null
-          toleransi_risiko: number | null
-          tujuan_keuangan: number | null
-          user_id: string | null
-          waktu_aktif_ponsel: number | null
-          waktu_nyaman_penawaran: number | null
-          year_month: string | null
-        }
-        Insert: {
-          alasan_menabung?: number | null
-          batas_waktu_keputusan?: number | null
-          faktor_memilih_produk?: number | null
-          fitur_bunga_imbal_hasil?: number | null
-          fitur_dukungan_pelanggan?: number | null
-          fitur_keamanan_transaksi?: number | null
-          fitur_reward_cashback?: number | null
-          frekuensi_pembelian_besar?: number | null
-          frekuensi_pemeriksaan_saldo?: number | null
-          frekuensi_perjalanan?: number | null
-          informasi_kemudahan_akses?: number | null
-          informasi_potensi_keuangan?: number | null
-          informasi_risiko_rendah?: number | null
-          informasi_testimoni?: number | null
-          investasi_berisiko?: number | null
-          is_akhirpekan?: number | null
-          is_harikerja?: number | null
-          is_laki_laki?: number | null
-          is_perempuan?: number | null
-          is_tidakdividen?: number | null
-          is_tidakotomatis?: number | null
-          is_tidaksaraninvest?: number | null
-          is_tidaktujuan?: number | null
-          is_yadividen?: number | null
-          is_yaotomatis?: number | null
-          is_yasaraninvest?: number | null
-          is_yatujuan?: number | null
-          jenis_investasi?: number | null
-          jenis_pekerjaan?: number | null
-          jenis_transaksi?: number | null
-          jumlah_tanggungan?: number | null
-          kenyamanan_informasi?: number | null
-          kenyamanan_telepon?: number | null
-          keputusan_dari_informasi?: number | null
-          ketertarikan_produk_baru?: number | null
-          memiliki_rumah?: number | null
-          menerima_aplikasi_bank?: number | null
-          menerima_email?: number | null
-          menerima_media_sosial?: number | null
-          menerima_sms?: number | null
-          menerima_telepon?: number | null
-          mengikuti_promo?: number | null
-          meningkatkan_tabungan?: number | null
-          motivasi_tujuan_finansial?: number | null
-          nasabah_bank?: number | null
-          pemeriksaan_pesan?: number | null
-          penawaran_khusus?: number | null
-          pendapatan_bulanan?: number | null
-          penggunaan_aplikasi?: number | null
-          pentingnya_suku_bunga?: number | null
-          pesan_keuntungan_risiko?: number | null
-          preferensi_layanan?: number | null
-          preferensi_produk_detail?: number | null
-          preferensi_waktu_informasi?: number | null
-          prioritas_keuangan?: number | null
-          produk_asuransi?: number | null
-          produk_deposito?: number | null
-          produk_investasi?: number | null
-          produk_kartu_kredit?: number | null
-          produk_keuangan_digunakan?: number | null
-          produk_lainnya?: number | null
-          produk_pinjaman?: number | null
-          produk_tabungan?: number | null
-          promosi_aplikasi_bank?: number | null
-          promosi_email?: number | null
-          promosi_media_sosial?: number | null
-          promosi_sesuai_kebutuhan?: number | null
-          promosi_sms?: number | null
-          promosi_website_bank?: number | null
-          rentang_usia?: number | null
-          rutinitas_menabung?: number | null
-          saluran_komunikasi?: number | null
-          status_pernikahan?: number | null
-          tingkat_pendidikan?: number | null
-          toleransi_risiko?: number | null
-          tujuan_keuangan?: number | null
-          user_id?: string | null
-          waktu_aktif_ponsel?: number | null
-          waktu_nyaman_penawaran?: number | null
-          year_month?: string | null
-        }
-        Update: {
-          alasan_menabung?: number | null
-          batas_waktu_keputusan?: number | null
-          faktor_memilih_produk?: number | null
-          fitur_bunga_imbal_hasil?: number | null
-          fitur_dukungan_pelanggan?: number | null
-          fitur_keamanan_transaksi?: number | null
-          fitur_reward_cashback?: number | null
-          frekuensi_pembelian_besar?: number | null
-          frekuensi_pemeriksaan_saldo?: number | null
-          frekuensi_perjalanan?: number | null
-          informasi_kemudahan_akses?: number | null
-          informasi_potensi_keuangan?: number | null
-          informasi_risiko_rendah?: number | null
-          informasi_testimoni?: number | null
-          investasi_berisiko?: number | null
-          is_akhirpekan?: number | null
-          is_harikerja?: number | null
-          is_laki_laki?: number | null
-          is_perempuan?: number | null
-          is_tidakdividen?: number | null
-          is_tidakotomatis?: number | null
-          is_tidaksaraninvest?: number | null
-          is_tidaktujuan?: number | null
-          is_yadividen?: number | null
-          is_yaotomatis?: number | null
-          is_yasaraninvest?: number | null
-          is_yatujuan?: number | null
-          jenis_investasi?: number | null
-          jenis_pekerjaan?: number | null
-          jenis_transaksi?: number | null
-          jumlah_tanggungan?: number | null
-          kenyamanan_informasi?: number | null
-          kenyamanan_telepon?: number | null
-          keputusan_dari_informasi?: number | null
-          ketertarikan_produk_baru?: number | null
-          memiliki_rumah?: number | null
-          menerima_aplikasi_bank?: number | null
-          menerima_email?: number | null
-          menerima_media_sosial?: number | null
-          menerima_sms?: number | null
-          menerima_telepon?: number | null
-          mengikuti_promo?: number | null
-          meningkatkan_tabungan?: number | null
-          motivasi_tujuan_finansial?: number | null
-          nasabah_bank?: number | null
-          pemeriksaan_pesan?: number | null
-          penawaran_khusus?: number | null
-          pendapatan_bulanan?: number | null
-          penggunaan_aplikasi?: number | null
-          pentingnya_suku_bunga?: number | null
-          pesan_keuntungan_risiko?: number | null
-          preferensi_layanan?: number | null
-          preferensi_produk_detail?: number | null
-          preferensi_waktu_informasi?: number | null
-          prioritas_keuangan?: number | null
-          produk_asuransi?: number | null
-          produk_deposito?: number | null
-          produk_investasi?: number | null
-          produk_kartu_kredit?: number | null
-          produk_keuangan_digunakan?: number | null
-          produk_lainnya?: number | null
-          produk_pinjaman?: number | null
-          produk_tabungan?: number | null
-          promosi_aplikasi_bank?: number | null
-          promosi_email?: number | null
-          promosi_media_sosial?: number | null
-          promosi_sesuai_kebutuhan?: number | null
-          promosi_sms?: number | null
-          promosi_website_bank?: number | null
-          rentang_usia?: number | null
-          rutinitas_menabung?: number | null
-          saluran_komunikasi?: number | null
-          status_pernikahan?: number | null
-          tingkat_pendidikan?: number | null
-          toleransi_risiko?: number | null
-          tujuan_keuangan?: number | null
-          user_id?: string | null
-          waktu_aktif_ponsel?: number | null
-          waktu_nyaman_penawaran?: number | null
-          year_month?: string | null
-        }
+        Row: {}
+        Insert: {}
+        Update: {}
         Relationships: []
       }
       automation_userswithriskmab: {
-        Row: {
-          bunga_potensireturn: string | null
-          category_id: number | null
-          condition: string | null
-          content: string | null
-          defaultoptions: string | null
-          email: string | null
-          encrypted_password: string | null
-          fitur: string | null
-          framingeffect: string | null
-          gamification: string | null
-          incentives: string | null
-          jenis_kelamin: string | null
-          jenis_pekerjaan: string | null
-          keuntungan: string | null
-          loss: string | null
-          lossaversion: string | null
-          memiliki_rumah: string | null
-          nasabah_bank: number | null
-          nudge_info: string | null
-          pendapatan_bulanan: string | null
-          personalization: string | null
-          phone_number: string | null
-          predicted_class: string | null
-          premi_setoran_makspinjam: string | null
-          product_id: string | null
-          product_name: string | null
-          product_title: string | null
-          profit: number | null
-          risiko: string | null
-          risk_profile: string | null
-          risklevel: string | null
-          saldo_awal: number | null
-          saliency: string | null
-          score: number | null
-          socialproof: string | null
-          status_pernikahan: string | null
-          timestamp: string | null
-          timing_justintimenudging: string | null
-          tingkat_pendidikan: string | null
-          tujuan_keuangan: string | null
-          user_id: string | null
-          weight_risk: string | null
-        }
-        Insert: {
-          bunga_potensireturn?: string | null
-          category_id?: number | null
-          condition?: string | null
-          content?: string | null
-          defaultoptions?: string | null
-          email?: string | null
-          encrypted_password?: string | null
-          fitur?: string | null
-          framingeffect?: string | null
-          gamification?: string | null
-          incentives?: string | null
-          jenis_kelamin?: string | null
-          jenis_pekerjaan?: string | null
-          keuntungan?: string | null
-          loss?: string | null
-          lossaversion?: string | null
-          memiliki_rumah?: string | null
-          nasabah_bank?: number | null
-          nudge_info?: string | null
-          pendapatan_bulanan?: string | null
-          personalization?: string | null
-          phone_number?: string | null
-          predicted_class?: string | null
-          premi_setoran_makspinjam?: string | null
-          product_id?: string | null
-          product_name?: string | null
-          product_title?: string | null
-          profit?: number | null
-          risiko?: string | null
-          risk_profile?: string | null
-          risklevel?: string | null
-          saldo_awal?: number | null
-          saliency?: string | null
-          score?: number | null
-          socialproof?: string | null
-          status_pernikahan?: string | null
-          timestamp?: string | null
-          timing_justintimenudging?: string | null
-          tingkat_pendidikan?: string | null
-          tujuan_keuangan?: string | null
-          user_id?: string | null
-          weight_risk?: string | null
-        }
-        Update: {
-          bunga_potensireturn?: string | null
-          category_id?: number | null
-          condition?: string | null
-          content?: string | null
-          defaultoptions?: string | null
-          email?: string | null
-          encrypted_password?: string | null
-          fitur?: string | null
-          framingeffect?: string | null
-          gamification?: string | null
-          incentives?: string | null
-          jenis_kelamin?: string | null
-          jenis_pekerjaan?: string | null
-          keuntungan?: string | null
-          loss?: string | null
-          lossaversion?: string | null
-          memiliki_rumah?: string | null
-          nasabah_bank?: number | null
-          nudge_info?: string | null
-          pendapatan_bulanan?: string | null
-          personalization?: string | null
-          phone_number?: string | null
-          predicted_class?: string | null
-          premi_setoran_makspinjam?: string | null
-          product_id?: string | null
-          product_name?: string | null
-          product_title?: string | null
-          profit?: number | null
-          risiko?: string | null
-          risk_profile?: string | null
-          risklevel?: string | null
-          saldo_awal?: number | null
-          saliency?: string | null
-          score?: number | null
-          socialproof?: string | null
-          status_pernikahan?: string | null
-          timestamp?: string | null
-          timing_justintimenudging?: string | null
-          tingkat_pendidikan?: string | null
-          tujuan_keuangan?: string | null
-          user_id?: string | null
-          weight_risk?: string | null
-        }
+        Row: {}
+        Insert: {}
+        Update: {}
         Relationships: []
       }
       data_mart_user_activity: {
@@ -1600,6 +1210,77 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "nudge_user_consent_nudge_user_id_fkey"
+            columns: ["nudge_user_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_user"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nudge_user_questionnaire_response: {
+        Row: {
+          created_at: string
+          id: string
+          nudge_user_id: string
+          question_id: string
+          response: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          nudge_user_id: string
+          question_id: string
+          response: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          nudge_user_id?: string
+          question_id?: string
+          response?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nudge_user_questionnaire_response_nudge_user_id_fkey"
+            columns: ["nudge_user_id"]
+            isOneToOne: false
+            referencedRelation: "nudge_user"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nudge_user_questionnaire_response_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nudge_user_reward: {
+        Row: {
+          created_at: string
+          id: number
+          nudge_user_id: string
+          reward: number
+          reward_phone: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          nudge_user_id: string
+          reward?: number
+          reward_phone: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          nudge_user_id?: string
+          reward?: number
+          reward_phone?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nudge_user_reward_nudge_user_id_fkey"
             columns: ["nudge_user_id"]
             isOneToOne: false
             referencedRelation: "nudge_user"
