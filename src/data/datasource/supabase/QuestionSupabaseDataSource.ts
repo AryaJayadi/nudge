@@ -9,7 +9,8 @@ export default class QuestionSupabaseDataSource implements QuestionDataSource {
     async getQuestions(): Promise<Question[]> {
         const response = await supabase
             .from("questions")
-            .select("*");
+            .select("*")
+            .order('created_at', { ascending: true });
 
         if (response.error) {
             console.error("Error fetching record by category:", response.error.message);
