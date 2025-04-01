@@ -57,7 +57,7 @@ export default function FeedbackPage() {
                                                                     className="peer sr-only"/>
                                                     <Label
                                                         htmlFor={`${q.id}-${value}`}
-                                                        className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground"
+                                                        className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground"
                                                     >
                                                         {value}
                                                     </Label>
