@@ -4,6 +4,7 @@ import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group"
 import {Label} from "@/components/ui/label"
 import useViewModel from "./FeedbackPageViewModel.ts";
 import SkeletonCard from "@/components/skeleton-card.tsx";
+import {Input} from "@/components/ui/input.tsx";
 
 export default function FeedbackPage() {
     const {
@@ -11,6 +12,7 @@ export default function FeedbackPage() {
         questionsError,
         questionsLoading,
         responses,
+        phoneRef,
         handleRatingChange,
         handleSubmit,
         isComplete
@@ -65,6 +67,10 @@ export default function FeedbackPage() {
                                 </RadioGroup>
                             </div>
                         ))}
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="phone">Phone</Label>
+                            <Input id="phone" placeholder="Phone" ref={phoneRef} type="text"/>
+                        </div>
                     </>
                 </CardContent>
                 <CardFooter>

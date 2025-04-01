@@ -10,7 +10,7 @@ export default function ThankYouPage() {
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">Terima Kasih</h1>
                 <p className="text-gray-700 mb-6">
                     Terima kasih telah menyelesaikan simulasi nudge. Hadiah anda sedang diproses. Anda akan menerima notifikasi
-                    dalam waktu 1x24 jam.
+                    dalam waktu 3x24 jam.
                 </p>
                 <div className="w-16 h-1 bg-green-500 mx-auto rounded-full"></div>
             </div>

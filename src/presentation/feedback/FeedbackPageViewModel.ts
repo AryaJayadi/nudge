@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useState} from "react";
+import {useCallback, useMemo, useRef, useState} from "react";
 import {useNavigate} from "react-router";
 import {FeedbackQuestionSupabaseDataSource} from "@/data/datasource/supabase/FeedbackQuestionSupabaseDataSource.ts";
 import {FeedbackQuestionDataSourceRepository} from "@/data/repository/FeedbackQuestionDataSourceRepository.ts";
@@ -10,10 +10,17 @@ import {FeedbackResponseDataSourceRepository} from "@/data/repository/FeedbackRe
 import {FinishSimulationSupabaseDataSource} from "@/data/datasource/supabase/FinishSimulationSupabaseDataSource.ts";
 import {FinishSimulationRepositoryDataSource} from "@/data/repository/FinishSimulationRepositoryDataSource.ts";
 import {FinishSimulation} from "@/domain/usecase/finish_simulation/FinishSimulation.ts";
+import {UserRewardSupabaseDataSource} from "@/data/datasource/supabase/UserRewardSupabaseDataSource.ts";
+import {UserRewardRepositoryDataSource} from "@/data/repository/UserRewardRepositoryDataSource.ts";
+import {UserRewardCreate} from "@/domain/usecase/user_reward/UserRewardCreate.ts";
+import {useToast} from "@/components/ui/use-toast.ts";
+import {calcPrize} from "@/lib/utils.ts";
 
 export default function FeedbackPageViewModel() {
     const [responses, setResponses] = useState<InsertFeedbackResponse[]>([]);
+    const phoneRef = useRef<HTMLInputElement | null>(null);
     const navigate = useNavigate();
+    const {toast} = useToast();
     const {user} = useUser();
 
     const THANKYOU = "/thankyou";
@@ -26,6 +33,9 @@ export default function FeedbackPageViewModel() {
 
     const finishSimulationDataSource = useMemo(() => new FinishSimulationSupabaseDataSource(), []);
     const finishSimulationRepository = useMemo(() => new FinishSimulationRepositoryDataSource(finishSimulationDataSource), [finishSimulationDataSource]);
+
+    const userRewardDataSource = useMemo(() => new UserRewardSupabaseDataSource(), []);
+    const userRewardRepository = useMemo(() => new UserRewardRepositoryDataSource(userRewardDataSource), [userRewardDataSource]);
 
     const feedbackQuestionReadUseCase = useMemo(() => new FeedbackQuestionRead(feedbackQuestionRepository), [feedbackQuestionRepository]);
     const feedbackQuestionRead = useCallback(async () => {
@@ -41,6 +51,11 @@ export default function FeedbackPageViewModel() {
     const finishSimulation = useCallback(async (uid: string, data: InsertFeedbackResponse[]) => {
         return await finishSimulationUseCase.invoke(uid, data);
     }, [finishSimulationUseCase]);
+
+    const userRewardCreateUseCase = useMemo(() => new UserRewardCreate(userRewardRepository), [userRewardRepository]);
+    const userRewardCreate = useCallback(async (data: InsertUserReward) => {
+        return await userRewardCreateUseCase.invoke(data);
+    }, [userRewardCreateUseCase]);
 
     const handleRatingChange = (id: number, score: number) => {
         setResponses((prev) => {
@@ -66,6 +81,15 @@ export default function FeedbackPageViewModel() {
 
     const handleSubmit = () => {
         if(!user || !user.id) return
+        if(!phoneRef.current || phoneRef.current['value'] == "") {
+            toast({
+                title: "Feedback failed!",
+                description: `Please fill phone number for reward!`,
+            });
+            return;
+        }
+
+        const phone: string = phoneRef.current['value'];
 
         console.log("Feedback submitted:", responses)
 
@@ -74,7 +98,15 @@ export default function FeedbackPageViewModel() {
                 return
             }
 
-            navigate(THANKYOU, {replace: true});
+            userRewardCreate({
+                nudge_user_id: user.id,
+                reward_phone: phone,
+                reward: calcPrize(user.balance)
+            } as InsertUserReward).then(res2 => {
+                if(res2.error) return;
+
+                navigate(THANKYOU, {replace: true});
+            });
         })
     }
 
@@ -85,6 +117,7 @@ export default function FeedbackPageViewModel() {
         questionsLoading,
         questionsError,
         responses,
+        phoneRef,
         handleRatingChange,
         handleSubmit,
         isComplete
