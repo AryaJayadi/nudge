@@ -17,7 +17,9 @@ export class FinishSimulation implements FinishSimulationUseCase {
     }
 
     async invoke(uid: string, responses: InsertFeedbackResponse[]): Promise<BaseSupabaseResponse<FinishAndResponses>> {
-        const resFinish = await this.repository.create({nudge_user_id: uid, finish: true} as InsertFinishSimulation);
+        const resFinish = await this.repository.update(uid, {
+            finish: true
+        } as UpdateFinishSimulation);
 
         if (resFinish.error) {
             return {success: false, data: null, error: resFinish.error} as BaseSupabaseResponse<FinishAndResponses>;
