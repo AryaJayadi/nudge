@@ -54,7 +54,7 @@ const UserContext = createContext<UserContextType>({
 export function UserProvider({children}: { children: ReactNode }) {
     const [value, setValue,] = useLocalStorage<User | null>('auth', null)
     const [user, setUser] = useState<User | null>(null);
-    const [isFinished, setIsFinished] = useState<boolean>(false);
+    const [isFinished, setIsFinished] = useState<boolean>(true);
     const location = useLocation();
     const navigate = useNavigate();
 
