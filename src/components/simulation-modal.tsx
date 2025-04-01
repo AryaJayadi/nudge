@@ -11,6 +11,8 @@ import {useEffect, useRef, useState} from "react"
 import {AlertCircle, CheckCircle2, XCircle} from "lucide-react"
 import {Label} from "@/components/ui/label.tsx";
 import {NumberSpinner} from "@/components/number-spinner.tsx";
+import {useUser} from "@/presentation/context/UserContext.tsx";
+import {useToast} from "@/components/ui/use-toast.ts";
 
 interface SimulationModalProps {
     isOpen: boolean;
@@ -30,6 +32,10 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
     const [finalNumber, setFinalNumber] = useState<number | null>(null)
     const [amount, setAmount] = useState<number>(product.saldo_awal)
     const simulationTimerRef = useRef<NodeJS.Timeout | null>(null)
+    const {
+        user
+    } = useUser();
+    const {toast} = useToast();
 
     const MIN_AMOUNT = product.saldo_awal;
     const MAX_AMOUNT = 10  * product.saldo_awal;
@@ -44,7 +50,27 @@ export function SimulationModal({isOpen, onClose, profit, price, risk, riskLevel
     //     }).format(amount)
     // }
 
+    function validateSimulation() {
+        if(!user) {
+            toast({
+                title: "User not found!",
+                description: `failed to find user`,
+            });
+            return false;
+        }
+        if(user.balance < amount) {
+            toast({
+                title: "Not enough balance!",
+                description: `Purchase price must be within balance amount.`,
+            });
+            return false;
+        }
+        return true;
+    }
+
     const startSimulation = () => {
+        if(!validateSimulation()) return;
+        
         setIsSimulating(true)
         setResult(null)
         setFinalNumber(null)
