@@ -20,6 +20,7 @@ import ThankYouPage from "@/presentation/thankyou/ThankyouPage.tsx";
 import {ForgotPasswordPage} from "@/presentation/auth/ForgotPasswordPage.tsx";
 import {TransactionHistoryPage} from "@/presentation/transaction_history/TransactionHistoryPage.tsx";
 import {LoadingProvider} from "@/presentation/context/LoadingContext.tsx";
+import {LoadingScreen} from "@/presentation/loading/LoadingScreen.tsx";
 
 interface ProtectedRouteProps {
     redirectPath: string;
@@ -40,6 +41,7 @@ const Root = () => {
     return (
         <UserProvider>
             <LoadingProvider>
+                <LoadingScreen />
                 <RootLayout/>
             </LoadingProvider>
         </UserProvider>
