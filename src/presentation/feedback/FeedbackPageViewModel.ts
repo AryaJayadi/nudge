@@ -15,6 +15,7 @@ import {UserRewardRepositoryDataSource} from "@/data/repository/UserRewardReposi
 import {UserRewardCreate} from "@/domain/usecase/user_reward/UserRewardCreate.ts";
 import {useToast} from "@/components/ui/use-toast.ts";
 import {calcPrize} from "@/lib/utils.ts";
+import {useLoading} from "@/presentation/context/LoadingContext.tsx";
 
 export default function FeedbackPageViewModel() {
     const [responses, setResponses] = useState<InsertFeedbackResponse[]>([]);
@@ -23,6 +24,7 @@ export default function FeedbackPageViewModel() {
     const navigate = useNavigate();
     const {toast} = useToast();
     const {user} = useUser();
+    const { setLoading, setMessage } = useLoading();
 
     const THANKYOU = "/thankyou";
 
@@ -94,6 +96,9 @@ export default function FeedbackPageViewModel() {
             return;
         }
 
+        setMessage('Processing Feedback...');
+        setLoading(true);
+
         const phone: string = phoneRef.current['value'];
         const lainnya: string = lainnyaRef.current['value'];
 
@@ -107,17 +112,27 @@ export default function FeedbackPageViewModel() {
 
         console.log("Feedback submitted:", responses)
 
+        setMessage('Submitting Feedback...');
+
         finishSimulation(user.id, data).then((res) => {
             if(res.error) {
+                setLoading(false);
                 return
             }
+
+            setMessage("Calculating Reward...");
 
             userRewardCreate({
                 nudge_user_id: user.id,
                 reward_phone: phone,
                 reward: calcPrize(user.balance)
             } as InsertUserReward).then(res2 => {
-                if(res2.error) return;
+                if(res2.error) {
+                    setLoading(false);
+                    return;
+                }
+
+                setLoading(false);
 
                 navigate(THANKYOU, {replace: true});
             });
