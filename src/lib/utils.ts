@@ -16,12 +16,13 @@ export function formatCurrency(amount: number) {
     }).format(amount)
 }
 
-export function calcPrize(amount: number) {
+export function calcPrize(amount: number): number {
     const BASE = 1000000000;
     const REWARD = 50000;
     const MAX_REWARD = 100000;
-    const res = amount / BASE * REWARD;
-    return res > MAX_REWARD ? MAX_REWARD : res;
+
+    const res = (amount / BASE) * REWARD;
+    return Math.min(MAX_REWARD, Math.floor(res));
 }
 
 export function isAuthenticated(session: Session | null | undefined): boolean {
