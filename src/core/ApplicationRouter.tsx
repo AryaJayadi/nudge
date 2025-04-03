@@ -19,6 +19,7 @@ import FeedbackPage from "@/presentation/feedback/FeedbackPage.tsx";
 import ThankYouPage from "@/presentation/thankyou/ThankyouPage.tsx";
 import {ForgotPasswordPage} from "@/presentation/auth/ForgotPasswordPage.tsx";
 import {TransactionHistoryPage} from "@/presentation/transaction_history/TransactionHistoryPage.tsx";
+import {LoadingProvider} from "@/presentation/context/LoadingContext.tsx";
 
 interface ProtectedRouteProps {
     redirectPath: string;
@@ -38,7 +39,9 @@ const ProtectedRoute: (p: ProtectedRouteProps) => (JSX.Element) = (p: ProtectedR
 const Root = () => {
     return (
         <UserProvider>
-            <RootLayout/>
+            <LoadingProvider>
+                <RootLayout/>
+            </LoadingProvider>
         </UserProvider>
     )
 }
